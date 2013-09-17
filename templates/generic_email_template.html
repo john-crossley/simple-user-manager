@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{subject}}</title>
+  <link rel="stylesheet" href="{{url}}stylesheets/bootstrap.css">
+  <link rel="stylesheet" href="{{url}}stylesheets/email-style.css">
+</head>
+<body class="email">
+
+  <div class="container-narrow">
+
+      <h1>{{system_name}}</h1>
+      <hr>
+
+      <div class="inner-container-narrow">
+        {{template}}
+      </div><!--//inner-container-narrow-->
+
+      <hr>
+      <footer>
+        &copy; {{year}} - <a href="{{url}}">{{system_name}}</a>
+      </footer>
+
+    </div><!--//inner-container-narrow-->
+
+  </div><!--container-->
+
+</body>
+</html>

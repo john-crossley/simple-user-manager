@@ -1,0 +1,368 @@
+body {
+  padding-top: 80px;
+  padding-bottom: 40px;
+
+  > .container {
+    margin-top: 30px;
+  }
+}
+
+.main {
+  margin-top: 2em;
+}
+
+.edit-account {
+  padding-top: 2em;
+}
+
+.permission {
+  margin-top: 3em;
+}
+
+//
+//  NAVBAR
+//
+.not-logged-in {
+  position: relative;
+  top: 25px;
+  li {
+    display: inline-block;
+    padding-right: 10px;
+  }
+  a {
+    color: #fff;
+  }
+}
+
+.navbar {
+  background-color: #2980B9;
+}
+
+.view-user-navigation {
+  margin-top: 2em;
+}
+
+.search-form {
+  background: none;
+  input {
+    width: 220px;
+  }
+  h2 a.navbar-brand {
+    color: #000;
+  }
+}
+
+.navbar .navbar-toggle {
+  border: 1px solid #2980B9;
+}
+
+.navbar .navbar-toggle:hover {
+  background-color: #2980B9;
+}
+
+.navbar .navbar-brand {
+  color: #fff;
+}
+
+.navbar li a {
+  // color: #fff !important;
+}
+
+.navbar li a:hover {
+  background-color: #3498DB !important;
+}
+
+.navbar li.active a {
+  background-color: #3498DB !important;
+}
+
+.navbar li.dropdown {
+  margin-top: 13px;
+  > a {
+    color: #fff;
+  }
+  b.caret {
+    color: #fff;
+  }
+}
+
+a i {
+  position: relative;
+  top: 2px;
+  padding-right: 5px;
+}
+
+.main-menu a.dropdown-toggle {
+  background: #2980B9 !important;
+}
+
+div.search-header {
+  margin-bottom : 20px;
+
+  form button {
+    position: relative;
+    bottom: 5px;
+  }
+}
+
+// ul {
+//   list-style: none;
+//   margin: 0;
+// }
+
+.profile-block {
+  margin-top: 2em;
+
+  h3 {
+    margin-top: 10px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+}
+
+.jumbotron {
+  margin: 20px 80px 40px;
+  text-align: center;
+  h1 {
+    font-size: 80px;
+    line-height: 1;
+  }
+  .lead {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+}
+
+span.red {
+  color: red;
+}
+
+.label-block {
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+table .btn {
+  width: 88%;
+  margin: 0;
+}
+
+.tab-content {
+  margin-top: 1em;
+}
+
+.gravatar {
+  border: 2px solid #ddd;
+  margin-right: 10px;
+}
+h2 .gravatar {
+  height: 50px;
+  width: 50px;
+}
+
+table td.image {
+  text-align: center;
+  margin: 0 !important;
+}
+
+footer {
+  > .container {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+  }
+
+  // border-top: 1px solid #eee;
+  margin-top: 40px;
+  padding-top: 10px;
+}
+
+td label {
+  font-weight: normal;
+}
+
+/**
+ * ===========================
+ * ALERT
+ */
+.alert {
+  width: 85%;
+  margin: 2em auto 1em;
+  text-align: center;
+  font-size: 15px;
+}
+
+/**
+ * ==========================
+ * TOOLTIPS
+ */
+.delete_group_tooltip {
+  position: relative;
+  top: 5px;
+  left: 3px;
+}
+
+/**
+ * ===========================
+ * TYPOGRAPHY
+ */
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+}
+
+h2 {
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+p {
+  margin-top: 10px;
+}
+
+.tabbable h2 {
+  margin-top: 0;
+  display: inline;
+
+  .navbar-form {
+    margin-bottom: 2px;
+    button {
+      margin-bottom: 8px;
+      position: relative;
+      bottom: 5px;
+    }
+  }
+}
+
+/**
+ * ===========================
+ * FORM STUFF
+ */
+ .modal-body .form-group {
+  margin-top: 1em;
+ }
+
+// .checkbox {
+//   &:first-child {
+//     padding-left: 0;
+//   }
+// }
+
+textarea.form-control {
+  height: 108px;
+}
+
+textarea {
+  width: 300px;
+  height: 200px;
+  &[name='template_data'] {
+    width: 100%;
+    height: 300px;
+    font: 14px/22px "PragmataPro", "Menlo", "Inconsolata", "Lucida Console", "Monaco", monospace;
+  }
+}
+
+textarea.high-textarea {
+  height: 230px;
+}
+
+// .input-message {
+//   width: 97%;
+//   height: 100px;
+// }
+
+// .modal-body form {
+//   // max-width: 300px;
+//   // margin: 1em auto 0em auto;
+// }
+
+
+
+// .form-user-group {
+//   margin-top: 20px;
+// }
+
+.form-login, .form-register {
+  width: 400px;
+  margin: 3em auto;
+}
+
+// .form-new-user {
+//   width: 600px;
+// }
+
+.help-block span.label {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.placeholder {
+  display: inline-block;
+  padding: 5px;
+}
+
+// form label {
+//   font-size: 12px;
+//   margin-bottom: 0;
+//   padding: 0;
+// }
+
+// .form-login input[type="text"],
+// .form-login input[type="password"] {
+//   height: auto;
+//   margin: 5px 0;
+//   padding: 5px 7px;
+// }
+
+// .form-forgot {
+//   input {
+//     width: 90%;
+//     padding: 10px;
+//     margin-top: 5px;
+//     width: 95%;
+//     font-size: 16px;
+//   }
+// }
+
+// .btn {
+//   margin-top: 10px;
+// }
+
+// .button-group {
+//   .btn-link {
+//     margin-top: 15px;
+//   }
+// }
+
+// small.help-inline {
+//   padding-left: 0;
+//   padding-top: 0;
+//   display: inline;
+// }
+
+/* #Media Queries
+================================================== */
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {
+
+}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {}

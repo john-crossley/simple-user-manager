@@ -29,11 +29,6 @@ if (isset($_POST['updateGroup']) && isset($_POST['roleId'])) {
 
 if (!empty($_POST)) {
 
-  if (DEMO_MODE) {
-    Flash::make('info', 'Sup! You\'re in demo mode so what you can do is limited.');
-    redirect('admin/view.php?user='.$user->id);
-  }
-
   // Here we have an array of files.
   if (isset($_POST['protect']) && isset($_POST['user_id'])) {
     $user = User::findById((int)$_POST['user_id']);

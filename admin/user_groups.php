@@ -6,8 +6,6 @@ $user = get_user();
 check_user_access($user, 'accessAdminPanel');
 
 if (!empty($_POST)) {
-  Flash::make('success', 'Consider this action done! You\'re in demo mode so have limited rights.');
-  redirect('admin/user_groups.php');
   /**
    * When a user wants to delete a user group.
    */

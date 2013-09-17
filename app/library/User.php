@@ -259,8 +259,6 @@ class User
     }
 
     // Not a new user you say? Then in that case update them!
-    if (DEMO_MODE && (int)$this->id === 1) return true;
-
     return DB::table('user')->where('id', '=', $this->id)->update($data);
   }
 

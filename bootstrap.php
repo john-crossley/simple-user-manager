@@ -43,7 +43,6 @@ require_once ROOT . 'app/helper/functions.php';
 
 // Check if the installation exists
 if (is_dir(ROOT . 'install/')) {
-  // Yes
-//  header("Location: " . URL . 'install/');
-  // exit;
+  header("Location: " . URL . 'install/');
+  exit;
 }

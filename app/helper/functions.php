@@ -273,9 +273,9 @@ function save_user(User $user) {
  */
 function redirect($page = 'index.php', $permanent = false) {
   if ($permanent) {
-    @header('HTTP/1.1 301 Moved Permanently');
+    header('HTTP/1.1 301 Moved Permanently');
   }
-  @header('Location: ' . URL . $page);
+  header('Location: ' . URL . $page);
   exit;
 }
 

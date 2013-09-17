@@ -1,3 +1,4 @@
+<?php ob_start(); // Fixed made by KRauer ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -17,7 +17,8 @@ $path2 = explode('/', substr(ROOT, 0, -1));
 $path3 = explode('/', str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])));
 for ($i = count($path2); $i < count($path1); $i++) array_pop($path3);
 $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
-($url{strlen($url) -1} == '/') ? define('URL', 'http://' . $url . '/') : define('URL', 'http://' . $url . '/');
+// Fixed made by KRauer
+($url{strlen($url) -1} == '/') ? define('URL', 'http://' . $url ) : define('URL', 'http://' . $url . '/');
 
 define('TEMPLATE', ROOT . 'templates/');
 
@@ -43,6 +44,6 @@ require_once ROOT . 'app/helper/functions.php';
 // Check if the installation exists
 if (is_dir(ROOT . 'install/')) {
   // Yes
-  header("Location: " . URL . 'install/');
-  exit;
+//  header("Location: " . URL . 'install/');
+  // exit;
 }

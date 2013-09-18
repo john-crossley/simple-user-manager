@@ -1,10 +1,12 @@
 <?php
-
-class Role
+/**
+ * Advanced user managers own simple `ACL`
+ */
+class Role extends SingletonAbstract
 {
   public $permissions;
 
-  public function __construct()
+  protected function init()
   {
     $this->permissions = array();
   }
@@ -119,18 +121,9 @@ class Role
 
   public static function deleteRole($role_id)
   {
-    // DB::debug();
-    // return DB::table('role_permission AS t1')
-    //     ->join('user_role AS t2', 't1.role_id', '=', 't2.role_id')
-    //     ->join('role_permission AS t3', 't1.role_id', '=', 't3.role_id')
-    //     ->where('t1.role_id', '=', (int)$role_id)
-    //     ->delete('t1, t2, t3');
-
     return DB::table('role_permission')
-                ->where('role_id', '=', (int)$role_id)
-                ->delete();
-
-    // DELETE FROM role_permission WHERE role_id = 4 AND permission_id = 5
+            ->where('role_id', '=', (int)$role_id)
+            ->delete();
   }
 
   public static function insertRole($role_name)
@@ -138,11 +131,6 @@ class Role
     return DB::table('role')->insert_get_id(array(
       'role_name' => $role_name
     ));
-  }
-
-  public function insertUserRoles($user_id, array $roles)
-  {
-
   }
 
   public function hasPermission($permission)

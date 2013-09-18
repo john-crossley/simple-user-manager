@@ -9,14 +9,8 @@
  * @package user-manager
  * @version 1.0
  */
-class Flash
+class Flash extends SingletonAbstract
 {
-  /**
-   * Construct is protected to stop direct object
-   * instantiation.
-   */
-  protected function __construct() {}
-
   /**
    * Make a new flash message
    *

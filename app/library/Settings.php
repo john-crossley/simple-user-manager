@@ -10,7 +10,7 @@
  * @package user-manager
  * @version 1.0
  */
-class Settings
+class Settings extends SingletonAbstract
 {
   /**
    * @var object stores the settings pulled from the database.
@@ -18,32 +18,15 @@ class Settings
   protected $settings;
 
   /**
-   * @var object stores an instance of the settings object.
-   */
-  protected static $instance;
-
-  /**
-   * The construct pulls the settings from the setting table of the
+   * The init pulls the settings from the setting table of the
    * database. If you changed the name of the setting table then you
    * need to ensure you change it here also.
    *
    * @return null
    */
-  protected function __construct()
+  protected function init()
   {
     $this->settings = DB::table('setting')->first();
-  }
-
-  /**
-   * Initialises an instance of the settings class if
-   * one doesn't exist.
-   */
-  public static function init()
-  {
-    if (!self::$instance instanceof Settings) {
-      self::$instance = new Settings;
-    }
-    return self::$instance;
   }
 
   /**
@@ -54,7 +37,7 @@ class Settings
    */
   public static function get($property)
   {
-    $settings = static::init();
+    $settings = static::getInstance();
     if (isset($settings->settings->$property)) {
       return $settings->settings->$property;
     } else return false;
@@ -62,7 +45,6 @@ class Settings
 
   public static function getAllSettings()
   {
-    $settings = static::init();
-    return $settings->settings;
+    return static::getInstance()->settings;
   }
 }

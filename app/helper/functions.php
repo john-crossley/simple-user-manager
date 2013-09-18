@@ -524,15 +524,6 @@ function _is_active($page, $current, $justClass = false) {
   return ($page===$current) ? 'class="active"' : '';
 }
 
-function get_stripe_secret_key() {
-  return Settings::get('stripe_secret_key');
-}
-
-function get_stripe_publishable_ket() {
-  return Settings::get('stripe_publishable_key');
-}
-
-
 /**
  * Get the CSRF token, useful for securing forms
  * against Cross Site Request Forgery

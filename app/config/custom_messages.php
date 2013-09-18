@@ -200,7 +200,7 @@ define('VALIDATION_ERRORS',
  * Only shown really when suspected tomfoolery
  */
 define('UNABLE_TO_LOCATE_USER',
-  "Oops something went wrong, we were unable to locate the requested record."
+  "Oops, the system was unable to locate the requested member. Did you enter their name correctly?"
 );
 
 /**

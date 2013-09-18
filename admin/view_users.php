@@ -48,8 +48,8 @@ if (!empty($_POST) && isset($_POST['search']) && !empty($_POST['search'])) {
         <div class="navbar search-form">
 
           <form method="post" action="<?=root_path('admin/view_users.php')?>" class="navbar-form pull-right">
-            <input type="text" class="form-control" name="search" placeholder="Enter a username to search..." value="<?=isset($searchTerm)?$searchTerm:''?>">
-            <button type="submit" class="btn btn-default">Submit</button>
+            <input type="text" class="form-control input-sm" name="search" placeholder="Enter a username to search..." value="<?=isset($searchTerm)?$searchTerm:''?>">
+            <button type="submit" class="btn btn-default btn-sm">Submit</button>
           </form>
         </div><!--//.navbar-->
 

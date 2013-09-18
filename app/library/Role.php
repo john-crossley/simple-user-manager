@@ -74,11 +74,7 @@ class Role extends SingletonAbstract
 
   public static function getRolePermissions($role_id)
   {
-    $role = new Role();
-
-    // SELECT t2.description FROM role_permission as t1
-    //         JOIN permission as t2 ON t1.permission_id = t2.id
-    //         WHERE t1.role_id = 1
+    $role = Role::getInstance();
 
     $result = DB::table('role_permission AS t1')
                   ->join('permission AS t2', 't1.permission_id', '=', 't2.id')

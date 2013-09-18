@@ -155,6 +155,8 @@ class User extends SingletonAbstract
   public static function findByUsername($username)
   {
     $user = User::getInstance();
+    // Dirty cleaning...
+    $username = strip_tags($username);
 
     $user->_newUser = false;
 

@@ -29,6 +29,7 @@ if ((isset($_POST['task']) && $_POST['task'] == 'sendMessage') &&
     redirect('compose_message.php');
   }
 
+
   $recipient = User::findByUsername($_POST['recipients_username']);
 
   if (!$recipient->id) {

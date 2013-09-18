@@ -1,6 +1,4 @@
 <?php
 require_once 'bootstrap.php';
 
-pp(
-  Core::getInstance()->getToken()
-);
+pp(User::findByUsername('carl.evison'));

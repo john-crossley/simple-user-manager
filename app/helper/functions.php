@@ -538,7 +538,7 @@ function get_stripe_publishable_ket() {
  * against Cross Site Request Forgery
  */
 function get_csrf_token() {
-  return Core::init()->getToken();
+  return Core::getInstance()->getToken();
 }
 
 /**

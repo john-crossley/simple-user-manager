@@ -419,3 +419,12 @@ define('USER_PROFILE_NOT_FOUND',
 define('YOUR_ACCOUNT_HAS_BEEN_UPDATED',
   "Your account has been successfully updated."
 );
+
+/**
+ * admin/view.php
+ *
+ * Shown when the system failed to update a user.
+ */
+define('UNABLE_TO_UPDATE_USER',
+  "Sorry, unable to update the user's profile. Try again."
+);

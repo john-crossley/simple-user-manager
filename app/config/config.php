@@ -50,3 +50,5 @@ define('TIME_FORMAT', 'dS M, Y h:ia');
 define('DATABASE_DATETIME_FORMAT', 'Y-m-d H:i:s');
 
 define('DEMO_MODE', false);
+
+define('CHECK_AND_RUN_INSTALL', false);

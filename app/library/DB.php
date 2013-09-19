@@ -201,7 +201,6 @@ class DB
   {
     $this->query = 'UPDATE ' . $this->table . ' SET ';
     $tmp = '';
-    // $where_data = $this->query_data; // Store this data for a rainy day
     $this->query_data = array(); // Reset the query data
 
     foreach ($data as $key => $value) {
@@ -209,8 +208,6 @@ class DB
       $tmp = ', ';
       $this->query_data[] = $value;
     }
-
-    // $this->query_data = array_merge($this->query_data, $where_data);
     $this->from = null;
 
     return $this->execute('UPDATE');

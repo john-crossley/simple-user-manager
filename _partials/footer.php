@@ -4,9 +4,6 @@
         &copy; <?=date('Y')?> - <a href="http://phpcodemonkey.com/" target="_blank">John Crossley</a> -
         <a href="http://phpcodemonkey.com/contact" target="_blank">Contact</a>
       </small>
-      <?php if (DEMO_MODE): ?>
-        <small class="text-danger pull-right"><strong>DEMO MODE v<?=system_version()?></strong></small>
-      <?php endif; ?>
     </div><!--//.container-->
   </footer>
 

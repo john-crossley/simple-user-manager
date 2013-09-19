@@ -7,13 +7,6 @@ messages_enabled($user);
 
 if (!empty($_POST) && isset($_POST['delete_message']) && !empty($_POST['delete_message'])) {
 
-  // DB::table('message')
-  //       ->where('sent_to_id', '=', $user->id)
-  //       ->where('id', '=', (int)$message_to_delete)
-  //       ->update(array('show_to_receiver' => 0));
-
-  // if ( DB::table('message')->where_in('') )
-
   $result = DB::table('message')->where_in('id', $_POST['delete_message'])->where('sent_to_id', '=', $user->id)->update(array(
     'show_to_receiver' => 0
   ));
@@ -23,12 +16,6 @@ if (!empty($_POST) && isset($_POST['delete_message']) && !empty($_POST['delete_m
     redirect('messages.php');
   }
 
-  // // I don't want to be shown this message (According to me it's been deleted.)
-  // foreach ($_POST['delete_message'] as $message_to_delete) {
-
-  // }
-  // Flash::make('success', 'Messages have been deleted!');
-  // redirect('messages.php');
 }
 ?>
 <body>

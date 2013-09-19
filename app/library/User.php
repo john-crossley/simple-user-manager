@@ -1,6 +1,6 @@
 <?php
 
-class User
+class User extends SingletonAbstract
 {
   protected $_userData;
   protected $_newUser;
@@ -8,12 +8,13 @@ class User
   protected $_errors = array();
   protected $messages;
 
-  public function __construct()
+  protected function init()
   {
     $this->messages = new Message;
     $this->_userData = new stdClass;
     $this->_userData->originalPassword = null;
-    $this->_newUser = true; // Assume this is a new user.
+    // Assume new user
+    $this->_newUser = true;
   }
 
   /**
@@ -69,9 +70,10 @@ class User
 
   public static function auth($username, $password)
   {
-    $user = new User;
-    $user->_newUser = false;
+    // Create a new instance of the user.
+    $user = User::getInstance();
 
+    $user->_newUser = false;
     $user->_userData = DB::table('user')->grab(1)->findByUsername('\''.$username.'\'');
 
     if (empty($user->_userData)) {
@@ -152,7 +154,10 @@ class User
 
   public static function findByUsername($username)
   {
-    $user = new User;
+    $user = User::getInstance();
+    // Dirty cleaning...
+    $username = strip_tags($username);
+
     $user->_newUser = false;
 
     $result = DB::table('user')->grab(1)->find(array('`username`' => '\''.$username.'\''));
@@ -166,7 +171,7 @@ class User
   public static function findById($id)
   {
     // Some basic human rights
-    $user = new User;
+    $user = User::getInstance();
     $user->_newUser = false;
     // Check to see if the user exists
     $result = DB::table('user')->grab(1)->find(array('id' => (int)$id));
@@ -183,9 +188,7 @@ class User
 
   public static function findByEmail($email)
   {
-    // DB::debug();
-
-    $user = new User;
+    $user = User::getInstance();
     $user->_newUser = false;
     $result = DB::table('user')
               ->grab(1)

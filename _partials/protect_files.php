@@ -12,7 +12,7 @@ if (isset($_POST['task']) && $_POST['task'] == 'directory_scan'
   $lockdown = new LockdownBuilder($_POST['path'], ROOT . 'member');
 
   if ($lockdown->path_not_found()) {
-    die("Unable to find files.");
+    die("<p class='text-danger'>Unable to find files.</p>");
   }
   $files = $lockdown->prepare_files(array('php'));
 

@@ -49,7 +49,7 @@ if (!empty($_POST)) {
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
           </div><!--//.form-group-->
-          <button type="submit" class="btn btn-primary">Login</button>
+          <button type="submit" class="btn btn-primary btn-sm">Login</button>
           <a href="#forgot-password-modal" data-toggle="modal" class="btn btn-link pull-right">Forgot password</a>
         </fieldset>
       </form>
@@ -76,8 +76,8 @@ if (!empty($_POST)) {
             </div><!--//.form-group-->
           </div><!--//.modal-body-->
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="request-forgot-password-btn">Request Password</button>
+            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary btn-sm" id="request-forgot-password-btn">Request Password</button>
           </div><!--//.modal-footer-->
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

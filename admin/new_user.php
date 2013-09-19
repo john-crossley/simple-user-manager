@@ -39,7 +39,7 @@ if (!empty($_POST)) {
     }
 
     // All has gone well at this point
-    $user = new User;
+    $user = User::getInstance();
 
     if (isset($_POST['email_user']) && $_POST['email_user'] == 'on') {
       $email_user = true;

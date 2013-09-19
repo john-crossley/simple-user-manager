@@ -1,5 +1,5 @@
 <?php
-
+require_once '../app/library/SingletonAbstract.php';
 require_once '../app/library/Flash.php';
 require_once 'functions.php';
 
@@ -302,7 +302,7 @@ $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
               <input type="text" class="form-control" id="db-name" placeholder="Eg: advanced_user_manager">
               <small class="help-block">
                 The name of the database you'd like to use for the application. Please ensure you have created this
-                otherwise the connection will fail. <strong><i>Please note that all data in this database will be deleted!</i></strong>
+                otherwise the connection will fail. <strong class="text-danger"><i>Please note that all data in this database will be deleted!</i></strong>
               </small>
             </div><!--//form-group-->
 

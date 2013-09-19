@@ -4,20 +4,20 @@ class Message
 {
   protected $_user;
 
-	/**
-	 * Deletes a list of user messages that match their ID.
-	 *
-	 * @param array $messages The array of message IDs to delete
-	 * @param int   $userId   The users ID
-	 * @return bool If successful
-	 */
-	public function deleteMessages(array $messages, $userId)
+  /**
+   * Deletes a list of user messages that match their ID.
+   *
+   * @param array $messages The array of message IDs to delete
+   * @param int   $userId   The users ID
+   * @return bool If successful
+   */
+  public function deleteMessages(array $messages, $userId)
   {
-		$result = DB::table('message')->where_in('id', $messages)->where('sent_to_id', '=', $userId)->delete();
+    $result = DB::table('message')->where_in('id', $messages)->where('sent_to_id', '=', $userId)->delete();
 
-	  if ($result) return true;
+    if ($result) return true;
 
-	  return false;
+    return false;
   }
 
   public function getMessageWithIdAndEnsureUserOwnsMessage($userId, $messageId)
@@ -72,11 +72,6 @@ class Message
 
     return false;
   }
-
-  // public function hasSentMessages($id)
-  // {
-
-  // }
 
   public function hasMessages($id)
   {

@@ -705,7 +705,7 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
 
   // Ok we can only assume all went well
   $hash = md5(uniqid().rand());
-  $user = new User;
+  $user = User::getInstance();
   $user->username = $username;
   $user->password = $password;
   $user->email    = $email;

@@ -51,14 +51,8 @@ if (!empty($_POST)) {
   }
 
   if (isset($_POST['task']) && $_POST['task'] === "saveUserFromAdminPanel") {
-
-    // Don't change anything if it's the admin.
-
     // CSRF check
-    if (!_csrf()) {
-      Flash::make('danger', CSRF_CHECK_FAILURE);
-      redirect('admin/view.php?user='.$user->id);
-    }
+    csrf_check();
 
     $data_changed = false;
     $email_user   = false;
@@ -90,17 +84,17 @@ if (!empty($_POST)) {
     // Account private?
     if (isset($_POST['account_private']) && $_POST['account_private'] == 'on') {
       // Do we need to even change it?
-      $user->private = true;
+      $user->private = 1;
       $data_changed = true;
     } else {
       // It's off
-      $user->private = false;
+      $user->private = 0;
       $data_changed = true;
     }
 
     if (isset($_POST['banned_from_sending_personal_messages']) && $_POST['banned_from_sending_personal_messages'] == 'on') {
-      $user->banned_from_sending_personal_messages = true;
-    } else $user->banned_from_sending_personal_messages = false;
+      $user->banned_from_sending_personal_messages = 1;
+    } else $user->banned_from_sending_personal_messages = 0;
 
     if (isset($_POST['fullname']) && !empty($_POST['fullname'])) {
       $names = explode(' ', $_POST['fullname']);
@@ -201,11 +195,10 @@ if (!empty($_POST)) {
     }
 
     if ($data_changed) {
-      if ($user->save()) {
-        // save_user($user);
-        if ($email_user) {
 
-          // a:6:{i:0;s:8:"username";i:1;s:8:"fullname";i:2;s:10:"user_email";i:3;s:8:"password";i:4;s:10:"user_group";i:5;s:21:"status_change_message";}
+      if ($user->save()) {
+
+        if ($email_user) {
 
           $template = DB::table('template')->where('id', '=', 6)->grab(1)->get();
           if ($template) {
@@ -236,8 +229,10 @@ if (!empty($_POST)) {
           } // template
 
         } // Email user.
+        Flash::make('success', 'Success, ' . $user->username . '\'s account has been updated.');
+        redirect('admin/view.php?user='.$user->id);
       }
-      Flash::make('success', 'Success, ' . $user->username . '\'s account has been updated.');
+      Flash::make('danger', UNABLE_TO_UPDATE_USER);
       redirect('admin/view.php?user='.$user->id);
     }
 

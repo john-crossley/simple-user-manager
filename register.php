@@ -41,7 +41,7 @@ if (!empty($_POST)) {
   }
 
   // Assume all went well and begin creating the user
-  $user = new User;
+  $user = User::getInstance();
   $user->username = $_POST['username'];
   $user->password = $_POST['password'];
   $user->email    = $_POST['email'];

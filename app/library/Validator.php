@@ -1,17 +1,23 @@
 <?php
-
+/**
+ * @author John Crossley <hello@phpcodemonkey.com>
+ * @copyright Copyright (c) 2013 - John Crossley (http://phpcodemonkey.com)
+ */
 class Validator
 {
-
   /**
    * array(
    *   'username' => 'admin',
    *   'password' => 'pass1'
    * )
    */
-  protected $values = array();
+  private $values = array();
 
-  protected $messages = array(
+  /**
+   * Default class error messages array.
+   * @var array
+   */
+  private $messages = array(
     'required'    => 'The :attribute field is required',
     'min'         => 'The :attribute should be a minimum of :min characters',
     'max'         => 'The :attribute should be a maximum of :max characters',
@@ -19,15 +25,39 @@ class Validator
     'unique'      => 'The :attribute has already been taken',
     'valid_email' => ':email doesn\'t seem to be a valid email',
     'valid_url'   => ':url doesn\'t seem to be a valid URL',
-    'banned'      => ':email has used a banned domain. Change your email.'
+    'banned'      => ':email is using a banned extension. Please use another email address.'
   );
 
-  protected $customAttributeMessages = array();
-  protected $errorMessages = array();
+  /**
+   * Any custom error messages.
+   * @var array
+   */
+  private $customAttributeMessages = array();
 
+  /**
+   * Stores a list of error messages that a
+   * particular attribute has associated with it.
+   * @var array
+   */
+  private $errorMessages = array();
 
-  protected $errors = array();
+  /**
+   * Stores if an attribute has an error associated with it.
+   * @var array
+   */
+  private $errors = array();
 
+  /**
+   * The make method kicks off all of the validation process using the
+   * data provided to it.
+   * @param  array  $data     The data to be validated. Typically this is
+   * just the $_POST variable.
+   * @param  array  $rules    The array of rules with keys matching the $data
+   * keys. Eg: ($_POST)$data['username'] - $rules['username'] = array('required')
+   * @param  array  $messages Any custom error messages you may want instead of the
+   * class defaults. Eg: $messages['required.email'] = 'My custom required email error message'
+   * @return NULL
+   */
   public function make(array $data, array $rules = array(), array $messages = array())
   {
     // Do we have any custom messages?
@@ -35,18 +65,16 @@ class Validator
       foreach ($messages as $key => $value) {
         // Explode the key
         $key = explode('.', $key);
-        if (count($key) >= 2) {
+        if (count($key) > 1) {
           // What's the attribute Cindy?
           $attribute = $key[0];
           // Whats the rule this message should be applied to?
           $rule = $key[1];
-
           // Store
-          $this->customAttributeMessages[$attribute] = array(
-            $rule => $value
-          );
+          $this->customAttributeMessages[$attribute][$rule] = $value;
         }
       }
+      // Add them to the messages for reference or what ever.
       $this->messages = array_replace($this->messages, $messages);
     }
 
@@ -72,7 +100,11 @@ class Validator
     $this->removeAnyPasswords();
   }
 
-  protected function removeAnyPasswords()
+  /**
+   * Removes any password like attribute value.
+   * @return NULL
+   */
+  private function removeAnyPasswords()
   {
     // pass([\S]+)?
     // Match something like a pass, password etc.
@@ -84,20 +116,36 @@ class Validator
     }
   }
 
-  protected function storeErrorInformation($attribute, $rule, $data = array())
+  /**
+   * Stores the error information about any given attribute.
+   * @param  string $attribute The name of the attribute
+   * @param  string $rule      The rule being applied to the attribute
+   * @param  array  $data      The array of error information
+   * @return NULL
+   */
+  private function storeErrorInformation($attribute, $rule, $data = array())
   {
     // Set an error for the attribute
     // Eg: $this->errors['username'] = true;
     $this->errors[$attribute] = true;
 
-    $this->errorMessages[$attribute][] = $this->createMessage($this->messages[$rule], $data, $rule, $attribute);
+    $this->errorMessages[$attribute][$rule] = $this->createMessage($this->messages[$rule], $data, $rule, $attribute);
 
     // Store in a session
     $_SESSION['FORM_ERRORS'][$attribute]['error'] = true;
     $_SESSION['FORM_ERRORS'][$attribute]['message'] = $this->errorMessages[$attribute];
   }
 
-  protected function createMessage($message, $attributes, $rule, $attr)
+  /**
+   * Using the messages and custom messages this method replaces
+   * the placeholders of the messages to personalise them.
+   * @param  string $message    The untouch message
+   * @param  string $attributes The attribute in question
+   * @param  string $rule       The rule being applied
+   * @param  string $attr       The name of the attribute
+   * @return string             The modified error message string
+   */
+  private function createMessage($message, $attributes, $rule, $attr)
   {
     $tmp = $message;
     foreach ($attributes as $attribute => $value) {
@@ -109,11 +157,21 @@ class Validator
     return $tmp;
   }
 
-  protected function validate($value, $rule, $attribute)
+  /**
+   * Carries out the validation using the options configured.
+   * @param string $value The current value being validated.
+   * @param arraty $rule The rules to be applied to the current value.
+   * @param string $attribute The name of the attribute being validated.
+   * @return NULL
+   */
+  private function validate($value, $rule, $attribute)
   {
     $rule = explode(':', $rule);
-
+    // Switch it out man and validate this SUKA!
     switch (strtolower($rule[0])) {
+      /**
+       * Validation for the required rule.
+       */
       case 'required':
         if (empty($value)) {
           $this->storeErrorInformation($attribute, 'required', array(
@@ -121,7 +179,9 @@ class Validator
           ));
         }
         break;
-
+      /**
+       * Validation for the min rule
+       */
       case 'min':
         if (strlen($value) <= $rule[1]-1) {
           $this->storeErrorInformation($attribute, 'min', array(
@@ -130,7 +190,9 @@ class Validator
           ));
         }
         break;
-
+      /**
+       * Validation for the max rule
+       */
       case 'max':
         if (strlen($value) > $rule[1]) {
           $this->storeErrorInformation($attribute, 'max', array(
@@ -139,7 +201,9 @@ class Validator
           ));
         }
         break;
-
+      /**
+       * Validation for the valid_email rule
+       */
       case 'valid_email':
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
           $this->storeErrorInformation($attribute, 'valid_email', array(
@@ -147,7 +211,9 @@ class Validator
           ));
         }
         break;
-
+      /**
+       * Validation for the banned rule
+       */
       case 'banned':
         // Cheap way but works fine
         $bannedExtensions = explode(' ', $rule[1]);
@@ -160,7 +226,9 @@ class Validator
           ));
         }
         break;
-
+      /**
+       * Validation for the value_url rule
+       */
       case 'valid_url':
         if (!filter_var($value, FILTER_VALIDATE_URL)) {
           $this->storeErrorInformation($attribute, 'valid_url', array(
@@ -168,20 +236,25 @@ class Validator
           ));
         }
         break;
-
+      /**
+       * Validation for the unique rule
+       */
       case 'unique':
         // Client may not have DB accessbile so rather than throwing
         // a nasty fatal we shall check to see if the DB class is
         // available
         if (class_exists('DB')) {
-          if (DB::table($rule[1])->where($attribute, '=', '\''.$value.'\'')->count()->count > 0) {
+          // Suppress just for now...
+          if (@DB::table($rule[1])->where($attribute, '=', '\''.$value.'\'')->count()->count > 0) {
             $this->storeErrorInformation($attribute, 'unique', array(
               ':attribute' => $attribute
             ));
           }
         } else throw new \Exception('[Error] DB Class has not been found!');
         break;
-
+      /**
+       * Validation for the match rule
+       */
       case 'match':
         if (!isset($rule[1]))
           break; // I'm gone
@@ -200,20 +273,44 @@ class Validator
           ));
         }
         break;
-
+      /**
+       * Add custom validation rules below in a new case statement
+       */
       default:
-        # code...
         break;
     }
   }
 
-  public function hasMessage($attribute)
+  public function getAttributeErrorMessages($attribute)
   {
-    if (isset($this->errorMessages[$attribute])) {
-      return $this->errorMessages[$attribute][0];
-    }
+    if (isset($this->errorMessages[$attribute]))
+      return $this->errorMessages[$attribute];
+    return false;
   }
 
+  /**
+   * Checks to see if an attribute has any error messages
+   * associated with it.
+   * @param string $attribute The name of the attribute
+   * @return mixed If the attribute has a message or any
+   * number of messages asscociated with it, then the first message
+   * in the array is returned.
+   * @see Validator::allMessages() to return all error messages.
+   */
+  public function hasMessage($attribute)
+  {
+    return $this->hasMessageSession($attribute);
+  }
+
+  /**
+   * Checks to see if an attribute has any error messages
+   * associated with it using sessions.
+   * @param string $attribute The name of the attribute
+   * @return mixed If the attribute has a message or any
+   * number of messages asscociated with it, then the first message
+   * in the array is returned.
+   * @see Validator::allMessages() to return all error messages.
+   */
   public static function hasMessageSession($attribute)
   {
     if (isset($_SESSION['FORM_ERRORS'][$attribute])) {
@@ -221,18 +318,32 @@ class Validator
       if (isset($data[$attribute]['message'])) {
         $_SESSION['FORM_ERRORS'][$attribute]['message'] = null;
         // Return the first error message
-        return $data[$attribute]['message'][0];
+        return reset($data[$attribute]['message']);
       }
     }
+    return false;
   }
 
+  /**
+   * Checks to see if a particular attribute has a value
+   * associated with it.
+   * @param  string $attribute The name of the attribute
+   * @return mixed If the attribute is found then it is returned.
+   * However, if no attribute is found false is returned.
+   */
   public function hasValue($attribute)
   {
-    if (isset($this->values[$attribute])) {
-      return $this->values[$attribute];
-    }
+    return $this->hasValueSession($attribute); // Maybe?
   }
 
+  /**
+   * Checks to see if a particular attribute has a value
+   * associated with it. This is again useful for requests
+   * where the validation is being performed somewhere else.
+   * @param  string  $attribute The name of the attribute
+   * @return mixed Returns value if one is found, if not then
+   * false is returned.
+   */
   public static function hasValueSession($attribute)
   {
     if (isset($_SESSION['FORM_ERRORS'][$attribute])) {
@@ -242,31 +353,61 @@ class Validator
         return $data[$attribute]['value'];
       }
     }
+    return false;
   }
 
+  /**
+   * Checks to see if a particular attribute has an
+   * error associated with it.
+   * @param  string  $attribute The attribute to check
+   * Eg: 'username', 'password', 'email', etc.
+   * @return boolean True if error found, false if not.
+   */
   public function hasError($attribute)
   {
-    if (isset($this->errors[$attribute])) {
-      return 'error';
-    }
+    return $this->hasErrorSession($attribute);
   }
 
+  /**
+   * Checks to see if a FORM_ERROR session has been set
+   * for a particular attribute. This is useful for requests
+   * away from the form page.
+   * @param  string  $attribute The name of the attribute to check.
+   * @return boolean True if the attribute has an error, false if not.
+   */
   public static function hasErrorSession($attribute)
   {
     if (isset($_SESSION['FORM_ERRORS'][$attribute])) {
       $data = $_SESSION['FORM_ERRORS']; // tmp
       if (isset($data[$attribute]['error'])) {
         $_SESSION['FORM_ERRORS'][$attribute]['error'] = null; // Kill it
-        return 'error';
+        return true;
       }
     }
+    return false;
   }
 
-  public function success()
+  /**
+   * Test to see if the validator has passed.
+   *
+   * @example
+   * if ($validator->passes()) { ... }
+   *
+   * @return bool true on success
+   */
+  public function passes()
   {
     return (empty($this->errors)) ? true : false;
   }
 
+  /**
+   * Test to see if the validator has failed.
+   *
+   * @example
+   * if ($validator->fails()) { ... }
+   *
+   * @return bool true on success
+   */
   public function fails()
   {
     return (!empty($this->errors)) ? true : false;

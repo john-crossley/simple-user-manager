@@ -2,7 +2,7 @@
     <div class="container">
       <small>
         &copy; <?=date('Y')?> - <a href="http://phpcodemonkey.com/" target="_blank">John Crossley</a> -
-        <a href="http://phpcodemonkey.com/contact" target="_blank">Contact</a>
+        <a href="mailto:hello@phpcodemonkey.com" target="_blank">Contact</a>
       </small>
     </div><!--//.container-->
   </footer>

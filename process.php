@@ -248,7 +248,7 @@ if (isset($_POST['task']) && $_POST['task'] == 'getMessageData'
     die('error');
   }
 
-  echo json_encode(['title' => 'Re: '. $message->title, 'email' => $message->email]);
+  echo json_encode(array('title' => 'Re: '. $message->title, 'email' => $message->email));
   exit;
 }
 

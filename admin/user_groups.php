@@ -6,6 +6,16 @@ $user = get_user();
 check_user_access($user, 'accessAdminPanel');
 
 if (!empty($_POST)) {
+
+  // DEMO MODE BLOCK
+  if (DEMO_MODE === true) {
+    if ((int)$_POST['roleId'] === 1 || (int)$_POST['roleId'] === 2 || (int)$_POST['roleId'] === 3) {
+      Flash::make('info', 'Your in demo mode and unable to change some permissions.');
+      redirect('admin/user_groups.php');
+    }
+  }
+  // DEMO MODE BLOCK
+
   /**
    * When a user wants to delete a user group.
    */

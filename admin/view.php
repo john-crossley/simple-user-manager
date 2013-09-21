@@ -194,6 +194,15 @@ if (!empty($_POST)) {
       redirect('admin/view.php?user='.$user->id);
     }
 
+    // DEMO MODE BLOCK
+    if (DEMO_MODE === true) {
+      if ((int)$user->id === 1 || (int)$user->id === 2) {
+        Flash::make('info', 'Your in demo mode and unable to change some user accounts.');
+        redirect('admin/view.php?user='.$user->id);
+      }
+    }
+    // DEMO MODE BLOCK
+
     if ($data_changed) {
 
       if ($user->save()) {
@@ -243,6 +252,15 @@ if (isset($_POST['task']) && $_POST['task'] === 'delete_account' &&
   isset($_POST['user_id']) && !empty($_POST['user_id'])) {
 
   csrf_check('admin/view.php?user='.$user->id);
+
+  // DEMO MODE BLOCK
+  if (DEMO_MODE === true) {
+    if ((int)$user->id === 1 || (int)$user->id === 2) {
+      Flash::make('info', 'Your in demo mode and unable to delete some user accounts.');
+      redirect('admin/view.php?user='.$user->id);
+    }
+  }
+  // DEMO MODE BLOCK
 
   // Just a little check
   if ((int)$user->id === (int)$_POST['user_id']) {

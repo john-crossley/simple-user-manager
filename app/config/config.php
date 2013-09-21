@@ -47,8 +47,20 @@ date_default_timezone_set('Europe/London');
  * Current one looks like: 19th May, 2013 12:43pm
  */
 define('TIME_FORMAT', 'dS M, Y h:ia');
+
+/**
+ * The default database time format.
+ */
 define('DATABASE_DATETIME_FORMAT', 'Y-m-d H:i:s');
 
+/**
+ * To put the system into demo mode and limited usage
+ * then change this value to true.
+ */
 define('DEMO_MODE', false);
 
+/**
+ * If you want the system to run the installation
+ * then set this to true.
+ */
 define('CHECK_AND_RUN_INSTALL', false);

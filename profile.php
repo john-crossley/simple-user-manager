@@ -88,6 +88,15 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveUserDataFr
     redirect('profile.php');
   }
 
+  // DEMO MODE BLOCK
+  if (DEMO_MODE === true) {
+    if ((int)$user->id === 1 || (int)$user->id === 2) {
+      Flash::make('info', 'Your in demo mode and unable to delete some user accounts.');
+      redirect('profile.php');
+    }
+  }
+  // DEMO MODE BLOCK
+
   if ($user->save()) {
 
     $template = DB::table('template')->where('id', '=', 6)->grab(1)->get();

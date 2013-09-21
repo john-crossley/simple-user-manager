@@ -54,6 +54,13 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
     $default_group = (int)$_POST['default_group'];
   } else $default_group = null; // Default to nothing
 
+  // DEMO MODE BLOCK
+  if (DEMO_MODE === true) {
+    Flash::make('info', 'Your in demo mode and unable to change system settings.');
+    redirect('admin/settings.php');
+  }
+  // DEMO MODE BLOCK
+
   // Right insert this
   $result = DB::table('setting')->where('id', '=', 1)->update(array(
               'name'                    => $system_name,

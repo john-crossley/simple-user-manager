@@ -28,6 +28,13 @@ if (isset($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveTemplateSet
     redirect('admin/templates.php');
   }
 
+  // DEMO MODE BLOCK
+  if (DEMO_MODE === true) {
+    Flash::make('info', 'Your in demo mode and unable to edit templates.');
+    redirect('admin/templates.php');
+  }
+  // DEMO MODE BLOCK
+
   $template_id = (int)$_POST['template_name'];
 
   $result = DB::table('template')->where('id', '=', $template_id)->update(array(

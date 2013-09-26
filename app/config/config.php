@@ -64,3 +64,10 @@ define('DEMO_MODE', false);
  * then set this to true.
  */
 define('CHECK_AND_RUN_INSTALL', false);
+
+/**
+ * Do not change this, because you could break the
+ * application. This is just the product number assigned
+ * to AUM when I submitted it to Codecanyon.
+ */
+define('PRODUCT_NUMBER', 5366263);

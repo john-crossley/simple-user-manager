@@ -1,5 +1,11 @@
 <?php if (!defined('ACCESS')) die('No direct script access allowed!');
 
+function get_news_from_phpcodemonkey() {
+
+  // Todo Some form of caching...?
+  return Core::getInstance()->getNewsFromPhpCodemonkey();
+}
+
 /**
  * functions.php
  *

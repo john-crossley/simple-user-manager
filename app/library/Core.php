@@ -17,6 +17,28 @@ class Core extends SingletonAbstract
    */
   private $csrf;
 
+  private $cacheDirectory = 'cache';
+
+  public static function getNewsFromPhpCodemonkey()
+  {
+    $url = "http://phpcodemonkey.com/api/v1/update/".PRODUCT_NUMBER;
+    return @json_decode(file_get_contents($url));
+  }
+
+  protected function getCachedFile($file)
+  {
+    if (file_exists(ROOT . $this->cacheDirectory . '/' . $file)) {
+      // TODO check to see if the cache has expired.
+    }
+
+    return false;
+  }
+
+  protected function storeCachedFile($file)
+  {
+
+  }
+
   /**
    * Generates a new CSRF token for the application and stores
    * it inside a session. The system will overwrite the token

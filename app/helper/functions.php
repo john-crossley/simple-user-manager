@@ -1,5 +1,30 @@
 <?php if (!defined('ACCESS')) die('No direct script access allowed!');
 
+function getElapsedTime($eventTime)
+{
+  $totaldelay = time() - strtotime($eventTime);
+  if($totaldelay <= 0) {
+    return '';
+  } else {
+    if($days = floor($totaldelay/86400)) {
+      $totaldelay = $totaldelay % 86400;
+      return $days.' days ago.';
+    }
+    if($hours = floor($totaldelay/3600)) {
+      $totaldelay = $totaldelay % 3600;
+      return $hours.' hours ago.';
+    }
+    if($minutes = floor($totaldelay/60)) {
+      $totaldelay = $totaldelay % 60;
+      return $minutes.' minutes ago.';
+    }
+    if($seconds = floor($totaldelay/1)) {
+      $totaldelay = $totaldelay % 1;
+      return $seconds.' seconds ago.';
+    }
+  }
+}
+
 function get_news_from_phpcodemonkey() {
 
   // Todo Some form of caching...?

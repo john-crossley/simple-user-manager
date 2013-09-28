@@ -373,6 +373,10 @@ define('CSRF_CHECK_FAILURE',
   "CSRF failure. You do not have permission to make this request!"
 );
 
+define('NO_WRITE_PERMISSIONS_FOR_CACHE_DIRECTORY',
+  "Please ensure your cache directory is writable before you can receive notifications."
+);
+
 
 /**
  *  CUSTOM MESSAGES
@@ -427,4 +431,8 @@ define('YOUR_ACCOUNT_HAS_BEEN_UPDATED',
  */
 define('UNABLE_TO_UPDATE_USER',
   "Sorry, unable to update the user's profile. Try again."
+);
+
+define('UNABLE_TO_RETRIEVE_NOTIFICATIONS',
+  "Unable to retrieve notifications at the moment. Please try again soon."
 );

@@ -17,26 +17,63 @@ class Core extends SingletonAbstract
    */
   private $csrf;
 
-  private $cacheDirectory = 'cache';
-
   public static function getNewsFromPhpCodemonkey()
   {
-    $url = "http://phpcodemonkey.com/api/v1/update/".PRODUCT_NUMBER;
-    return @json_decode(file_get_contents($url));
-  }
+    $core = self::getInstance();
 
-  protected function getCachedFile($file)
-  {
-    if (file_exists(ROOT . $this->cacheDirectory . '/' . $file)) {
-      // TODO check to see if the cache has expired.
+    // I'd suggest updating the notifications once every two days.
+    $data = DB::table('notifications_centre')->limit(1)->get();
+
+    if (!$data) {
+      $data = $core->makeServiceCall();
+
+      if (!$data) return false;
+
+      // Store it in the database
+      DB::table('notifications_centre')->insert(array(
+        'json_object_data' => $data,
+        'created_at' => date(DATABASE_DATETIME_FORMAT)
+      ));
+
+      return json_decode($data);
+
+    } else {
+      // Right we have some data from the database, check to see how old the data is
+      // $lastCheckedForNotifications = getElapsedTime( $data->created_at );
+      // die($lastCheckedForNotifications);
+
+      $currentTime = date(DATABASE_DATETIME_FORMAT);
+      $lastCheckedForNotifications = $data->created_at;
+      $hoursLastChecked = round((strtotime($currentTime) - strtotime($lastCheckedForNotifications))/(60*60));
+
+      if ($hoursLastChecked > 24) {
+        // Check for new updates
+        $data = $core->makeServiceCall();
+
+        if (!$data) return false;
+
+        // Update the data
+        DB::table('notifications_centre')->where('id', '=', 1)->update(array(
+          'json_object_data' => $data,
+          'created_at' => date(DATABASE_DATETIME_FORMAT)
+        ));
+
+        return $data;
+
+      }
     }
-
-    return false;
+    return json_decode($data->json_object_data);
   }
 
-  protected function storeCachedFile($file)
+  private function makeServiceCall()
   {
-
+    $url = "http://phpcodemonkey.com/api/v1/update/".PRODUCT_NUMBER;
+    $data = @file_get_contents($url);
+    if ($data === false) {
+      Flash::make('info', UNABLE_TO_RETRIEVE_NOTIFICATIONS);
+      return false;
+    }
+    return $data;
   }
 
   /**

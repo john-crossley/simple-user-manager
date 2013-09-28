@@ -30,7 +30,7 @@ DB::connect(array(
   'host' => 'localhost',
   'username' => 'root',
   'password' => 'root',
-  'database' => 'advanced_user_manager'
+  'database' => 'simple_user_manager'
 ));
 
 /**

@@ -44,7 +44,6 @@ require_once ROOT . 'app/helper/functions.php';
 // Check if the installation exists
 if (CHECK_AND_RUN_INSTALL) {
   if (is_dir(ROOT . 'install/')) {
-    header("Location: " . URL . 'install/');
-    exit;
+    redirect('install');
   }
 }

@@ -63,7 +63,7 @@ define('DEMO_MODE', false);
  * If you want the system to run the installation
  * then set this to true.
  */
-define('CHECK_AND_RUN_INSTALL', false);
+define('CHECK_AND_RUN_INSTALL', true);
 
 /**
  * Do not change this, because you could break the

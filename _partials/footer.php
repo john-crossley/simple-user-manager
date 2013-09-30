@@ -8,6 +8,10 @@
         <small class="pull-right text-danger">
           <strong>DEMO MODE ENABLED</strong> v<?=system_version()?>
         </small>
+      <?php else: ?>
+        <small class="pull-right text-danger">
+          v<?=system_version()?>
+        </small>
       <?php endif; ?>
     </div><!--//.container-->
   </footer>

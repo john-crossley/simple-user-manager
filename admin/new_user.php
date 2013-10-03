@@ -1,5 +1,5 @@
 <?php
-require_once '../bootstrap.php';
+require_once '../loader.php';
 get_header('New User'); // Get the header!
 ensure_login(); // Ensure the user is logged in
 $user = get_user(); // Get the logged in user.

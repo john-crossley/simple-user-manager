@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once 'loader.php';
 
 // Is this user logged in?
 if (_logged_in()) {

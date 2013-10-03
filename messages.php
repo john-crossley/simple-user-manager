@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once 'loader.php';
 get_header('Inbox');
 ensure_login();
 $user = get_user();

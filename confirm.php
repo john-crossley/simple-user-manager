@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once 'loader.php';
 
 // Check to see if the values are set and not empty
 if (isset($_GET['hash']) && isset($_GET['id']) && isset($_GET['do'])

@@ -1,5 +1,5 @@
 <?php
-require_once '../bootstrap.php';
+require_once '../loader.php';
 
 if (isset($_GET['role_id'])) {
   $roleId = (int)$_GET['role_id'];

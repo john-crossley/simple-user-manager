@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once 'loader.php';
 get_header('Login');
 
 if (!empty($_POST)) {

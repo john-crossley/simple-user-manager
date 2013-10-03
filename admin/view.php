@@ -1,5 +1,5 @@
 <?php
-require_once '../bootstrap.php';
+require_once '../loader.php';
 ensure_login();
 $user = get_user();
 get_header("Viewing $user->username's Profile");

@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once 'loader.php';
 get_header('Compose a new Message');
 ensure_login();
 $user = get_user();

@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once 'loader.php';
 // Make sure the user is logged in.
 ensure_login();
 $user = get_user(); // Right now grab the user.

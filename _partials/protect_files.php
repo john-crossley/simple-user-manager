@@ -1,5 +1,5 @@
 <?php
-require_once '../bootstrap.php';
+require_once '../loader.php';
 
 if (isset($_POST['task']) && $_POST['task'] == 'directory_scan'
   && isset($_POST['path']) && !empty($_POST['path'])

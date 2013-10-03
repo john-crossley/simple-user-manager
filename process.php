@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once 'loader.php';
 /**
  * process.php
  *
@@ -21,7 +21,7 @@ if (isset($_POST['task']) && $_POST['task'] == 'how_to_protect_user_group'
     die(json_encode(array('error' => true, 'message' => PATH_NOT_FOUND)));
   }
 
-  $path = get_rel_path(ROOT . strip_tags($_POST['path']), ROOT . 'bootstrap.php');
+  $path = get_rel_path(ROOT . strip_tags($_POST['path']), ROOT . 'loader.php');
 
   die(json_encode(array(
     'error' => false,
@@ -43,7 +43,7 @@ if (isset($_POST['task']) && $_POST['task'] == 'calculateRelPath' &&
 
   if (!$result) die(json_encode(array('error' => true)));
 
-  $path_to_bootstrap = get_rel_path(ROOT . $result->URL, ROOT . 'bootstrap.php');
+  $path_to_bootstrap = get_rel_path(ROOT . $result->URL, ROOT . 'loader.php');
 
   die(json_encode(array(
     'error'   => false,

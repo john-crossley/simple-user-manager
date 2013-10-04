@@ -43,8 +43,8 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
   $system_url       = strip_tags($_POST['system_url']);
 
   if (isset($_POST['registration_status']) && !empty($_POST['registration_status'])) {
-    $registration_status = (bool)$_POST['registration_status'];
-  } else $registration_status = true;
+    $registration_status = (int)$_POST['registration_status'];
+  } else $registration_status = 1;
 
   if (isset($_POST['pm_disabled']) && !empty($_POST['pm_disabled'])) {
     $pm_disabled = (int)$_POST['pm_disabled'];
@@ -70,7 +70,7 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
               'banned_email_extensions' => $banned_extensions,
               'default_group'           => $default_group,
               'email'                   => $system_email,
-              'allow_registration'      => (bool)$_POST['registration_status'],
+              'allow_registration'      => $_POST['registration_status'],
               'pm_disabled'             => $pm_disabled
             ));
 

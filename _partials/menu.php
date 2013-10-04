@@ -45,7 +45,7 @@
               </li><!--//dropdown-->
             <?php else: ?>
               <div class="not-logged-in">
-                <li><a href="<?=root_path('login.php')?>">Sign in</a></li>
+                <li><a href="<?=root_path('login.php')?>">Login</a></li>
                 <li><a href="<?=root_path('register.php')?>">Register</a></li>
               </div><!--//.not-logged-in-->
             <?php endif; ?>

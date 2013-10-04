@@ -57,7 +57,7 @@ define('DATABASE_DATETIME_FORMAT', 'Y-m-d H:i:s');
  * To put the system into demo mode and limited usage
  * then change this value to true.
  */
-define('DEMO_MODE', true);
+define('DEMO_MODE', false);
 
 /**
  * If you want the system to run the installation

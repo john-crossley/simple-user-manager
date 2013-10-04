@@ -28,7 +28,12 @@ function getElapsedTime($eventTime)
 function get_news_from_phpcodemonkey() {
 
   // Todo Some form of caching...?
-  return Core::getInstance()->getNewsFromPhpCodemonkey();
+  $data = Core::getInstance()->getNewsFromPhpCodemonkey();
+  if (!empty($data))
+    return $data;
+  else
+    return false;
+
 }
 
 /**

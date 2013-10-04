@@ -58,7 +58,7 @@ $news = get_news_from_phpcodemonkey();
             <hr>
 
             <div class="update-container">
-              <?php if (!empty($news)): ?>
+              <?php if ($news): ?>
               <ul>
                 <?php foreach($news as $news_item): ?>
                   <li>

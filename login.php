@@ -36,23 +36,29 @@ if (!empty($_POST)) {
   <div class="row">
     <div class="container">
 
-      <form method="post" action="<?=root_path('login.php')?>" class="form-login">
-        <fieldset>
-          <legend>Login to <?=system_name()?></legend>
-          <input type="hidden" name="task" value="login">
-          <input type="hidden" name="csrf" value="<?=get_csrf_token()?>">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
-          </div><!--//.form-group-->
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-          </div><!--//.form-group-->
-          <button type="submit" class="btn btn-primary btn-sm">Login</button>
-          <a href="#forgot-password-modal" data-toggle="modal" class="btn btn-link pull-right">Forgot password</a>
-        </fieldset>
-      </form>
+      <div class="panel panel-default form-login">
+        <div class="panel-heading">
+          <h3 class="panel-title">Login to <?=system_name()?></h3>
+        </div><!--//panel-heading-->
+        <div class="panel-body">
+          <form method="post" action="<?=root_path('login.php')?>">
+            <fieldset>
+              <input type="hidden" name="task" value="login">
+              <input type="hidden" name="csrf" value="<?=get_csrf_token()?>">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+              </div><!--//.form-group-->
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+              </div><!--//.form-group-->
+              <button type="submit" class="btn btn-primary btn-xs">Login</button>
+              <a href="#forgot-password-modal" data-toggle="modal" class="btn btn-link pull-right">Forgot password</a>
+            </fieldset>
+          </form>
+        </div><!--//panel-body-->
+      </div><!--//panel panel-default-->
 
     </div><!--//.container-->
   </div><!--//.row-->

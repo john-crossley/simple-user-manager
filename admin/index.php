@@ -10,6 +10,7 @@ $user = get_user();
 // Check to see if the user has access to this section of the website.
 check_user_access($user, 'accessAdminPanel', array('redirect' => 'member/'));
 
+// Grab the news from phpcodemonkey.com
 $news = get_news_from_phpcodemonkey();
 ?>
 <body>

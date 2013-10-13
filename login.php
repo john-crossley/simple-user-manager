@@ -4,14 +4,14 @@ get_header('Login');
 
 if (!empty($_POST)) {
   // Process some post data.
-  if (isset($_POST['username']) && isset($_POST['password'])) {
+  if ( ( isset($_POST['username']) || isset($_POST['email']) ) && isset($_POST['password'])) {
 
-    if (!_csrf()) {
-      Flash::make('danger', CSRF_CHECK_FAILURE);
-      redirect('login.php');
-    } // End check for CSRF
+    csrf_check('login.php');
 
-    if (empty($_POST['username']) || empty($_POST['password'])) {
+    // Assign either the username or email field to the username var.
+    $username = (isset($_POST['username']) ? $_POST['username'] : $_POST['email']);
+
+    if (empty($username) || empty($_POST['password'])) {
       Flash::make('danger', LOGIN_FORM_DATA_NOT_SUPPLIED);
       redirect('login.php');
     }
@@ -22,7 +22,7 @@ if (!empty($_POST)) {
       $remember = true;
 
     // Authorise man, authorise... YES that is it!
-    User::auth($_POST['username'], $_POST['password'], $remember);
+    User::auth($username, $_POST['password'], (isset($_POST['email'])) ? true : false);
 
   }
 }
@@ -45,10 +45,17 @@ if (!empty($_POST)) {
             <fieldset>
               <input type="hidden" name="task" value="login">
               <input type="hidden" name="csrf" value="<?=get_csrf_token()?>">
+              <?php if (username_disabled()): ?>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email address">
+              </div><!--//.form-group-->
+              <?php else: ?>
               <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
               </div><!--//.form-group-->
+              <?php endif; ?>
               <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">

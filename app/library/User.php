@@ -68,13 +68,17 @@ class User extends SingletonAbstract
     return false;
   }
 
-  public static function auth($username, $password)
+  public static function auth($username, $password, $email = false)
   {
     // Create a new instance of the user.
     $user = User::getInstance();
 
     $user->_newUser = false;
-    $user->_userData = DB::table('user')->grab(1)->findByUsername('\''.$username.'\'');
+    if ($email) {
+      $user->_userData = DB::table('user')->grab(1)->findByEmail('\''.$username.'\'');
+    } else {
+      $user->_userData = DB::table('user')->grab(1)->findByUsername('\''.$username.'\'');
+    }
 
     if (empty($user->_userData)) {
       // No user has been found

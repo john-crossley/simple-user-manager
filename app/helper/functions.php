@@ -26,14 +26,7 @@ function getElapsedTime($eventTime)
 }
 
 function get_news_from_phpcodemonkey() {
-
-  // Todo Some form of caching...?
-  $data = Core::getInstance()->getNewsFromPhpCodemonkey();
-  if (!empty($data))
-    return $data;
-  else
-    return false;
-
+  return Core::getInstance()->getNewsFromPhpCodemonkey();
 }
 
 /**
@@ -335,6 +328,10 @@ function status($status, $actual) {
  */
 function get_settings() {
   return Settings::getAllSettings();
+}
+
+function username_disabled() {
+  return !!Settings::get('username_disabled');
 }
 
 /**

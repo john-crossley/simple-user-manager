@@ -8,10 +8,7 @@ $settings = get_settings();
 
 if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFromAdminPanel') {
   // Do this
-  if (!_csrf()) {
-    Flash::make('error', CSRF_CHECK_FAILURE);
-    redirect('register.php');
-  } // end CSRF
+  csrf_check();
 
   // Start the validation process
   $v = new Validator;
@@ -70,8 +67,9 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
               'banned_email_extensions' => $banned_extensions,
               'default_group'           => $default_group,
               'email'                   => $system_email,
-              'allow_registration'      => $_POST['registration_status'],
-              'pm_disabled'             => $pm_disabled
+              'allow_registration'      => (int)$_POST['registration_status'],
+              'pm_disabled'             => $pm_disabled,
+              'username_disabled'       => (int)$_POST['username_disabled']
             ));
 
   if ($result) {
@@ -162,6 +160,17 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
             </select>
             <small class="help-block">
               <a href="#privilege-reminder" role="button" data-toggle="modal">What privileges does this group have?</a>
+            </small>
+          </div><!--//.form-group-->
+
+          <div class="form-group has-<?=form_has_error('username_disabled')?>">
+            <label for="username_disabled" class="username_disabled-label">Username disabled?</label>
+            <select id="username_disabled" class="form-control" name="username_disabled">
+              <option value="1" <?=status(1, $settings->username_disabled)?>>Yes (Disabled)</option>
+              <option value="0" <?=status(0, $settings->username_disabled)?>>No (Enabled)</option>
+            </select>
+            <small class="help-block">
+              Here you can disable the use of the username allowing the user to login with their email address.
             </small>
           </div><!--//.form-group-->
 

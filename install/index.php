@@ -199,7 +199,7 @@ $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
         }
 
         // Load the SQL file.
-        $query = file_get_contents(ROOT . 'advanced_user_manager18-01.sql');
+        $query = file_get_contents(ROOT . 'simple-user-manager.sql');
 
         // Reconnect
         $conn = new mysqli($connection['HOST'], $connection['USER'], $connection['PASS'], $connection['DBNAME']);

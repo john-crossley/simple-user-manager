@@ -8,6 +8,12 @@ if (empty($_SESSION)) {
   session_start();
 }
 
+/**
+ * Added for those times when the server is down.
+ * This ensures the user can still use the installer.
+ */
+define('SKIP_LICENSE_KEY', true);
+
 if (isset($_POST['task']) && $_POST['task'] === 'test_connection') {
 
   // Save the connection information
@@ -39,6 +45,11 @@ if (isset($_POST['task']) && $_POST['task'] === 'license') {
 
   if (empty($_POST['code'])) {
     echo json_encode(array('error' => true, 'message' => 'You must enter your license key!'));
+    exit;
+  }
+
+  if (SKIP_LICENSE_KEY) {
+    echo json_encode(array('error' => false, 'message' => 'Success!'));
     exit;
   }
 

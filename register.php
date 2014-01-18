@@ -90,30 +90,51 @@ if (!empty($_POST)) {
 
 ?>
 <body>
-    <?=get_menu('register')?>
+    <?php echo get_menu('register'); ?>
 
         <div class="container">
 
-            <form method="post" action="<?php echo root_path('login.php'); ?>" class="form-login-register" role="form">
-                <h2 class="form-login-register-heading"><?php echo system_name(); ?></h2>
-                <input type="hidden" name="task" value="login">
-                <input type="hidden" name="csrf" value="<?=get_csrf_token()?>">
+            <?php if (allow_registration()): ?>
 
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email address" required autofocus>
+                <form method="post" action="<?php echo root_path('login.php'); ?>" class="form-login-register" role="form">
+                    <h2 class="form-login-register-heading"><?php echo system_name(); ?></h2>
+                    <input type="hidden" name="task" value="login">
+                    <input type="hidden" name="csrf" value="<?php echo get_csrf_token(); ?>">
 
-                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Username" required>
+                    </div>
 
-                <input type="text" class="form-control" id="captcha " name="captcha" placeholder="2 + 2 =" required>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email address" required>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" required>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="captcha">The sum of <?php echo get_captcha(); ?> = </label>
+                        <input type="text" class="form-control" id="captcha" placeholder="Whats the sum?" required>
+                    </div>
 
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                <button class="btn btn-success pull-left" type="submit">Login</button>
-                <a href="#forgot-password-modal" data-toggle="modal" class="btn btn-link pull-right">Forgot password</a>
-            </form>
+                    <button class="btn btn-success pull-left" type="submit">Register</button>
+                    <a href="<?php echo root_path('login'); ?>" data-toggle="modal" class="btn btn-link pull-right">Already have an account?</a>
+
+                </form>
+
+            <?php else: ?>
+                <div class="alert alert-warning">
+                    <strong>Registration Closed!</strong><br>
+                    Our registration is currently closed due to maintenance, please come back soon!
+                </div>
+            <?php endif; ?>
 
         </div>
 
-    <?=get_footer()?>
+    <?php echo get_footer(); ?>
 </body>
 </html>

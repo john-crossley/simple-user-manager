@@ -3,17 +3,16 @@ require_once 'loader.php';
 get_header('Login');
 
 
-if (! empty($_POST)) {
-    if (isset($_POST['username']) || isset($_POST['email']) && isset($_POST['password'])) {
-        csrf_check('login.php');
-        $username = isset($_POST['username']) ? $_POST['username'] : $_POST['email'];
-        if (empty($username) || empty($_POST['password'])) {
-            Flash::make('danger', LOGIN_FORM_DATA_NOT_SUPPLIED);
-            redirect('login.php');
-        }
-        User::auth($username, $_POST['password'], isset($_POST['email']) ? true : false);
+if (isset($_POST['username']) || isset($_POST['email']) && isset($_POST['password'])) {
+    csrf_check('login.php');
+    $username = isset($_POST['username']) ? $_POST['username'] : $_POST['email'];
+    if (empty($username) || empty($_POST['password'])) {
+        Flash::make('danger', LOGIN_FORM_DATA_NOT_SUPPLIED);
+        redirect('login.php');
     }
+    User::auth($username, $_POST['password'], isset($_POST['email']) ? true : false);
 }
+
 ?>
 
 <body>
@@ -26,11 +25,20 @@ if (! empty($_POST)) {
             <input type="hidden" name="task" value="login">
             <input type="hidden" name="csrf" value="<?=get_csrf_token()?>">
             <?php if (username_disabled()): ?>
-                <input type="text" class="form-control" id="email" name="email" placeholder="Email address" required autofocus>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email address" autofocus>
+                </div>
             <?php else: ?>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" autofocus>
+                </div>
             <?php endif; ?>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+            </div>
             <button class="btn btn-success pull-left" type="submit">Login</button>
             <a href="#forgot-password-modal" data-toggle="modal" class="btn btn-link pull-right">Forgot password</a>
         </form>

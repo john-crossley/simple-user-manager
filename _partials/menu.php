@@ -46,7 +46,7 @@
                     </li>
                     <?php else: ?>
                         <li><a href="<?php echo root_path('login.php'); ?>">Login</a></li>
-                        <li><a href="<?php echo root_path('register.php'); ?>">Register</a></
+                        <li><a href="<?php echo root_path('register.php'); ?>">Register</a>
                     <?php endif; ?>
                 </ul>
             </div><!--/.nav-collapse -->

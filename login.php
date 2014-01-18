@@ -21,8 +21,8 @@ if (! empty($_POST)) {
 
     <div class="container">
 
-        <form method="post" action="<?php echo root_path('login.php'); ?>" class="form-signin" role="form">
-            <h2 class="form-signin-heading"><?php echo system_name(); ?> Login</h2>
+        <form method="post" action="<?php echo root_path('login.php'); ?>" class="form-login-register" role="form">
+            <h2 class="form-login-register-heading"><?php echo system_name(); ?> Login</h2>
             <input type="hidden" name="task" value="login">
             <input type="hidden" name="csrf" value="<?=get_csrf_token()?>">
             <?php if (username_disabled()): ?>

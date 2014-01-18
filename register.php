@@ -90,68 +90,30 @@ if (!empty($_POST)) {
 
 ?>
 <body>
+    <?=get_menu('register')?>
 
-  <!-- Menu -->
-  <?=get_menu('register')?>
+        <div class="container">
 
-  <div class="row">
-    <div class="container">
+            <form method="post" action="<?php echo root_path('login.php'); ?>" class="form-login-register" role="form">
+                <h2 class="form-login-register-heading"><?php echo system_name(); ?></h2>
+                <input type="hidden" name="task" value="login">
+                <input type="hidden" name="csrf" value="<?=get_csrf_token()?>">
 
-      <div class="panel panel-default form-register">
-        <div class="panel-heading">
-          <h3 class="panel-title">Register to <?=system_name()?></h3>
-        </div><!--//panel-heading-->
-        <div class="panel-body">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email address" required autofocus>
 
-          <?php if (allow_registration()): ?>
-          <form method="post" action="<?=root_path("register.php")?>">
-            <div class="form-group has-<?=form_has_error('username')?>">
-              <input type="hidden" name="task" value="register">
-              <input type="hidden" name="csrf" value="<?=get_csrf_token()?>">
-              <label for="username" class="control-label">Username</label>
-              <input type="text" class="form-control" id="username" name="username" placeholder="Enter a username" value="<?=form_has_value('username')?>">
-              <small class="help-block"><?=form_has_message('username')?></small>
-            </div><!--//.form-group-->
-            <div class="form-group has-<?=form_has_error('email')?>">
-              <label for="email" class="control-label">Email address</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" value="<?=form_has_value('email')?>">
-              <small class="help-block"><?=form_has_message('email')?></small>
-            </div><!--//.form-group-->
-            <div class="form-group has-<?=form_has_error('password')?>">
-              <label for="password" class="control-label">Password</label>
-              <input type="password" class="form-control" id="password" name="password" placeholder="Enter a password">
-              <small class="help-block"><?=form_has_message('password')?></small>
-            </div><!--//.form-group-->
-            <div class="form-group has-<?=form_has_error('password_again')?>">
-              <label for="password_again" class="control-label">Password again</label>
-              <input type="password" class="form-control" id="password_again" name="password_again" placeholder="Password again">
-              <small class="help-block"><?=form_has_message('password_again')?></small>
-            </div><!--//.form-group-->
-            <div class="form-group has-<?=form_has_error('captcha')?>">
-              <label for="captcha" class="control-label">The sum of <?=get_captcha()?> = </label>
-              <input type="text" class="form-control" id="captcha" name="captcha" placeholder="Your answer">
-              <small class="help-block"><?=form_has_message('captcha')?></small>
-            </div><!--//.form-group-->
-            <div class="form-group">
-              <button class="btn btn-primary btn-xs">Register</button>
-              <a href="<?=root_path('login.php')?>" class="btn btn-link pull-right">Already have account?</a>
-            </div><!--//.form-group-->
-          </form>
-          <?php else: ?>
-          <div class="alert alert-warning">
-            <strong>Registration Closed!</strong><br>
-            Our registration is currently closed due to maintenance, please come
-            back soon!
-          </div><!--//.alert alert-danger-->
-          <?php endif; ?>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
 
-        </div><!--//panel-body-->
-      </div><!--//panel panel-default-->
+                <input type="text" class="form-control" id="captcha " name="captcha" placeholder="2 + 2 =" required>
 
-    </div><!--//.container-->
-  </div><!--//.row-->
 
-  <?=get_footer()?>
 
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                <button class="btn btn-success pull-left" type="submit">Login</button>
+                <a href="#forgot-password-modal" data-toggle="modal" class="btn btn-link pull-right">Forgot password</a>
+            </form>
+
+        </div>
+
+    <?=get_footer()?>
 </body>
 </html>

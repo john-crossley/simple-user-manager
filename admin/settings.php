@@ -24,7 +24,7 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
   $v->make($_POST, $rules);
 
   if ($v->fails()) {
-    Flash::make('error', GENERIC_FORM_ERROR_MESSAGE);
+    Flash::make('danger', GENERIC_FORM_ERROR_MESSAGE);
     redirect('admin/settings.php');
   }
 

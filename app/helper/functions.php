@@ -143,7 +143,7 @@ function csrf_check($url = 'member/') {
  */
 function ensure_login() {
   if (!_logged_in()) {
-    Flash::make('error', MUST_BE_LOGGED_IN);
+    Flash::make('danger', MUST_BE_LOGGED_IN);
     redirect('login.php');
   }
 }
@@ -400,14 +400,6 @@ function me_logged_in($username) {
   }
   return false;
 }
-
-/**
- * Returns the user object if a user is logged in.
- * @return object The user object providing they are logged in.
- */
-// function get_logged_in_user() {
-//   return true;
-// }
 
 /**
  * Generates a secure random password.

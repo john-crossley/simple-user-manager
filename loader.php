@@ -1,38 +1,33 @@
 <?php
-if (empty($_SESSION)) {
-  session_regenerate_id();
-  session_start();
+// Start a new session
+session_start();
+if (! isset($_SESSION['init'])) {
+    session_regenerate_id(true);
+    $_SESSION['init'] = true;
 }
 
-// error_reporting(E_ALL);
-// ini_set("display_errors", 1);
-
-/**
- * This block of code gets the applications ROOT folder and
- * the URL of the application.
- */
 define('ROOT', str_replace('\\', '/', dirname(__FILE__)) . '/');
 $path1 = explode('/', str_replace('\\', '/', dirname($_SERVER['SCRIPT_FILENAME'])));
 $path2 = explode('/', substr(ROOT, 0, -1));
 $path3 = explode('/', str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])));
 for ($i = count($path2); $i < count($path1); $i++) array_pop($path3);
 $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
-// Fixed made by KRauer
 ($url{strlen($url) -1} == '/') ? define('URL', 'http://' . $url ) : define('URL', 'http://' . $url . '/');
 
+// The path to the templates folder.
 define('TEMPLATE', ROOT . 'templates/');
 
-/**
- * Autoload our classes man
- */
-spl_autoload_register(function($class) {
-  require_once ROOT . 'app/library/' . $class . '.php';
-});
+// Whether or not the browser has direct access to a file.
+define('ACCESS', true);
 
 /**
- * So we can access certain files.
+ * Add the ability to autoload our classes
+ * @see http://www.php.net/manual/en/function.spl-autoload-register.php
  */
-define('ACCESS', true);
+spl_autoload_register(function($class) {
+    require_once ROOT . 'app/library/' . $class . '.php';
+});
+
 
 /**
  * Require some needed files.
@@ -42,7 +37,7 @@ require_once ROOT . 'app/config/custom_messages.php';
 require_once ROOT . 'app/helper/functions.php';
 
 if (CHECK_AND_RUN_INSTALL) {
-  if (is_dir(ROOT . 'install/')) {
-    redirect('install');
-  }
+    if (is_dir(ROOT . 'install/')) {
+        redirect('install');
+    }
 }

@@ -102,14 +102,14 @@ class User extends SingletonAbstract
       // Now check to see if the user has been banned
       if ($user->checkPermission('bannedMember')) {
         // Banned slut.
-        Flash::make('error', _rd('username', $username, BANNED_ACCOUNT));
+        Flash::make('danger', _rd('username', $username, BANNED_ACCOUNT));
         redirect('login.php');
       }
 
       // Check to see if this person is verified
       if ($user->verified < 1) {
         // Nope just as I expected, this snake isn't verified
-        Flash::make('error', _rd('username', $username, ACCOUNT_NOT_YET_ACTIVATED));
+        Flash::make('danger', _rd('username', $username, ACCOUNT_NOT_YET_ACTIVATED));
         redirect('login.php');
       }
 
@@ -123,7 +123,7 @@ class User extends SingletonAbstract
       redirect($user->redirect_to);
     } else {
       // Incorrect username and or password
-      Flash::make('error', INVALID_USERNAME_AND_OR_PASSWORD);
+      Flash::make('danger', INVALID_USERNAME_AND_OR_PASSWORD);
       redirect('login.php');
     }
     return $user;

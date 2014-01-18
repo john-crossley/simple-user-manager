@@ -212,12 +212,12 @@ if (isset($_POST['task']) && $_POST['task'] == 'deleteUserMessagesFromUserPanel'
   && isset($_POST['delete_message']) && !empty($_POST['delete_message'])) {
 
   if (!_csrf()) {
-    Flash::make('error', CSRF_CHECK_FAILURE);
+    Flash::make('danger', CSRF_CHECK_FAILURE);
     redirect('admin/messages.php');
   }
 
   if (!_logged_in()) {
-    Flash::make('error', USER_LOGGED_IN);
+    Flash::make('danger', USER_LOGGED_IN);
     redirect('login.php');
   }
 
@@ -298,7 +298,7 @@ if ((isset($_POST['task']) && $_POST['task'] === 'sendMessage') &&
 
   // Check CSRF Token
   if (!_csrf()) {
-    Flash::make('error', CSRF_CHECK_FAILURE);
+    Flash::make('danger', CSRF_CHECK_FAILURE);
     redirect('admin/messages.php');
     exit;
   }
@@ -316,19 +316,19 @@ if ((isset($_POST['task']) && $_POST['task'] === 'sendMessage') &&
   $v->make($_POST, $rules);
 
   if ($v->fails()) {
-    Flash::make('error', GENERIC_FORM_ERROR_MESSAGE);
+    Flash::make('danger', GENERIC_FORM_ERROR_MESSAGE);
     redirect('admin/messages.php');
   }
 
   $recipient = User::findByEmail($_POST['recipients_email']);
 
   if (!$recipient) {
-    Flash::make('error', UNABLE_TO_LOCATE_USER);
+    Flash::make('danger', UNABLE_TO_LOCATE_USER);
     redirect('admin/messages.php');
   }
 
   if ($recipient->email === $user->email) {
-    Flash::make('error', 'You cannot send yourself a personal message');
+    Flash::make('danger', 'You cannot send yourself a personal message');
     redirect('admin/messages.php');
     exit;
   }
@@ -393,7 +393,7 @@ if (isset($_POST['task']) && $_POST['task'] == 'saveUserFromAdminPanel'
 
   // Ensure that this request is from the allowed destination
   if (!_csrf()) {
-    Flash::make('error', CSRF_CHECK_FAILURE);
+    Flash::make('danger', CSRF_CHECK_FAILURE);
     redirect('admin/');
   }
 
@@ -409,7 +409,7 @@ if (isset($_POST['task']) && $_POST['task'] == 'saveUserFromAdminPanel'
 
     if (!$user) {
       // Nothing has been found so redirect the user
-      Flash::make('error', UNABLE_TO_LOCATE_USER);
+      Flash::make('danger', UNABLE_TO_LOCATE_USER);
       redirect('admin/');
     }
 
@@ -531,7 +531,7 @@ if (isset($_POST['task']) && $_POST['task'] == 'saveUserFromAdminPanel'
     $v->make($_POST, $rules);
 
     if ($v->fails()) {
-      Flash::make('error', GENERIC_FORM_ERROR_MESSAGE);
+      Flash::make('danger', GENERIC_FORM_ERROR_MESSAGE);
       redirect('admin/view.php?user='.$user->id);
     }
 
@@ -664,7 +664,7 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
     isset($_POST['captcha']) && isset($_POST['task']) && $_POST['task'] == 'register') {
 
   if (!_csrf()) {
-    Flash::make('error', CSRF_CHECK_FAILURE);
+    Flash::make('danger', CSRF_CHECK_FAILURE);
     redirect('register.php');
   }
 
@@ -690,12 +690,12 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
   $v->make($_POST, $rules, $messages);
 
   if ($_SESSION['CAPTCHA']['ANSWER'] !== $_POST['captcha']) {
-    Flash::make('error', CAPTCHA_FAILED);
+    Flash::make('danger', CAPTCHA_FAILED);
     redirect('register.php');
   }
 
   if ($v->fails()) {
-    Flash::make('error', GENERIC_FORM_ERROR_MESSAGE);
+    Flash::make('danger', GENERIC_FORM_ERROR_MESSAGE);
     redirect('register.php');
   }
 
@@ -748,7 +748,7 @@ if (isset($_POST['username']) && isset($_POST['email']) &&
     redirect('register.php');
 
   } else {
-    Flash::make('error', ERROR_OCCURRED_WHILE_PROCESSING_FORM);
+    Flash::make('danger', ERROR_OCCURRED_WHILE_PROCESSING_FORM);
     redirect('register.php');
   }
 

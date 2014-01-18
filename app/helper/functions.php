@@ -143,7 +143,7 @@ function csrf_check($url = 'member/') {
  */
 function ensure_login() {
   if (!_logged_in()) {
-    Flash::make('error', MUST_BE_LOGGED_IN);
+    Flash::make('danger', MUST_BE_LOGGED_IN);
     redirect('login.php');
   }
 }

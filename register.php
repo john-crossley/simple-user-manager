@@ -9,11 +9,10 @@ if (! empty($_POST)) {
     $v = new Validator;
 
     $rules = array(
-        'username'       => array('required', 'min:2', 'max:52', 'unique:user'),
-        'password'       => array('required', 'min:6'),
-        'password_again' => array('required', 'match:password'),
-        'email'          => array('required', 'valid_email', 'banned:'.get_banned_email_extensions(), 'unique:user'),
-        'captcha'        => array('required')
+        'username'              => array('required', 'min:2', 'max:52', 'unique:user'),
+        'password'              => array('required', 'min:6'),
+        'password_confirmation' => array('match:password'),
+        'email'                 => array('required', 'valid_email', 'banned:'.get_banned_email_extensions(), 'unique:user')
     );
 
     $messages = array(
@@ -70,7 +69,7 @@ if (! empty($_POST)) {
             Flash::make('success', _rd('username', $user->username, NEW_USER_REGISTERED));
             redirect('login.php');
         } else {
-            Flash::make('error', ERROR_OCCURRED_WHILE_PROCESSING_FORM);
+            Flash::make('danger', ERROR_OCCURRED_WHILE_PROCESSING_FORM);
             redirect('register.php');
         }
     }
@@ -92,28 +91,34 @@ if (! empty($_POST)) {
             <input type="hidden" name="task" value="login">
             <input type="hidden" name="csrf" value="<?php echo get_csrf_token(); ?>">
 
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+            <div class="form-group <?php echo form_has_error('username') ? 'has-error' : ''; ?>">
+                <label for="username" class="control-label">Username</label>
+                <input type="text" class="form-control" name="username" id="username"
+                    placeholder="Username" value="<?=form_has_value('username')?>" required>
+                <small class="help-block"><?=form_has_message('username')?></small>
             </div>
 
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="Email address" required>
+            <div class="form-group <?php echo form_has_error('email') ? 'has-error' : ''; ?>">
+                <label for="email" class="control-label">Email address</label>
+                <input type="email" class="form-control" name="email" id="email"
+                    placeholder="Email address" value="<?=form_has_value('email')?>" required>
+                <small class="help-block"><?=form_has_message('email')?></small>
             </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
+            <div class="form-group <?php echo form_has_error('password') ? 'has-error' : ''; ?>">
+                <label for="password" class="control-label">Password</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                <small class="help-block"><?=form_has_message('password')?></small>
             </div>
 
-            <div class="form-group">
-                <label for="password_confirmation">Password confirmation</label>
+            <div class="form-group <?php echo form_has_error('password_confirmation') ? 'has-error' : ''; ?>">
+                <label for="password_confirmation" class="control-label">Password confirmation</label>
                 <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Password again" required>
+                <small class="help-block"><?=form_has_message('password_confirmation')?></small>
             </div>
 
-            <div class="form-group">
-                <label for="captcha">The sum of <?php echo get_captcha(); ?> = </label>
+            <div class="form-group <?php echo form_has_error('captcha') ? 'has-error' : ''; ?>">
+                <label for="captcha" class="control-label">The sum of <?php echo get_captcha(); ?> = </label>
                 <input type="text" class="form-control" name="captcha" id="captcha" placeholder="Whats the sum?" required>
             </div>
 

@@ -11,7 +11,7 @@ if (!empty($_POST)) {
     // Oooo we have a new group being added.
     // Check to see the role name is not in use.
     if (Role::checkRoleNameIsNotInUse($_POST['roleName']) === true) {
-      Flash::make('error', 'Sorry but that group name has been taken. Select another one!');
+      Flash::make('danger', 'Sorry but that group name has been taken. Select another one!');
       redirect('admin/user_group.php');
     }
     $roleName = strip_tags($_POST['roleName']);

@@ -402,14 +402,6 @@ function me_logged_in($username) {
 }
 
 /**
- * Returns the user object if a user is logged in.
- * @return object The user object providing they are logged in.
- */
-// function get_logged_in_user() {
-//   return true;
-// }
-
-/**
  * Generates a secure random password.
  * @param  integer $len The length of characters in the new password.
  * @return string       The new password.

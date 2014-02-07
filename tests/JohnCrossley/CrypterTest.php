@@ -16,7 +16,6 @@ class CrypterTest extends \PHPUnit_Framework_TestCase
     {
         $password = 'password';
         $salt = 'MYSALT123';
-        // $this->assertEquals($, sha1($password.$salt));
         $this->assertEquals(sha1($password . $salt), $this->_crypter->makePassword($password, $salt));
     }
 

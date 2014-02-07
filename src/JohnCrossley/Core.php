@@ -1,13 +1,13 @@
 <?php namespace JohnCrossley;
 /**
- * Core Class
+ * Core class provides some basic core functionality to
+ * the application. Any house keeping methods can be added here.
  *
- * The core class offers base functionality of the system. Any house
- * keeping work can be done in here.
- *
- * @author John Crossley <hello@phpcodemonkey.com>
- * @package simple-user-manager
- * @version 2.0
+ * @package    JohnCrossley
+ * @author     John Crossley <jonnysnip3r@gmail.com>
+ * @copyright  2013 John Crossley <phpcodemonkey>
+ * @license    http://johncrossley.io/license/advanced-user-manager/
+ * @version    Release: 2.0
  */
 class Core
 {

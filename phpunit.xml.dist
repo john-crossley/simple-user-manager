@@ -1,0 +1,9 @@
+<phpunit bootstrap="bootstrap.php"
+         cacheTokens="false"
+         colors="true">
+   <testsuites>
+      <testsuite name="Simple User Manager">
+         <directory>tests</directory>
+      </testsuite>
+   </testsuites>
+</phpunit>

@@ -49,3 +49,7 @@
 .search-form h2 a.navbar-brand {
   color: #000;
 }
+
+textarea.form-control {
+  height: 260px;
+}

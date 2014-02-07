@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="utf-8">
     <title> <?php echo $title; ?> &raquo; <?php echo system_name(); ?> </title>

@@ -242,8 +242,10 @@ $(function() {
 
 
   $('#privilege-reminder').on('show', function() {
+    console.log("Clicked!");
     // $('#modal-body').html('Loading...');
     var role_id = $('#default_group').find(":selected").attr('value');
+    alert(role_id);
     $('.modal-body').load('../_partials/permission_reminder.php?role_id='+role_id);
   });
 

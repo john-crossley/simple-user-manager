@@ -7,9 +7,26 @@
  *
  * @author John Crossley <hello@phpcodemonkey.com>
  * @package simple-user-manager
- * @version 1.0
+ * @version 2.0
  */
 class Core
 {
+    protected $_csrfToken = null;
 
+    public function __construct()
+    {
+        $this->generateToken();
+    }
+
+    public function generateToken()
+    {
+        $token = strtoupper('csrf' . md5(uniqid() . rand()));
+        $_SESSION['CSRF_TOKEN'] = $token;
+        $this->_csrfToken = $token;
+    }
+
+    public function getToken()
+    {
+        return $this->_csrfToken;
+    }
 }

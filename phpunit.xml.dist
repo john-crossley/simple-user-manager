@@ -4,6 +4,9 @@
    <testsuites>
       <testsuite name="Simple User Manager">
          <directory>tests</directory>
+         <blacklist>
+            <directory>vendor/</directory>
+         </blacklist>
       </testsuite>
    </testsuites>
 </phpunit>

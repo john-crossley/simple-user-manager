@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="<?php echo stylesheets_path('bootstrap.min'); ?>">
-    <link rel="stylesheet" href="<?php echo stylesheets_path('bootstrap-theme.min'); ?>">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

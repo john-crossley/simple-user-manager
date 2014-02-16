@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SingletonAbstract.php
  *
@@ -10,26 +11,30 @@
  */
 abstract class SingletonAbstract
 {
-  private static $instances = array();
+    private static $instances = array();
 
-  final private function __construct()
-  {
-    if (isset(self::$instances[get_called_class()])) {
-      throw new Exception('A ' . get_called_class() . ' instance already exists!');
+    final private function __construct()
+    {
+        if (isset(self::$instances[get_called_class()])) {
+            throw new Exception('A ' . get_called_class() . ' instance already exists!');
+        }
+        static::init();
     }
-    static::init();
-  }
 
-  protected function init() { }
-
-  final public static function getInstance()
-  {
-    $class = get_called_class();
-    if (!isset(self::$instances[$class])) {
-      self::$instances[$class] = new static();
+    protected function init()
+    {
     }
-    return self::$instances[$class];
-  }
 
-  final private function __clone() {}
+    final public static function getInstance()
+    {
+        $class = get_called_class();
+        if (!isset(self::$instances[$class])) {
+            self::$instances[$class] = new static();
+        }
+        return self::$instances[$class];
+    }
+
+    final private function __clone()
+    {
+    }
 }

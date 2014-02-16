@@ -16,61 +16,66 @@ if (isset($_POST['username']) || isset($_POST['email']) && isset($_POST['passwor
 ?>
 
 <body>
-    <?php echo get_menu('login'); ?>
+<?php echo get_menu('login'); ?>
 
-    <div class="container">
+<div class="container">
 
-        <form method="post" action="<?php echo root_path('login.php'); ?>" class="form-login-register" role="form">
-            <h2 class="form-login-register-heading"><?php echo system_name(); ?> Login</h2>
-            <input type="hidden" name="task" value="login">
-            <input type="hidden" name="csrf" value="<?=get_csrf_token()?>">
-            <?php if (username_disabled()): ?>
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Email address" autofocus>
-                </div>
-            <?php else: ?>
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" autofocus>
-                </div>
-            <?php endif; ?>
+    <form method="post" action="<?php echo root_path('login.php'); ?>" class="form-login-register" role="form">
+        <h2 class="form-login-register-heading"><?php echo system_name(); ?> Login</h2>
+        <input type="hidden" name="task" value="login">
+        <input type="hidden" name="csrf" value="<?= get_csrf_token() ?>">
+        <?php if (username_disabled()): ?>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email address" autofocus>
             </div>
-            <button class="btn btn-success pull-left" type="submit">Login</button>
-            <a href="#forgot-password-modal" data-toggle="modal" class="btn btn-link pull-right">Forgot password</a>
-        </form>
+        <?php else: ?>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Username" autofocus>
+            </div>
+        <?php endif; ?>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+        </div>
+        <button class="btn btn-success pull-left" type="submit">Login</button>
+        <a href="#forgot-password-modal" data-toggle="modal" class="btn btn-link pull-right">Forgot password</a>
+    </form>
 
-    </div>
+</div>
 
-    <div class="modal fade" id="forgot-password-modal">
-        <form action="<?php echo root_path('process.php'); ?>">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Forgotten your login information?</h4>
+<div class="modal fade" id="forgot-password-modal">
+    <form action="<?php echo root_path('process.php'); ?>">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Forgotten your login information?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" name="task" value="login">
+                        <input type="hidden" name="csrf" value="<?= get_csrf_token() ?>">
+                        <label for="username" class="control-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                        <small class="help-block" id="forgot-password-help-block">Please enter an email address...
+                        </small>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <input type="hidden" name="task" value="login">
-                            <input type="hidden" name="csrf" value="<?=get_csrf_token()?>">
-                            <label for="username" class="control-label">Email address</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
-                            <small class="help-block" id="forgot-password-help-block">Please enter an email address...</small>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="request-forgot-password-btn">Get Information</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </form>
-    </div><!-- /.modal -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="request-forgot-password-btn">Get Information
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+</div>
+<!-- /.modal -->
 
-    <?php echo get_footer(); ?>
+<?php echo get_footer(); ?>
 </body>
 </html>

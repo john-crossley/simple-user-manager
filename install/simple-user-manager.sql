@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.14)
 # Database: simple_user_manager
-# Generation Time: 2013-12-16 21:48:00 +0000
+# Generation Time: 2014-02-16 18:52:45 +0000
 # ************************************************************
 
 
@@ -175,8 +175,6 @@ CREATE TABLE `setting` (
   `default_group` int(11) unsigned DEFAULT NULL,
   `allow_registration` tinyint(1) DEFAULT '1',
   `email` varchar(128) DEFAULT 'noreply@phpcodemonkey.com',
-  `stripe_secret_key` varchar(128) DEFAULT NULL,
-  `stripe_ publishable_key` varchar(128) DEFAULT NULL,
   `pm_disabled` tinyint(1) DEFAULT '0',
   `support_enabled` tinyint(1) DEFAULT '0',
   `username_disabled` tinyint(1) DEFAULT '1',
@@ -188,9 +186,9 @@ CREATE TABLE `setting` (
 LOCK TABLES `setting` WRITE;
 /*!40000 ALTER TABLE `setting` DISABLE KEYS */;
 
-INSERT INTO `setting` (`id`, `name`, `url`, `version`, `meta_author`, `meta_description`, `banned_email_extensions`, `default_group`, `allow_registration`, `email`, `stripe_secret_key`, `stripe_ publishable_key`, `pm_disabled`, `support_enabled`, `username_disabled`)
+INSERT INTO `setting` (`id`, `name`, `url`, `version`, `meta_author`, `meta_description`, `banned_email_extensions`, `default_group`, `allow_registration`, `email`, `pm_disabled`, `support_enabled`, `username_disabled`)
 VALUES
-  (1,'Simple User Manager','http://localhost/simple-user-manager/','1.0.4','John Crossley','This is a meta description, nothing too fancy just this.','fake.com example.com googlemail.com',2,1,'hello@phpcodemonkey.com','sk_test_htCmN7XkocIQ7Z45G6CI3agY','pk_test_h5kd3AIMCHF9IczvdGbsRh5S',1,0,0);
+  (1,'Simple User Manager','http://localhost/simple-user-manager/','1.2.1','John Crossley','This is a meta description, nothing too fancy just this.','fake.com example.com googlemail.com',2,1,'hello@phpcodemonkey.com',1,0,0);
 
 /*!40000 ALTER TABLE `setting` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -253,6 +251,7 @@ CREATE TABLE `user` (
   `last_login` datetime DEFAULT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT '0',
   `hash` varchar(42) DEFAULT NULL,
+  `custom_image` varchar(128) DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`)
@@ -261,10 +260,10 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 
-INSERT INTO `user` (`id`, `firstname`, `lastname`, `username`, `email`, `bio`, `location`, `password`, `salt`, `private`, `notify_me_personal_message`, `receive_personal_messages`, `banned_from_sending_personal_messages`, `redirect_to`, `created_at`, `updated_at`, `last_login`, `verified`, `hash`)
+INSERT INTO `user` (`id`, `firstname`, `lastname`, `username`, `email`, `bio`, `location`, `password`, `salt`, `private`, `notify_me_personal_message`, `receive_personal_messages`, `banned_from_sending_personal_messages`, `redirect_to`, `created_at`, `updated_at`, `last_login`, `verified`, `hash`, `custom_image`)
 VALUES
-  (1,'John','Crossley','admin','hello@phpcodemonkey.com','Hello my name is John Crossley and I\'m a 24 year old student / web app developer from Manchester, England. I specialise in writing beauiful php, HTML, CSS and JavaScript oh and a little bit of Ruby. If your looking for someone to write awesome code for you, your company or even your dog then then I\'m your guy!','Manchester, England','0643c76c544072ea70d1f869d1b45cb45c3771a3','439313a160fb70949d073a266455d6d4a38c7c72',0,0,1,0,'admin/index.php','2013-05-26 21:45:48','2013-12-16 21:38:01','2013-12-16 21:38:01',1,'e22f9d25178d9c9bd629048c08afb69e'),
-  (2,'Carl','Evison','carlospinkz','newb2ninja@gmail.com','Hello, my name is Carl and welcome to my profile. - edit.',NULL,'ce430ae1364e1a94a4de34cfdf190338f2462851','d558a61bf29b8d47fdd70962d5aff57f968e7a8d',0,1,1,0,'member/','2013-08-12 19:51:46','2013-12-16 21:25:20','2013-09-18 22:55:22',1,NULL);
+  (1,'John','Crossley','admin','hello@phpcodemonkey.com','Hello my name is John Crossley and I\'m a 24 year old student / web app developer from Manchester, England. I specialise in writing beauiful php, HTML, CSS and JavaScript oh and a little bit of Ruby. If your looking for someone to write awesome code for you, your company or even your dog then then I\'m your guy!','Manchester, England','0643c76c544072ea70d1f869d1b45cb45c3771a3','439313a160fb70949d073a266455d6d4a38c7c72',0,0,1,0,'admin/index.php','2013-05-26 21:45:48','2014-02-16 18:50:59','2014-02-16 18:50:59',1,'1cac65fc4cfba6bd576f9e028e47840d',''),
+  (2,'Carl','Evison','carlospinkz','newb2ninja@gmail.com','Hello, my name is Carl and welcome to my profile. - edit.','Rochdale, Manchester','ce430ae1364e1a94a4de34cfdf190338f2462851','d558a61bf29b8d47fdd70962d5aff57f968e7a8d',0,0,1,0,'member/','2013-08-12 19:51:46','2014-02-16 18:46:40','2014-02-16 18:41:00',1,NULL,'');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;

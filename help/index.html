@@ -1,201 +1,248 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-  <meta name="viewport" content="width=device-width">
-  <link rel="canonical" href="http://backbonejs.org" />
-  <title>Simple User Manager Docs</title>
-  <style>
-    body {
-      font-size: 14px;
-      line-height: 22px;
-      font-family: Helvetica Neue, Helvetica, Arial;
-    }
-    .interface {
-      font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif !important;
-    }
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+<meta name="viewport" content="width=device-width">
+<link rel="canonical" href="http://backbonejs.org"/>
+<title>Simple User Manager Docs</title>
+<style>
+body {
+    font-size: 14px;
+    line-height: 22px;
+    font-family: Helvetica Neue, Helvetica, Arial;
+}
+
+.interface {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif !important;
+}
+
+div#sidebar {
+    background: #fff;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 15px 0 30px 30px;
+    border-right: 1px solid #bbb;
+    box-shadow: 0 0 20px #ccc;
+    -webkit-box-shadow: 0 0 20px #ccc;
+    -moz-box-shadow: 0 0 20px #ccc;
+}
+
+a.toc_title, a.toc_title:visited {
+    display: block;
+    color: black;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+a.toc_title:hover {
+    text-decoration: underline;
+}
+
+#sidebar .version {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+ul.toc_section {
+    font-size: 11px;
+    line-height: 14px;
+    margin: 5px 0 0 0;
+    padding-left: 0px;
+    list-style-type: none;
+    font-family: Lucida Grande;
+}
+
+.toc_section li {
+    cursor: pointer;
+    margin: 0 0 3px 0;
+}
+
+.toc_section li a {
+    text-decoration: none;
+    color: black;
+}
+
+.toc_section li a:hover {
+    text-decoration: underline;
+}
+
+div.container {
+    position: relative;
+    width: 550px;
+    margin: 30px 0 50px 260px;
+}
+
+img#logo {
+    width: 450px;
+    height: 80px;
+}
+
+div.run {
+    position: absolute;
+    right: 15px;
+    width: 26px;
+    height: 18px;
+    background: url('docs/images/arrows.png') no-repeat -26px 0;
+}
+
+div.run:active {
+    background-position: -51px 0;
+}
+
+p, div.container ul {
+    margin: 25px 0;
+    width: 550px;
+}
+
+p.warning {
+    font-size: 12px;
+    line-height: 18px;
+    font-style: italic;
+}
+
+div.container ul {
+    list-style: circle;
+    padding-left: 15px;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+div.container ul li {
+    margin-bottom: 10px;
+}
+
+div.container ul.small {
+    font-size: 12px;
+}
+
+a, a:visited {
+    color: #444;
+}
+
+a:active, a:hover {
+    color: #000;
+}
+
+a img {
+    border: 0;
+}
+
+a.travis-badge {
+    display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    padding-top: 20px;
+}
+
+h2 {
+    font-size: 22px;
+}
+
+b.header {
+    font-size: 18px;
+    line-height: 35px;
+}
+
+span.alias {
+    font-size: 14px;
+    font-style: italic;
+    margin-left: 20px;
+}
+
+table {
+    margin: 15px 0 0;
+    padding: 0;
+}
+
+tr, td {
+    margin: 0;
+    padding: 0;
+}
+
+td {
+    padding: 0px 15px 5px 0;
+}
+
+table .rule {
+    height: 1px;
+    background: #ccc;
+    margin: 5px 0;
+}
+
+code, pre, tt {
+    font-family: Monaco, Consolas, "Lucida Console", monospace;
+    font-size: 12px;
+    line-height: 18px;
+    font-style: normal;
+}
+
+tt {
+    padding: 0px 3px;
+    background: #fff;
+    border: 1px solid #ddd;
+    zoom: 1;
+}
+
+code {
+    margin-left: 20px;
+}
+
+pre {
+    font-size: 12px;
+    padding: 2px 0 2px 15px;
+    border: 4px solid #bbb;
+    border-top: 0;
+    border-bottom: 0;
+    margin: 0px 0 25px;
+}
+
+img.example_image {
+    margin: 0px auto;
+}
+
+img.example_retina {
+    margin: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+@media only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 600px), only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 600px) {
     div#sidebar {
-      background: #fff;
-      position: fixed;
-      z-index: 10;
-      top: 0; left: 0; bottom: 0;
-      width: 200px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      padding: 15px 0 30px 30px;
-      border-right: 1px solid #bbb;
-      box-shadow: 0 0 20px #ccc; -webkit-box-shadow: 0 0 20px #ccc; -moz-box-shadow: 0 0 20px #ccc;
-    }
-      a.toc_title, a.toc_title:visited {
-        display: block;
-        color: black;
-        font-weight: bold;
-        margin-top: 15px;
-      }
-        a.toc_title:hover {
-          text-decoration: underline;
-        }
-        #sidebar .version {
-          font-size: 10px;
-          font-weight: normal;
-        }
-      ul.toc_section {
-        font-size: 11px;
-        line-height: 14px;
-        margin: 5px 0 0 0;
-        padding-left: 0px;
-        list-style-type: none;
-        font-family: Lucida Grande;
-      }
-        .toc_section li {
-          cursor: pointer;
-          margin: 0 0 3px 0;
-        }
-          .toc_section li a {
-            text-decoration: none;
-            color: black;
-          }
-            .toc_section li a:hover {
-              text-decoration: underline;
-            }
-    div.container {
-      position: relative;
-      width: 550px;
-      margin: 30px 0 50px 260px;
-    }
-    img#logo {
-      width: 450px;
-      height: 80px;
-    }
-    div.run {
-      position: absolute;
-      right: 15px;
-      width: 26px; height: 18px;
-      background: url('docs/images/arrows.png') no-repeat -26px 0;
-    }
-      div.run:active {
-        background-position: -51px 0;
-      }
-    p, div.container ul {
-      margin: 25px 0;
-      width: 550px;
-    }
-      p.warning {
-        font-size: 12px;
-        line-height: 18px;
-        font-style: italic;
-      }
-      div.container ul {
-        list-style: circle;
-        padding-left: 15px;
-        font-size: 13px;
-        line-height: 18px;
-      }
-        div.container ul li {
-          margin-bottom: 10px;
-        }
-        div.container ul.small {
-          font-size: 12px;
-        }
-    a, a:visited {
-      color: #444;
-    }
-    a:active, a:hover {
-      color: #000;
+        display: none;
     }
 
-    a img {
-      border: 0;
-    }
-    a.travis-badge {
-      display: block;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      padding-top: 20px;
-    }
-      h2 {
-        font-size: 22px;
-      }
-    b.header {
-      font-size: 18px;
-      line-height: 35px;
-    }
-    span.alias {
-      font-size: 14px;
-      font-style: italic;
-      margin-left: 20px;
-    }
-    table {
-      margin: 15px 0 0; padding: 0;
-    }
-      tr, td {
-        margin: 0; padding: 0;
-      }
-        td {
-          padding: 0px 15px 5px 0;
-        }
-        table .rule {
-          height: 1px;
-          background: #ccc;
-          margin: 5px 0;
-        }
-    code, pre, tt {
-      font-family: Monaco, Consolas, "Lucida Console", monospace;
-      font-size: 12px;
-      line-height: 18px;
-      font-style: normal;
-    }
-      tt {
-        padding: 0px 3px;
-        background: #fff;
-        border: 1px solid #ddd;
-        zoom: 1;
-      }
-      code {
-        margin-left: 20px;
-      }
-      pre {
-        font-size: 12px;
-        padding: 2px 0 2px 15px;
-        border: 4px solid #bbb; border-top: 0; border-bottom: 0;
-        margin: 0px 0 25px;
-      }
-      img.example_image {
-        margin: 0px auto;
-      }
-        img.example_retina {
-          margin: 20px;
-          box-shadow: 0 8px 15px rgba(0,0,0,0.4);
-        }
-    @media only screen and (-webkit-max-device-pixel-ratio: 1) and (max-width: 600px),
-           only screen and (max--moz-device-pixel-ratio: 1) and (max-width: 600px) {
-      div#sidebar {
-        display: none;
-      }
-      img#logo {
+    img#logo {
         max-width: 450px;
         width: 100%;
         height: auto;
-      }
-      div.container {
+    }
+
+    div.container {
         width: auto;
         margin-left: 15px;
         margin-right: 15px;
-      }
-        p, div.container ul {
-          width: auto;
-        }
     }
-    @media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (max-width: 640px),
-          only screen and (-o-min-device-pixel-ratio: 3/2) and (max-width: 640px),
-          only screen and (min-device-pixel-ratio: 1.5) and (max-width: 640px) {
-      img {
+
+    p, div.container ul {
+        width: auto;
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (max-width: 640px), only screen and (-o-min-device-pixel-ratio: 3/2) and (max-width: 640px), only screen and (min-device-pixel-ratio: 1.5) and (max-width: 640px) {
+    img {
         max-width: 100%;
         height: auto;
-      }
-      div#sidebar {
+    }
+
+    div#sidebar {
         -webkit-overflow-scrolling: initial;
         position: relative;
         width: 90%;
@@ -204,210 +251,225 @@
         top: -7px;
         padding: 10px 0 10px 30px;
         border: 0;
-      }
-      img#logo {
+    }
+
+    img#logo {
         width: auto;
         height: auto;
-      }
-      div.container {
+    }
+
+    div.container {
         margin: 0;
         width: 100%;
-      }
-      p, div.container ul {
+    }
+
+    p, div.container ul {
         max-width: 98%;
         overflow-x: scroll;
-      }
-      table {
-        position: relative;
-      }
-        tr:first-child td {
-          padding-bottom: 25px;
-        }
-        td.text {
-          line-height: 12px;
-          padding: 0;
-          position: absolute;
-          left: 0;
-          top: 48px;
-        }
-        tr:last-child td.text {
-          top: 122px;
-        }
-      pre {
-        overflow: scroll;
-      }
     }
-  </style>
+
+    table {
+        position: relative;
+    }
+
+    tr:first-child td {
+        padding-bottom: 25px;
+    }
+
+    td.text {
+        line-height: 12px;
+        padding: 0;
+        position: absolute;
+        left: 0;
+        top: 48px;
+    }
+
+    tr:last-child td.text {
+        top: 122px;
+    }
+
+    pre {
+        overflow: scroll;
+    }
+}
+</style>
 </head>
 <body>
 
-  <div id="sidebar" class="interface">
+<div id="sidebar" class="interface">
 
     <a class="toc_title" href="#">
-      Simple User Manager<br>
-      <span class="version">Documentation v1.1.0</span>
+        Simple User Manager<br>
+        <span class="version">Documentation v1.1.0</span>
     </a>
     <ul class="toc_section">
-      <li>&raquo; <a href="#">Demo this application</a></li>
-      <li>&raquo; <a href="#">Buy this application</a></li>
+        <li>&raquo; <a href="#">Demo this application</a></li>
+        <li>&raquo; <a href="#">Buy this application</a></li>
     </ul>
 
     <a class="toc_title" href="#credentials">
-      Credentials
+        Credentials
     </a>
 
     <a class="toc_title" href="#requirements">
-      Requirements
+        Requirements
     </a>
 
     <a class="toc_title" href="#introduction">
-      Introduction
+        Introduction
     </a>
 
     <a class="toc_title" href="#getting-started">
-      Getting Started
+        Getting Started
     </a>
     <ul class="toc_section">
-      <li>– <a href="#getting-connected">Getting Connected</a></li>
-      <li>– <a href="#custom-messages">Custom Messages</a></li>
+        <li>– <a href="#getting-connected">Getting Connected</a></li>
+        <li>– <a href="#custom-messages">Custom Messages</a></li>
     </ul>
 
     <a class="toc_title" href="#protecting-pages">
-      Protecting Pages
+        Protecting Pages
     </a>
     <ul class="toc_section">
-      <li>– <a href="#lock-down-pages">Locking down pages</a></li>
-      <li>– <a href="#using-the-acl">Using the ACL</a></li>
+        <li>– <a href="#lock-down-pages">Locking down pages</a></li>
+        <li>– <a href="#using-the-acl">Using the ACL</a></li>
     </ul>
 
     <a class="toc_title" href="#helper-functions">
-      Helper Functions
+        Helper Functions
     </a>
     <ul class="toc_section">
-      <li>– <a href="#check-logged-in">Check User Logged In</a></li>
-      <li>– <a href="#accessing-user-data">Accessing User Data</a></li>
-      <li>– <a href="#saving-user-data">Saving User Data</a></li>
-      <li>– <a href="#other-useful-functions">Other Useful Functions</a></li>
+        <li>– <a href="#check-logged-in">Check User Logged In</a></li>
+        <li>– <a href="#accessing-user-data">Accessing User Data</a></li>
+        <li>– <a href="#saving-user-data">Saving User Data</a></li>
+        <li>– <a href="#other-useful-functions">Other Useful Functions</a></li>
     </ul>
 
     <a class="toc_title" href="#faq">
-      F.A.Q.
+        F.A.Q.
     </a>
     <ul class="toc_section">
-      <li>– <a href="#FAQ-ssl3-upgrade">SSLv3 Upgrade</a></li>
-      <li>– <a href="#FAQ-assets-not-loading">Assets not Loading</a></li>
+        <li>– <a href="#FAQ-ssl3-upgrade">SSLv3 Upgrade</a></li>
+        <li>– <a href="#FAQ-assets-not-loading">Assets not Loading</a></li>
     </ul>
 
     <a class="toc_title" href="#changelog">
-      Change Log
+        Change Log
     </a>
 
-  </div>
+</div>
 
-  <div class="container">
+<div class="container">
 
-    <p>
-      Welcome to <strong>Simple User Manager</strong> documentation. This is your guide on how to quickly get up and running. I will try to guide you through various aspects of the application and how to use it. Occasionally I may miss things or something might not make sense to you (that’s me). If this is the case please contact me and I’ll change it to better suit.
-    </p>
+<p>
+    Welcome to <strong>Simple User Manager</strong> documentation. This is your guide on how to quickly get up and
+    running. I will try to guide you through various aspects of the application and how to use it. Occasionally I may
+    miss things or something might not make sense to you (that’s me). If this is the case please contact me and I’ll
+    change it to better suit.
+</p>
 
-    <p>
-      A note to those wanting to upgrade from <strong>SSLv3</strong>. Good news you can! To upgrade simply send me your purchase code for <strong>SSLv3</strong> I’ll verify it and send you <strong>Simple User Manager</strong>
-    </p>
+<p>
+    A note to those wanting to upgrade from <strong>SSLv3</strong>. Good news you can! To upgrade simply send me your
+    purchase code for <strong>SSLv3</strong> I’ll verify it and send you <strong>Simple User Manager</strong>
+</p>
 
-    <p>
-      I’ve worked hard (trust me) to remove all the bugs from this application, but if one has niggled its way in, I’ll beat it out with a stick! So let me know a.s.a.p and I’ll aim to fix it within <em>24 hours</em>
-    </p>
+<p>
+    I’ve worked hard (trust me) to remove all the bugs from this application, but if one has niggled its way in, I’ll
+    beat it out with a stick! So let me know a.s.a.p and I’ll aim to fix it within <em>24 hours</em>
+</p>
 
-    <p>
-      <em>
+<p>
+    <em>
         Some of the elements of this application are open-source check them out
         <a href="http://github.com/john-crossley/" target="_blank">github.com/john-crossley</a>.
-      </em>
-    </p>
+    </em>
+</p>
 
-    <h2 id="credentials">Credentials</h2>
-    <p>When you install the application you have <strong>2</strong> default user accounts.
+<h2 id="credentials">Credentials</h2>
+
+<p>When you install the application you have <strong>2</strong> default user accounts.
     Their credentials are;</p>
 
-    <p><strong>Administrator</strong></p>
-    <ul>
-      <li>Username: <strong>admin</strong></li>
-      <li>Password: <strong>password</strong></li>
-    </ul>
+<p><strong>Administrator</strong></p>
+<ul>
+    <li>Username: <strong>admin</strong></li>
+    <li>Password: <strong>password</strong></li>
+</ul>
 
-    <p><strong>Member</strong></p>
-    <ul>
-      <li>Username: <strong>carlos</strong></li>
-      <li>Password: <strong>password</strong></li>
-    </ul>
+<p><strong>Member</strong></p>
+<ul>
+    <li>Username: <strong>carlos</strong></li>
+    <li>Password: <strong>password</strong></li>
+</ul>
 
-    <h2 id="requirements">Requirements</h2>
-    <p>Please enusure you have the minimum required software versions
-      before purchasing this app otherwise it won't work correctly. If you
-      would like help checking these version numbers you can contact me and I'll help.</p>
-    <ul>
-      <li>
+<h2 id="requirements">Requirements</h2>
+
+<p>Please enusure you have the minimum required software versions
+    before purchasing this app otherwise it won't work correctly. If you
+    would like help checking these version numbers you can contact me and I'll help.</p>
+<ul>
+    <li>
         <strong>PHP Version</strong>: 5.3.x &dash;
         <a href="http://php.net/downloads.php#5.3">php.net</a><br>
         &dash; <strong>PDO Extension</strong> enabled<br>
         &dash; <strong>PDO MYSQL</strong> Driver
-      </li>
-      <li><strong>MYSQL Version</strong>: 5.x.x &dash; <a href="http://dev.mysql.com/downloads/">mysql.com</a></li>
-    </ul>
+    </li>
+    <li><strong>MYSQL Version</strong>: 5.x.x &dash; <a href="http://dev.mysql.com/downloads/">mysql.com</a></li>
+</ul>
 
-    <h2 id="introduction">Introduction</h2>
+<h2 id="introduction">Introduction</h2>
 
-    <p>
-      I have developed a user friendly advanced user management system to help people like yourself
-      protect pages and manage your website users. What you see during the demo is features suggested
-      by users of my old system <strong>SSLv3</strong>. The following features are included in Simple User Manager v1.1.0;
-    </p>
-    <ul>
-      <li>Create, read, update and delete users</li>
-      <li>Built in Access Control List <strong>(ACL)</strong></li>
-      <li>Private messaging system</li>
-      <li>Built on top of the bootstrap framework</li>
-    </ul>
+<p>
+    I have developed a user friendly advanced user management system to help people like yourself
+    protect pages and manage your website users. What you see during the demo is features suggested
+    by users of my old system <strong>SSLv3</strong>. The following features are included in Simple User Manager v1.1.0;
+</p>
+<ul>
+    <li>Create, read, update and delete users</li>
+    <li>Built in Access Control List <strong>(ACL)</strong></li>
+    <li>Private messaging system</li>
+    <li>Built on top of the bootstrap framework</li>
+</ul>
 
-    <p>
-      <strong>Who would want to use this?</strong> If you need a system that allows you to manage
-      your user base and restrict access to pages. Then this is the system for you.
-    </p>
+<p>
+    <strong>Who would want to use this?</strong> If you need a system that allows you to manage
+    your user base and restrict access to pages. Then this is the system for you.
+</p>
 
-    <h2 id="getting-started">Getting Started</h2>
+<h2 id="getting-started">Getting Started</h2>
 
-    <p>
-      <strong>Assumptions</strong> throughout these docs, I won't make many assumptions
-      so don't worry. However, for the start Im going to assume you have uploaded
-      all the files from the <strong>.zip</strong>. After extracting the file I have
-      named my folder to <strong>aums</strong> <em>Short for advanced user management
-      system</em>. Now my project can be found at <strong>phpcodemonkey.com/aums</strong>
-    </p>
+<p>
+    <strong>Assumptions</strong> throughout these docs, I won't make many assumptions
+    so don't worry. However, for the start Im going to assume you have uploaded
+    all the files from the <strong>.zip</strong>. After extracting the file I have
+    named my folder to <strong>aums</strong> <em>Short for advanced user management
+    system</em>. Now my project can be found at <strong>phpcodemonkey.com/aums</strong>
+</p>
 
-    <p id="getting-connected">
-      <b class="header">Getting Connected</b>
-      <br />
-      Right so we need to get connected to a database in order for everything to
-      work correctly. This is easy! First of all we need to upload the SQL dump provided
-      to <a href="http://www.phpmyadmin.net/">phpMyAdmin</a>. If your not using phpMyAdmin
-      I'll assume you know how to import SQL dumps to your MYSQL database.
-    </p>
+<p id="getting-connected">
+    <b class="header">Getting Connected</b>
+    <br/>
+    Right so we need to get connected to a database in order for everything to
+    work correctly. This is easy! First of all we need to upload the SQL dump provided
+    to <a href="http://www.phpmyadmin.net/">phpMyAdmin</a>. If your not using phpMyAdmin
+    I'll assume you know how to import SQL dumps to your MYSQL database.
+</p>
 
-    <ul>
-      <li>1. Login to phpMyAdmin and locate the <strong>Databases</strong> tab</li>
-      <li>2. Chose a name for your database <em>Eg: advanced_user_manager</em>.</li>
-      <li>3. On the left you will then see a list of databases (+ your newly created one) select it.</li>
-      <li>4. In the top left you will see a tab called <strong>Import</strong>, select it.</li>
-      <li>5. Click the <strong>Chose File</strong> button and find the SQL dump.</li>
-      <li>6. That's it!</li>
-    </ul>
+<ul>
+    <li>1. Login to phpMyAdmin and locate the <strong>Databases</strong> tab</li>
+    <li>2. Chose a name for your database <em>Eg: advanced_user_manager</em>.</li>
+    <li>3. On the left you will then see a list of databases (+ your newly created one) select it.</li>
+    <li>4. In the top left you will see a tab called <strong>Import</strong>, select it.</li>
+    <li>5. Click the <strong>Chose File</strong> button and find the SQL dump.</li>
+    <li>6. That's it!</li>
+</ul>
 
-    <p>Belive it or not that's that hard part over and done with. Next we need to provide
-      the application with the <strong>credentials</strong> to access the database. When you created
-      your database maybe with your host they will have given you a username and password to access the
-      database. <strong>Remember?</strong> Right well we need them now.</p>
+<p>Belive it or not that's that hard part over and done with. Next we need to provide
+    the application with the <strong>credentials</strong> to access the database. When you created
+    your database maybe with your host they will have given you a username and password to access the
+    database. <strong>Remember?</strong> Right well we need them now.</p>
 
-  <p>** <strong>File: </strong>/advanced-user-manager/app/config/config.php</p>
+<p>** <strong>File: </strong>/advanced-user-manager/app/config/config.php</p>
 
 <pre>
 &lt;?php
@@ -422,16 +484,16 @@ DB::connect(array(
 </pre>
 
 
-    <p id="custom-messages">
-      <b class="header">Custom Messages</b>
-      <br />
-      Editing someone else's code can be a daunting task. So I have made it
-      easier for you to modify certain messages that are shown to the user
-      throughout the system. Users of my previous application <strong>SSLv3</strong>
-      will be familiar with this method.
-    </p>
+<p id="custom-messages">
+    <b class="header">Custom Messages</b>
+    <br/>
+    Editing someone else's code can be a daunting task. So I have made it
+    easier for you to modify certain messages that are shown to the user
+    throughout the system. Users of my previous application <strong>SSLv3</strong>
+    will be familiar with this method.
+</p>
 
-    <p>** <strong>File: </strong>/advanced-user-manager/app/config/custom_messages.php</p>
+<p>** <strong>File: </strong>/advanced-user-manager/app/config/custom_messages.php</p>
 
 <pre>
 /**
@@ -453,61 +515,66 @@ define('VALIDATION_ERRORS',
 );
 </pre>
 
-    <p>
-      In the example above you can see two messages. One with a
-      <code>{{username}}</code> placeholder. This allows you to modify the
-      contents of the message without navigating through all of the applications
-      code. Simply change the message to say what ever you want it to say and
-      the placeholder will dynamically be changed on the user.
-    </p>
+<p>
+    In the example above you can see two messages. One with a
+    <code>{{username}}</code> placeholder. This allows you to modify the
+    contents of the message without navigating through all of the applications
+    code. Simply change the message to say what ever you want it to say and
+    the placeholder will dynamically be changed on the user.
+</p>
 
-    <h2 id="protecting-pages">Protecting Pages</h2>
+<h2 id="protecting-pages">Protecting Pages</h2>
 
-    <p>
-      One feature many users wanted from <strong>SSLv3</strong> was the ability to
-      lockdown pages for individual users rather than just protecting many pages allowing
-      all logged in users to access. This can now be done one of two ways. Either individually
-      protecting pages only allowing users of your choosing to access a page. Or, using the
-      ACL and allowing groups of users to access a page. See how this is done below.
-    </p>
+<p>
+    One feature many users wanted from <strong>SSLv3</strong> was the ability to
+    lockdown pages for individual users rather than just protecting many pages allowing
+    all logged in users to access. This can now be done one of two ways. Either individually
+    protecting pages only allowing users of your choosing to access a page. Or, using the
+    ACL and allowing groups of users to access a page. See how this is done below.
+</p>
 
-    <p id="lock-down-pages">
-      <b class="header">Locking Down Pages</b>
-      <br />
-      Right, so, you have just created a user and the next thing you want to do
-      is supply them a page only they can access and that no other user can access.
-      To complete this action you will need to be logged in as an <strong>Administrator</strong>
-      so get logged in! Next you will want to locate the user you would like to work with.
-    </p>
+<p id="lock-down-pages">
+    <b class="header">Locking Down Pages</b>
+    <br/>
+    Right, so, you have just created a user and the next thing you want to do
+    is supply them a page only they can access and that no other user can access.
+    To complete this action you will need to be logged in as an <strong>Administrator</strong>
+    so get logged in! Next you will want to locate the user you would like to work with.
+</p>
 
-    <ul>
-      <li>1. Login as an <strong>Administrator</strong></li>
-      <li>2. In the admin panel, select <strong>Manage Users</strong> and from the
+<ul>
+    <li>1. Login as an <strong>Administrator</strong></li>
+    <li>2. In the admin panel, select <strong>Manage Users</strong> and from the
         dropdown <strong>View Users</strong></li>
-      <li>3. If you know the users username search for them in the top right.
-        then select <strong>View</strong><br> to see their profile</li>
-      <li>4. From the tabs at the top we want to select <strong>Access Areas</strong></li>
-      <li>5. You can see the URL location is already pointing to <strong>/</strong> which
-      is the <strong>member/</strong> directory. I would recommend that you keep all
-      user pages inside the <strong>member/</strong> directory.
-      Press <strong>Check</strong> to scan the member directory for <strong>.php</strong> files</li>
-      <li>6. If any files exist the application will list all the files in that directory. So all you
-      need to do is <strong>check</strong> the files you would like the user to access and press <strong>Protect</strong></li>
-    </ul>
+    <li>3. If you know the users username search for them in the top right.
+        then select <strong>View</strong><br> to see their profile
+    </li>
+    <li>4. From the tabs at the top we want to select <strong>Access Areas</strong></li>
+    <li>5. You can see the URL location is already pointing to <strong>/</strong> which
+        is the <strong>member/</strong> directory. I would recommend that you keep all
+        user pages inside the <strong>member/</strong> directory.
+        Press <strong>Check</strong> to scan the member directory for <strong>.php</strong> files
+    </li>
+    <li>6. If any files exist the application will list all the files in that directory. So all you
+        need to do is <strong>check</strong> the files you would like the user to access and press
+        <strong>Protect</strong></li>
+</ul>
 
-    <p>Almost done! Right so we have added the pages we want the user to access
-      but for this to be fully protected to allow only this user access we have to
-      do one more thing.</p>
+<p>Almost done! Right so we have added the pages we want the user to access
+    but for this to be fully protected to allow only this user access we have to
+    do one more thing.</p>
 
-    <ul>
-      <li>7. Navigate back to the <strong>Access Areas</strong> tab on the users
-      profile.</li>
-      <li>8. You will now see on the left a list of pages you allowed this person
-      to access. Press the <strong>How to protect</strong> button for the system
-      to show you what to add to that file.</li>
-      <li>9. It will dynamically calculate the path to the bootstrap.php file.
-      How cool is that? <strong>Finished!</strong></li>
-    </ul>
+<ul>
+    <li>7. Navigate back to the <strong>Access Areas</strong> tab on the users
+        profile.
+    </li>
+    <li>8. You will now see on the left a list of pages you allowed this person
+        to access. Press the <strong>How to protect</strong> button for the system
+        to show you what to add to that file.
+    </li>
+    <li>9. It will dynamically calculate the path to the bootstrap.php file.
+        How cool is that? <strong>Finished!</strong></li>
+</ul>
 
 <pre>
 &lt;?php
@@ -516,44 +583,48 @@ restrict_access();
 ?&gt;
 </pre>
 
-    <p><em>Once you have protected a file, you will now longer need to do that again.
+<p><em>Once you have protected a file, you will now longer need to do that again.
     So if you decide to give another user access to that file it will be
     <strong>automagically</strong> protected</em></p>
 
-    <p id="using-the-acl">
-      <b class="header">Using the Access Control List (ACL)</b>
-      <br />
-      So rather than locking down individual pages to individual users you may
-      want to lock down a page to a user group. Guess what? That's not a problem
-      and I'll show you how it's done.
-    </p>
+<p id="using-the-acl">
+    <b class="header">Using the Access Control List (ACL)</b>
+    <br/>
+    So rather than locking down individual pages to individual users you may
+    want to lock down a page to a user group. Guess what? That's not a problem
+    and I'll show you how it's done.
+</p>
 
-    <p><em>I'll show you from the point of creating a new user group</em></p>
+<p><em>I'll show you from the point of creating a new user group</em></p>
 
-    <ul>
-      <li>1. This step requires <strong>Administrator</strong>, so login.</li>
-      <li>2. In the menu to the left select <strong>Create Group</strong> from
-      the <strong>Manage Groups (ACL)</strong></li>
-      <li>3. Name this role what ever you'd like. I'm going to name it <strong>ABCClientGroup</strong>.</li>
-      <li>4. While I'm here I can also select extra permissions, so I can allow them to access various sections
-      of the website if I so wish. I'm going to leave that for now, so just select <strong>Add Group</strong></li>
-      <li>5. I can now assign users to this group, so navigate to <strong>View Users</strong> from the
-      <strong>Manage Users</strong> menu item located on the left of the screen</li>
-      <li>6. Select a user of your choice you'd like to assign this group to. Hit the <strong>View</strong> button
-      when you have made your decision</li>
-      <li>7. Find the <strong>Assign to group</strong> option in the users profile and select the <strong>ABCClientGroup</strong>
-      group we just created. Once you have done that select <strong>Update User</strong></li>
-    </ul>
+<ul>
+    <li>1. This step requires <strong>Administrator</strong>, so login.</li>
+    <li>2. In the menu to the left select <strong>Create Group</strong> from
+        the <strong>Manage Groups (ACL)</strong></li>
+    <li>3. Name this role what ever you'd like. I'm going to name it <strong>ABCClientGroup</strong>.</li>
+    <li>4. While I'm here I can also select extra permissions, so I can allow them to access various sections
+        of the website if I so wish. I'm going to leave that for now, so just select <strong>Add Group</strong></li>
+    <li>5. I can now assign users to this group, so navigate to <strong>View Users</strong> from the
+        <strong>Manage Users</strong> menu item located on the left of the screen
+    </li>
+    <li>6. Select a user of your choice you'd like to assign this group to. Hit the <strong>View</strong> button
+        when you have made your decision
+    </li>
+    <li>7. Find the <strong>Assign to group</strong> option in the users profile and select the
+        <strong>ABCClientGroup</strong>
+        group we just created. Once you have done that select <strong>Update User</strong></li>
+</ul>
 
-    <p><em>Almost done, we just need to tell the page that it's ok for our new user group to access it.</em></p>
+<p><em>Almost done, we just need to tell the page that it's ok for our new user group to access it.</em></p>
 
-    <ul>
-      <li>8. Select <strong>Access Areas</strong> from the <strong>Manage Groups (ACL)</strong> dropdown</li>
-      <li>9. Use the form controls to locate the <strong>directory</strong> where the file you want to protect resides</li>
-      <li>10. The system will then generate the code you need to protect the page</li>
-    </ul>
+<ul>
+    <li>8. Select <strong>Access Areas</strong> from the <strong>Manage Groups (ACL)</strong> dropdown</li>
+    <li>9. Use the form controls to locate the <strong>directory</strong> where the file you want to protect resides
+    </li>
+    <li>10. The system will then generate the code you need to protect the page</li>
+</ul>
 
-    <p><em>The system will generate the following code (Similar)</em></p>
+<p><em>The system will generate the following code (Similar)</em></p>
 
 <pre>
 &lt;?php
@@ -562,7 +633,7 @@ restrict_access('ABCClientGroup');
 ?&gt;
 </pre>
 
-    <p>If you would like to add more user groups to this function simply add extra groups like so:</p>
+<p>If you would like to add more user groups to this function simply add extra groups like so:</p>
 
 <pre>
 &lt;?php
@@ -571,17 +642,17 @@ restrict_access('ABCClientGroup', 'AnotherGroup', 'AndAnotherGroup');
 ?&gt;
 </pre>
 
-    <p>You get the idea right?</p>
+<p>You get the idea right?</p>
 
-    <h2 id="helper-functions">Helper Functions</h2>
+<h2 id="helper-functions">Helper Functions</h2>
 
-    <p>
-      So you bought the application you want to customise it right? Here I will
-      list some functions that might be useful to you whilst extending the application
-      from checking if the user is logged in - to accessing their data. One thing that
-      you must note is that when ever using functions provided by myself you must include
-      the <code>bootstrap.php</code> file
-    </p>
+<p>
+    So you bought the application you want to customise it right? Here I will
+    list some functions that might be useful to you whilst extending the application
+    from checking if the user is logged in - to accessing their data. One thing that
+    you must note is that when ever using functions provided by myself you must include
+    the <code>bootstrap.php</code> file
+</p>
 
 <pre>
 &lt;?php
@@ -591,14 +662,15 @@ require_once&nbsp;'../bootstrap.php';
 ?&gt;
 </pre>
 
-    <p id="check-logged-in">
-      <b class="header">Check User Logged In</b>
-      <br />
-      <p>As mentioned previously before using any of the following functions make
-      sure that you have included the <code>bootstrap.php</code> file. Once you
-      have done this you have access to a whole host of functions. To check if a
-      user is logged in you can use the following snippet of code;</p>
-    </p>
+<p id="check-logged-in">
+    <b class="header">Check User Logged In</b>
+    <br/>
+
+<p>As mentioned previously before using any of the following functions make
+    sure that you have included the <code>bootstrap.php</code> file. Once you
+    have done this you have access to a whole host of functions. To check if a
+    user is logged in you can use the following snippet of code;</p>
+</p>
 <pre>
 &lt;?php
 require_once&nbsp;'bootstrap.php';
@@ -606,7 +678,7 @@ ensure_login();
 ?&gt;
 </pre>
 
-    <p>If the user is not logged in then they will be redirected to the
+<p>If the user is not logged in then they will be redirected to the
     <strong>login.php</strong> page. If you would prefer a <strong>boolean</strong>
     value returned then you may use the following;</p>
 
@@ -621,12 +693,13 @@ if (_logged_in()) {
 ?&gt;
 </pre>
 
-    <p id="accessing-user-data">
-      <b class="header">Accessing User Data</b>
-      <br />
-      <p>No doubt there will be times when you want to access the user data? Well
-      you can using the following snippet of code;</p>
-    </p>
+<p id="accessing-user-data">
+    <b class="header">Accessing User Data</b>
+    <br/>
+
+<p>No doubt there will be times when you want to access the user data? Well
+    you can using the following snippet of code;</p>
+</p>
 
 <pre>
 &lt;?php
@@ -637,11 +710,11 @@ if (_logged_in()) {
 ?&gt;
 </pre>
 
-    <p><strong>Note:</strong> how we use the <code>get_user()</code> function? I
+<p><strong>Note:</strong> how we use the <code>get_user()</code> function? I
     have wrapped this around an <code>if</code> statement but don't worry if
     a logged in user is not found then <code>false</code> will be returned.</p>
 
-    <em>We can then access all the following properties of the user.</em>
+<em>We can then access all the following properties of the user.</em>
 
 <pre>
 &lt;?php
@@ -669,8 +742,8 @@ $user->hash;
 ?&gt;
 </pre>
 
-    <p>To view the contents of a <code>$user</code> object simply use the
-      pretty print function</p>
+<p>To view the contents of a <code>$user</code> object simply use the
+    pretty print function</p>
 
 <pre>
 &lt;?php
@@ -679,22 +752,23 @@ pp( get_user() );
 ?&gt;
 </pre>
 
-    <p id="saving-user-data">
-      <b class="header">Saving User Data</b>
-      <br />
-      <p>Sometimes you want to save user information. But before I show you how it's done I must
-      warn you about a few things.</p>
-    </p>
+<p id="saving-user-data">
+    <b class="header">Saving User Data</b>
+    <br/>
 
-    <ul>
-      <li><strong>Don't</strong>: re-hash the password, the system takes care of this for you</li>
-      <li><strong>Don't</strong>: try and save a custom SALT, the system won't let you</li>
-      <li><strong>Don't</strong>: try and change the created_at property</li>
-      <li><strong>Don't</strong>: try and change the users id!</li>
-      <li><strong>Don't</strong>: belive unicorns are real, you'll only be disappointed</li>
-    </ul>
+<p>Sometimes you want to save user information. But before I show you how it's done I must
+    warn you about a few things.</p>
+</p>
 
-    <p>I can only describe as whichcraft, watch this</p>
+<ul>
+    <li><strong>Don't</strong>: re-hash the password, the system takes care of this for you</li>
+    <li><strong>Don't</strong>: try and save a custom SALT, the system won't let you</li>
+    <li><strong>Don't</strong>: try and change the created_at property</li>
+    <li><strong>Don't</strong>: try and change the users id!</li>
+    <li><strong>Don't</strong>: belive unicorns are real, you'll only be disappointed</li>
+</ul>
+
+<p>I can only describe as whichcraft, watch this</p>
 
 <pre>
 &lt;?php
@@ -706,11 +780,12 @@ $user->save(); // BOOM!
 ?&gt;
 </pre>
 
-    <p id="other-useful-functions">
-      <b class="header">Other Useful Functions</b>
-      <br />
-      <p>Below are some more functions you may find useful.</p>
-    </p>
+<p id="other-useful-functions">
+    <b class="header">Other Useful Functions</b>
+    <br/>
+
+<p>Below are some more functions you may find useful.</p>
+</p>
 
 <pre>
 &lt;?php
@@ -738,53 +813,64 @@ get_csrf_token()
 ?&gt;
 </pre>
 
-  <p>Keep an eye out on my youtube channel for videos <a href="http://www.youtube.com/channel/UCGmpf9QWuLBefDNaIA9y4XA/feed">youtube.com</a></p>
+<p>Keep an eye out on my youtube channel for videos <a
+        href="http://www.youtube.com/channel/UCGmpf9QWuLBefDNaIA9y4XA/feed">youtube.com</a></p>
 
-    <h2 id="faq">F.A.Q.</h2>
+<h2 id="faq">F.A.Q.</h2>
 
-    <p id="FAQ-ssl3-upgrade">
-      <b class="header">SSLv3 Upgrade</b>
-      <br />
-      Yes! send me an <a href="mailto:hello@phpcodemonkey.com">hello@phpcodemonkey.com</a> with your
-      purchase code and I'll send you this.
-    </p>
+<p id="FAQ-ssl3-upgrade">
+    <b class="header">SSLv3 Upgrade</b>
+    <br/>
+    Yes! send me an <a href="mailto:hello@phpcodemonkey.com">hello@phpcodemonkey.com</a> with your
+    purchase code and I'll send you this.
+</p>
 
-    <p id="FAQ-assets-not-loading">
-      <b class="header">Assets not Loading</b>
-      <br />
-      Right not to worry! Login to your administrator account and navigate to the system settings.
-      Enter the correct path to the system in the URL field.
-    </p>
+<p id="FAQ-assets-not-loading">
+    <b class="header">Assets not Loading</b>
+    <br/>
+    Right not to worry! Login to your administrator account and navigate to the system settings.
+    Enter the correct path to the system in the URL field.
+</p>
 
-    <h2 id="changelog">Change Log</h2>
+<h2 id="changelog">Change Log</h2>
 
-    <p><small><em>Sep 30, 2013</em></small></p>
-    <ul>
-      <li><strong>Big Change</strong> &dash; Changed the name from Advanced User Manager to Simple User Manager</li>
-      <li><strong>Feature</strong> &dash; Added nottification centre to the administrator
-      panel. So I can keep you up to date about important events.</li>
-      <li><strong>Bug Fix</strong> &dash; Fixed some minor issues.</li>
-      <li><strong>Internal Improvements</strong> &dash; Made some minor adjustments to improve
-      how the system works.</li>
-    </ul>
+<p>
+    <small><em>Sep 30, 2013</em></small>
+</p>
+<ul>
+    <li><strong>Big Change</strong> &dash; Changed the name from Advanced User Manager to Simple User Manager</li>
+    <li><strong>Feature</strong> &dash; Added nottification centre to the administrator
+        panel. So I can keep you up to date about important events.
+    </li>
+    <li><strong>Bug Fix</strong> &dash; Fixed some minor issues.</li>
+    <li><strong>Internal Improvements</strong> &dash; Made some minor adjustments to improve
+        how the system works.
+    </li>
+</ul>
 
-    <p><small><em>Sep 15, 2013</small></p>
-    <ul>
-      <li><strong>Installtion</strong> &dash; Now has the ability to install the script.</li>
-      <li><strong>Bug fix</strong> &dash; Various bug fixes.</li>
-    </ul>
+<p>
+    <small><em>Sep 15, 2013</small>
+</p>
+<ul>
+    <li><strong>Installtion</strong> &dash; Now has the ability to install the script.</li>
+    <li><strong>Bug fix</strong> &dash; Various bug fixes.</li>
+</ul>
 
-    <p><small><em>Aug 28, 2013</small></p>
-    <ul>
-      <li><strong>Bug fix</strong> &dash; When the admin saves a user it longer switches to that person.</li>
-      <li><strong>Missing file</strong> &dash; Forgot to supply the SQL file.</li>
-    </ul>
+<p>
+    <small><em>Aug 28, 2013</small>
+</p>
+<ul>
+    <li><strong>Bug fix</strong> &dash; When the admin saves a user it longer switches to that person.</li>
+    <li><strong>Missing file</strong> &dash; Forgot to supply the SQL file.</li>
+</ul>
 
-    <p><small><em>Aug 12, 2013</small></p>
-    <ul>
-      <li>Initial release</li>
-    </ul>
-  </div>
+<p>
+    <small><em>Aug 12, 2013</small>
+</p>
+<ul>
+    <li>Initial release</li>
+</ul>
+</div>
 
 </body>
 </html>

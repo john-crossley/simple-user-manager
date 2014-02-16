@@ -27,10 +27,10 @@
 // ADD YOUR DATABASE CONNECTION INFORMATION BELOW
 //
 DB::connect(array(
-  'host' => 'localhost',
-  'username' => 'root',
-  'password' => 'root',
-  'database' => 'simple_user_manager'
+    'host' => 'localhost',
+    'username' => 'root',
+    'password' => 'root',
+    'database' => 'simple_user_manager'
 ));
 
 /**

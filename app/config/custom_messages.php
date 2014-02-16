@@ -16,7 +16,7 @@
  * Shown when a path is not found
  */
 define('PATH_NOT_FOUND',
-  "Path was not found, check and try again"
+"Path was not found, check and try again"
 );
 
 /**
@@ -25,7 +25,7 @@ define('PATH_NOT_FOUND',
  * When the user can now access the selected directories
  */
 define('USER_CAN_NOW_ACCESS_DIR',
-  "The user can now access the selected files. Remember to secure the file!"
+"The user can now access the selected files. Remember to secure the file!"
 );
 
 /**
@@ -34,7 +34,7 @@ define('USER_CAN_NOW_ACCESS_DIR',
  * Shown when the user supplied an invaid path (Protecting files)
  */
 define('INVALID_PATH_SUPPLIED',
-  "You have supplied a nonexistent path, please enter another one."
+"You have supplied a nonexistent path, please enter another one."
 );
 
 /**
@@ -43,28 +43,28 @@ define('INVALID_PATH_SUPPLIED',
  * Shown when the user tries to send themselves a message
  */
 define('CANNOT_SEND_YOURSELF_A_PERSONAL_MESSAGE',
-  "Sorry but you cannot send yourself a personal message."
+"Sorry but you cannot send yourself a personal message."
 );
 
 /**
  * messages.php
  */
 define('MESSAGE_FEATURE_HAS_BEEN_DISABLED',
-  "The messages feature has been disabled, you must re-enable this feature to use it."
+"The messages feature has been disabled, you must re-enable this feature to use it."
 );
 
 /**
  * compose_messages.php
  */
 define('USER_HAS_PERSONAL_MESSAGES_DISABLED',
-  "Sorry, but the user has personal messages disabled."
+"Sorry, but the user has personal messages disabled."
 );
 
 /**
  * admin/view.php
  */
 define('DELETE_USER_SUCCESS',
-  "The user has been successfully removed from the database!"
+"The user has been successfully removed from the database!"
 );
 
 /**
@@ -73,7 +73,7 @@ define('DELETE_USER_SUCCESS',
  * Just a generic form success message
  */
 define('TEMPLATE_SUCCESSFULLY_UPDATED',
-  "The template has been updated successfully!"
+"The template has been updated successfully!"
 );
 
 /**
@@ -82,7 +82,7 @@ define('TEMPLATE_SUCCESSFULLY_UPDATED',
  * Shown when a user group has been added successfully
  */
 define('USER_GROUP_SUCCESSFULLY_ADDED',
-  "User group has been successfully added and can now be applied to members."
+"User group has been successfully added and can now be applied to members."
 );
 
 /**
@@ -91,7 +91,7 @@ define('USER_GROUP_SUCCESSFULLY_ADDED',
  * When a user has successfully removed a user group
  */
 define('SUCCESSFULLY_REMOVED_USER_GROUP',
-  "User groups have been successfully removed and no longer usable!"
+"User groups have been successfully removed and no longer usable!"
 );
 
 /**
@@ -100,7 +100,7 @@ define('SUCCESSFULLY_REMOVED_USER_GROUP',
  * When the user has succesfully updated a user group.
  */
 define('SUCCESSFULLY_UPDATE_USER_GROUP',
-  "The user group has been successfully updated!"
+"The user group has been successfully updated!"
 );
 
 /**
@@ -110,7 +110,7 @@ define('SUCCESSFULLY_UPDATE_USER_GROUP',
  * What do we do show an empty page? I think not!
  */
 define('UNABLE_TO_LOCATE_MESSAGE',
-  "The message no longer exists, maybe it has been deleted?"
+"The message no longer exists, maybe it has been deleted?"
 );
 
 /**
@@ -119,7 +119,7 @@ define('UNABLE_TO_LOCATE_MESSAGE',
  * Shown when a user successfully deletes a message
  */
 define('SUCCESSFULLY_DELETED_A_MESSAGE',
-  "Success, selected {{messages}} have been removed!"
+"Success, selected {{messages}} have been removed!"
 );
 
 /**
@@ -128,7 +128,7 @@ define('SUCCESSFULLY_DELETED_A_MESSAGE',
  * Shown when the user tries to access an area they are not allowed.
  */
 define('UNABLE_TO_ACCESS_THIS_AREA',
-  "Sorry but your account is not able to access this area of the website"
+"Sorry but your account is not able to access this area of the website"
 );
 
 /**
@@ -137,7 +137,7 @@ define('UNABLE_TO_ACCESS_THIS_AREA',
  * Shown when the user needs to be logged in to view a page
  */
 define('MUST_BE_LOGGED_IN',
-  "Sorry but you must be logged in to view this page"
+"Sorry but you must be logged in to view this page"
 );
 
 /**
@@ -146,7 +146,7 @@ define('MUST_BE_LOGGED_IN',
  * Just a generic error message when form errors are found.
  */
 define('GENERIC_FORM_ERROR_MESSAGE',
-  "We have some errors, please review and try again"
+"We have some errors, please review and try again"
 );
 
 /**
@@ -164,7 +164,7 @@ define('GENERIC_FORM_ERROR_MESSAGE',
  * When a user has successfully sent another user a message
  */
 define('SUCCESSFULLY_SENT_A_MESSAGE',
-  "Your message has been successfully sent"
+"Your message has been successfully sent"
 );
 
 /**
@@ -182,7 +182,7 @@ define('SUCCESSFULLY_SENT_A_MESSAGE',
  * Shown when the users profile has been updated from the admin panel
  */
 define('USER_PROFILE_HAS_BEEN_UPDATED',
-  "{{username}}'s profile has been successfully updated."
+"{{username}}'s profile has been successfully updated."
 );
 
 /**
@@ -191,7 +191,7 @@ define('USER_PROFILE_HAS_BEEN_UPDATED',
  * Shown when the user has some generic form validation errors.
  */
 define('VALIDATION_ERRORS',
-  "We have some validation errors, please check them!"
+"We have some validation errors, please check them!"
 );
 
 /**
@@ -200,7 +200,7 @@ define('VALIDATION_ERRORS',
  * Only shown really when suspected tomfoolery
  */
 define('UNABLE_TO_LOCATE_USER',
-  "Oops, the system was unable to locate the requested member. Did you enter their name correctly?"
+"Oops, the system was unable to locate the requested member. Did you enter their name correctly?"
 );
 
 /**
@@ -209,7 +209,7 @@ define('UNABLE_TO_LOCATE_USER',
  * Tells the user that they failed the captcha
  */
 define('CAPTCHA_FAILED',
-  "Captcha failed! Please enter the correct sum and try again."
+"Captcha failed! Please enter the correct sum and try again."
 );
 
 /**
@@ -218,7 +218,7 @@ define('CAPTCHA_FAILED',
  * Tells the user if they have been logged out.
  */
 define('LOGGED_OUT',
-  "{{username}} has been successfully logged out. See you soon!"
+"{{username}} has been successfully logged out. See you soon!"
 );
 
 /**
@@ -227,7 +227,7 @@ define('LOGGED_OUT',
  * Shown when the users account is banned.
  */
 define('BANNED_ACCOUNT',
-  "Sorry {{username}} but this account has been banned!"
+"Sorry {{username}} but this account has been banned!"
 );
 
 /**
@@ -237,8 +237,8 @@ define('BANNED_ACCOUNT',
  * account has not been activated.
  */
 define('ACCOUNT_NOT_YET_ACTIVATED',
-  "Sorry {{username}} your account is not yet active, check your
-  spam folder for an activation email!"
+"Sorry {{username}} your account is not yet active, check your
+spam folder for an activation email!"
 );
 
 /**
@@ -247,7 +247,7 @@ define('ACCOUNT_NOT_YET_ACTIVATED',
  * Shown when the user has had a new password generated.
  */
 define('NEW_PASSWORD_GENERATED',
-  "Success, {{username}} we have generated you a new password!"
+"Success, {{username}} we have generated you a new password!"
 );
 
 /**
@@ -257,14 +257,14 @@ define('NEW_PASSWORD_GENERATED',
  * on the login.php page (Forgot password field)
  */
 define('FORGOT_EMAIL_SENT',
-  "Success, {{username}} check your email for further instructions."
+"Success, {{username}} check your email for further instructions."
 );
 
 /**
  * process.php
  */
 define('ACCOUNT_NOT_FOUND_BY_EMAIL',
-  "Sorry but no record was found matching {{email}}"
+"Sorry but no record was found matching {{email}}"
 );
 
 
@@ -274,7 +274,7 @@ define('ACCOUNT_NOT_FOUND_BY_EMAIL',
  * Shown when the user uses a banned email extension
  */
 define('BANNED_EMAIL_EXTENSION',
-  "Sorry but you cannot use this email extension: {{extension}}"
+"Sorry but you cannot use this email extension: {{extension}}"
 );
 
 /**
@@ -284,7 +284,7 @@ define('BANNED_EMAIL_EXTENSION',
  * what message should be shown?
  */
 define('INCORRECT_VERIFICATION_DETAILS',
-  "Verification details do not match. Did you click the right link?"
+"Verification details do not match. Did you click the right link?"
 );
 
 /**
@@ -292,7 +292,7 @@ define('INCORRECT_VERIFICATION_DETAILS',
  * what message should be shown to them?
  */
 define('ACCOUNT_VERIFIED',
-  "Success {{username}}, you may now login!"
+"Success {{username}}, you may now login!"
 );
 
 /**
@@ -310,7 +310,7 @@ define('ACCOUNT_VERIFIED',
  * Shown when the users information has been updated.
  */
 define('USER_DETAILS_HAVE_CHANGED',
-  "FYI Your account has been updated at {{system_name}}"
+"FYI Your account has been updated at {{system_name}}"
 );
 
 /**
@@ -318,9 +318,8 @@ define('USER_DETAILS_HAVE_CHANGED',
  * receive when they create a new account.
  */
 define('WELCOME_SUBJECT',
-  "Action Required | Welcome to {{system_name}}"
+"Action Required | Welcome to {{system_name}}"
 );
-
 
 
 /**
@@ -328,7 +327,7 @@ define('WELCOME_SUBJECT',
  * register.php page.
  */
 define('EMAIL_IN_USE',
-  "{{email}} is currently in use!"
+"{{email}} is currently in use!"
 );
 
 /**
@@ -336,21 +335,21 @@ define('EMAIL_IN_USE',
  * On the register.php page
  */
 define('INVALID_EMAIL_ADDRESS',
-  "{{email}} seems to be invalid."
+"{{email}} seems to be invalid."
 );
 
 /**
  * Shown when the username is in use.
  */
 define('USERNAME_IN_USE',
-  "{{username}} is currently in use!"
+"{{username}} is currently in use!"
 );
 
 /**
  * Shown when the user chooses a password too short.
  */
 define('PASSWORD_TOO_SHORT',
-  "Password must be 6 or more chars."
+"Password must be 6 or more chars."
 );
 
 /**
@@ -358,23 +357,23 @@ define('PASSWORD_TOO_SHORT',
  * information.
  */
 define('INVALID_USERNAME_AND_OR_PASSWORD',
-  "Username and password do not match, please try again!"
+"Username and password do not match, please try again!"
 );
 
 define('RECORD_NOT_FOUND',
-  "I'm sorry but {{record}} was not found in the database!"
+"I'm sorry but {{record}} was not found in the database!"
 );
 
 define('USER_LOGGED_IN',
-  "Welcome {{username}}, you are now logged in!"
+"Welcome {{username}}, you are now logged in!"
 );
 
 define('CSRF_CHECK_FAILURE',
-  "CSRF failure. You do not have permission to make this request!"
+"CSRF failure. You do not have permission to make this request!"
 );
 
 define('NO_WRITE_PERMISSIONS_FOR_CACHE_DIRECTORY',
-  "Please ensure your cache directory is writable before you can receive notifications."
+"Please ensure your cache directory is writable before you can receive notifications."
 );
 
 
@@ -389,30 +388,30 @@ define('NO_WRITE_PERMISSIONS_FOR_CACHE_DIRECTORY',
  * Shown when a user has just successfully registered
  */
 define('NEW_USER_REGISTERED',
-  "Welcome {{username}}! Please check your email for further instructions."
+"Welcome {{username}}! Please check your email for further instructions."
 );
 
 /**
  * process.php
  */
 define('ERROR_OCCURRED_WHILE_PROCESSING_FORM',
-  "Sorry but an error occurred while processing form, please try again."
+"Sorry but an error occurred while processing form, please try again."
 );
 
 define('LOGIN_FORM_DATA_NOT_SUPPLIED',
-  "You must fill out all of the required fields."
+"You must fill out all of the required fields."
 );
 
 define('SEARCH_TERM_TOO_SHORT',
-  "Please user a longer search term, minimum 3 characters long."
+"Please user a longer search term, minimum 3 characters long."
 );
 
 define('SEARCH_FOUND_NO_RESULTS',
-  "No results have been found using {{term}}. Maybe try another one?"
+"No results have been found using {{term}}. Maybe try another one?"
 );
 
 define('USER_PROFILE_NOT_FOUND',
-  "Sorry but you requested a profile that doesn't exist."
+"Sorry but you requested a profile that doesn't exist."
 );
 
 /**
@@ -421,7 +420,7 @@ define('USER_PROFILE_NOT_FOUND',
  * When the user wants to update their profile
  */
 define('YOUR_ACCOUNT_HAS_BEEN_UPDATED',
-  "Your account has been successfully updated."
+"Your account has been successfully updated."
 );
 
 /**
@@ -430,9 +429,9 @@ define('YOUR_ACCOUNT_HAS_BEEN_UPDATED',
  * Shown when the system failed to update a user.
  */
 define('UNABLE_TO_UPDATE_USER',
-  "Sorry, unable to update the user's profile. Try again."
+"Sorry, unable to update the user's profile. Try again."
 );
 
 define('UNABLE_TO_RETRIEVE_NOTIFICATIONS',
-  "Unable to retrieve notifications at the moment. Please try again soon."
+"Unable to retrieve notifications at the moment. Please try again soon."
 );

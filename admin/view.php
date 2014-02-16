@@ -74,7 +74,8 @@ if (!empty($_POST)) {
             try {
                 $result = ImageUploader::upload($_FILES['custom_profile_picture']);
             } catch (Exception $e) {
-                die(var_dump($e->getMessage()));
+                Flash::make('danger', $e->getMessage());
+                redirect('admin/view.php?user=' . $user->id);
             }
 
             $user->custom_image = $result;
@@ -106,6 +107,11 @@ if (!empty($_POST)) {
         if (isset($_POST['banned_from_sending_personal_messages']) && $_POST['banned_from_sending_personal_messages'] == 'on') {
             $user->banned_from_sending_personal_messages = 1;
         } else $user->banned_from_sending_personal_messages = 0;
+
+        if (isset($_POST['delete_profile_picture']) && $_POST['delete_profile_picture'] == 'on') {
+            // Todo remove the file...
+            $user->custom_image = null;
+        }
 
         if (isset($_POST['fullname']) && !empty($_POST['fullname'])) {
             $names = explode(' ', $_POST['fullname']);
@@ -288,15 +294,14 @@ if (isset($_POST['task']) && $_POST['task'] === 'delete_account' &&
 
 <body>
 
-<!-- Menu -->
-<?= get_menu() ?>
+<?php get_menu(); ?>
 
 <div class="row main">
 
 <div class="container">
 
 <h2>
-    <img src="<?= get_gravatar($user->email, 50) ?>" width="50" height="50"
+    <img src="<?= get_profile_picture($user, 50) ?>" width="50" height="50"
          class="gravatar" alt="<?= $user->username ?>'s Gravatar Picture">
     <?= $user->username ?> <?= fullname($user, true) ?> <?= get_role($user) ?>
 </h2>
@@ -366,7 +371,9 @@ if (isset($_POST['task']) && $_POST['task'] === 'delete_account' &&
                 <input type="file" id="custom_profile_picture" name="custom_profile_picture">
                 <small class="help-block">
                     <?php $image_url = URL . 'uploads/' . $user->custom_image ?>
-                    <a href="<?= $image_url ?>" target="_blank"><?= $image_url ?></a>
+                    <?php if ($user->custom_image): ?>
+                        <a href="<?= $image_url ?>" target="_blank"><?= $image_url ?></a>
+                    <?php endif; ?>
                 </small>
             </div>
 
@@ -432,6 +439,17 @@ if (isset($_POST['task']) && $_POST['task'] === 'delete_account' &&
                 <!--//.checkbox-->
             </div>
             <!--//.form-group-->
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="delete_profile_picture">
+                        Delete profile picture?<br>
+                        <small>Picture will be removed and replaced with Gravatar (If you have one)</small>
+                    </label>
+                </div>
+                <!--//.checkbox-->
+            </div>
 
             <div class="form-group">
                 <div class="checkbox">

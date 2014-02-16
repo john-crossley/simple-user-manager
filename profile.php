@@ -16,10 +16,28 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveUserDataFr
     $rules = array();
     $email_user = false;
 
+    if ($_FILES['custom_profile_picture']['name']) {
+
+        // We have an image perform the update.
+        try {
+            $result = ImageUploader::upload($_FILES['custom_profile_picture']);
+        } catch (Exception $e) {
+            Flash::make('danger', $e->getMessage());
+            redirect('admin/view.php?user=' . $user->id);
+        }
+
+        $user->custom_image = $result;
+    }
+
     if (isset($_POST['account_private']) && $_POST['account_private'] == 'on') {
         // The user wants to make their account private
         $user->private = 1;
     } else $user->private = 0;
+
+    if (isset($_POST['delete_profile_picture']) && $_POST['delete_profile_picture'] == 'on') {
+        // Todo remove the file...
+        $user->custom_image = null;
+    }
 
     if (isset($_POST['email_user']) && $_POST['email_user'] == 'on') {
         // The user wants to be emailed
@@ -146,33 +164,34 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveUserDataFr
 
 ?>
 <body>
-<?= get_menu() ?>
+<?php get_menu(); ?>
 
-<div class="row">
-    <div class="container">
-
-        <div class="col-lg-3 profile-block">
-            <img src="<?= get_gravatar($user->email, 240) ?>" width="240" height="240" class="gravatar"
-                 alt="<?= $user->username ?>'s Gravatar Picture">
-
-            <h3><?= fullname($user) ?></h3>
-            <h4><?= $user->username ?> <?= get_role($user) ?></h4>
-            <ul>
-                <li><i class="glyphicon glyphicon-user"></i> <?= fullname($user) ?></li>
-                <li><i class="glyphicon glyphicon-envelope"></i> <a
-                        href="mailto: <?= $user->email ?>"><?= $user->email ?></a></li>
-                <li><i class="glyphicon glyphicon-map-marker"></i> <?= $user->location ?></li>
-                <li><i class="glyphicon glyphicon-time"></i> Joined
-                    on: <?= date(TIME_FORMAT, strtotime($user->created_at)) ?></li>
-            </ul>
+<div class="container main">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="<?php echo get_profile_picture($user, 240) ?>" width="240" height="240" class="gravatar"
+                     alt="<?= $user->username ?>'s Profile Picture">
+                <div class="caption">
+                    <hgroup>
+                        <h3><?= fullname($user) ?></h3>
+                        <h4><?= $user->username ?> <?= get_role($user) ?></h4>
+                    </hgroup>
+                    <p><?php echo $user->bio; ?></p>
+                    <p><i class="glyphicon glyphicon-envelope"></i> <a
+                            href="mailto: <?= $user->email ?>"><?= $user->email ?></a></p>
+                    <p><i class="glyphicon glyphicon-map-marker"></i> <?= $user->location ?></p>
+                    <p><i class="glyphicon glyphicon-time"></i> Joined
+                        on: <?= date(TIME_FORMAT, strtotime($user->created_at)) ?></p>
+                </div>
+            </div>
         </div>
-        <!--//.col-lg-3-->
 
-        <div class="col-lg-9 main">
+        <div class="col-md-9">
             <h2>Viewing <?= fullname($user) ?>'s Profile</h2>
             <hr>
 
-            <form method="post" action="<?= root_path('profile.php') ?>">
+            <form method="post" action="<?= root_path('profile.php') ?>" enctype="multipart/form-data">
                 <div class="form-group has-<?= form_has_error('username') ?>">
                     <input type="hidden" name="task" value="saveUserDataFromUserProfile">
                     <input type="hidden" name="csrf" value="<?= get_csrf_token() ?>">
@@ -231,6 +250,17 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveUserDataFr
                 </div>
                 <!--//.form-group-->
 
+                <div class="form-group">
+                    <label for="custom_profile_picture" class="control-label">Custom profile picture</label>
+                    <input type="file" id="custom_profile_picture" name="custom_profile_picture">
+                    <small class="help-block">
+                        <?php $image_url = URL . 'uploads/' . $user->custom_image ?>
+                        <?php if ($user->custom_image): ?>
+                            <a href="<?= $image_url ?>" target="_blank"><?= $image_url ?></a>
+                        <?php endif; ?>
+                    </small>
+                </div>
+
                 <hr>
 
                 <div class="form-group">
@@ -243,7 +273,17 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveUserDataFr
                     </div>
                     <!--//.checkbox-->
                 </div>
-                <!--//.form-group-->
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="delete_profile_picture">
+                            Delete profile picture?<br>
+                            <small>Your picture will be removed and replaced with Gravatar (If you have one)</small>
+                        </label>
+                    </div>
+                    <!--//.checkbox-->
+                </div>
 
                 <?php if (pm_system_enabled()): ?>
                     <div class="form-group">
@@ -284,19 +324,15 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveUserDataFr
                 <!--//.form-group-->
 
                 <div class="form-group">
-                    <button class="btn btn-primary pull-right">Update Account</button>
+                    <button class="btn btn-primary pull-right">Save</button>
                 </div>
                 <!--//.form-group-->
 
             </form>
-
         </div>
-        <!--//.col-lg-9-->
-
     </div>
-    <!--//.container-->
 </div>
-<!--//.row-->
+
 
 <?= get_footer() ?>
 </body>

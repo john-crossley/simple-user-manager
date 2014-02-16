@@ -19,7 +19,7 @@
                     ?>
                     <li class="dropdown">
                         <a href="<?php echo root_path('index.php'); ?>" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="<?php echo get_gravatar($user->email, 25); ?>" width="25" height="25"
+                            <img src="<?php echo get_profile_picture($user, 25); ?>" width="25" height="25"
                                  class="gravatar" alt="<?php echo $user->username ?>'s Gravatar Picture">
                             <?php echo $user->username; ?> <b class="caret"></b>
                         </a>

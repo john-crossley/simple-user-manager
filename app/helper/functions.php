@@ -421,6 +421,14 @@ function get_gravatar($email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts 
     return $url;
 }
 
+function get_profile_picture(User $user, $size = null)
+{
+    if ($user->custom_image)
+        return URL . 'uploads/' . $user->custom_image;
+
+    return get_gravatar($user->email, $size);
+}
+
 /**
  * Checks to see if a user is logged in
  * @return bool Returns true when logged in.

@@ -18,17 +18,17 @@ get_header('Viewing: ' . fullname($user) . '\'s profile');
 ?>
 <body>
 
-<?= get_menu() ?>
+<?php get_menu(); ?>
 
 <div class="row">
     <div class="container">
 
         <div class="col-lg-3 profile-block">
-            <img src="<?= get_gravatar($user->email, 240) ?>" width="240" height="240" class="gravatar"
-                 alt="<?= $user->username ?>'s Gravatar Picture">
+            <img src="<?php echo get_profile_picture($user, 240); ?>" width="240" height="240" class="gravatar"
+                 alt="<?php echo $user->username; ?>'s Gravatar Picture">
 
-            <h3><?= fullname($user) ?></h3>
-            <h4><?= $user->username ?> <?= get_role($user) ?></h4>
+            <h3><?php echo fullname($user); ?></h3>
+            <h4><?php echo  $user->username; ?> <?php echo get_role($user); ?></h4>
             <ul>
                 <li><i class="glyphicon glyphicon-user"></i> <?= fullname($user) ?></li>
                 <?php if (!$user->private): ?>
@@ -81,7 +81,7 @@ get_header('Viewing: ' . fullname($user) . '\'s profile');
 <!--//.row-->
 
 <div class="modal fade" id="send-personal-message">
-    <form method="POST" action="<?= root_path('view.php') ?>">
+    <form method="POST" action="<?= root_path('view.php') ?>" enctype="multipart/form-data">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

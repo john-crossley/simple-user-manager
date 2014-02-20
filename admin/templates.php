@@ -3,7 +3,7 @@ require_once '../loader.php';
 get_header('Templates');
 ensure_login();
 $user = get_user();
-check_user_access($user, 'accessSettingsPanel', array('redirect' => $user->redirect_to));
+check_user_access($user, 'accessTemplatesPanel', array('redirect' => 'admin/'));
 $settings = get_settings();
 
 if (isset($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveTemplateSettingsFromAdminPanel') {

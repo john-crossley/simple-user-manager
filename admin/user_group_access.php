@@ -3,7 +3,9 @@ require_once '../loader.php';
 get_header('Access Control List (ACL)');
 ensure_login();
 $user = get_user();
-check_user_access($user, 'accessAdminPanel');
+check_user_access($user, 'editUserGroupAccessAreas', array(
+    'redirect' => 'admin/'
+));
 ?>
 <body>
 <?php get_menu(); ?>

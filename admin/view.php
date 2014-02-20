@@ -3,8 +3,8 @@ require_once '../loader.php';
 ensure_login();
 $user = get_user();
 get_header("Viewing $user->username's Profile");
-check_user_access($user, 'accessAdminPanel', array(
-    'redirect' => 'member/'
+check_user_access($user, 'editMembers', array(
+    'redirect' => 'admin/'
 ));
 
 

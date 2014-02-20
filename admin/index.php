@@ -3,7 +3,7 @@ require_once '../loader.php';
 get_header('Admin Panel');
 ensure_login();
 $user = get_user();
-check_user_access($user, 'accessAdminPanel', array('redirect' => 'member/'));
+check_user_access($user, 'accessAdminPanel', array('redirect' => $user->redirect_to));
 ?>
 <body>
 <?php get_menu('home'); ?>

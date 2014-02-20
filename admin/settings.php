@@ -3,7 +3,7 @@ require_once '../loader.php';
 get_header('Settings');
 ensure_login();
 $user = get_user();
-check_user_access($user, 'accessSettingsPanel', array('redirect' => $user->redirect_to));
+check_user_access($user, 'accessSettingsPanel', array('redirect' => 'admin/'));
 $settings = get_settings();
 
 if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFromAdminPanel') {

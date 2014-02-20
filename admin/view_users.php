@@ -3,8 +3,8 @@ require_once '../loader.php';
 get_header('Viewing Users');
 ensure_login();
 $user = get_user();
-check_user_access($user, 'accessAdminPanel', array(
-    'redirect' => 'member/'
+check_user_access($user, 'viewMembers', array(
+    'redirect' => 'admin/'
 ));
 
 $p = new Pagination(20, 'page');

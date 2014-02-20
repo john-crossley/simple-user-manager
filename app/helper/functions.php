@@ -171,7 +171,7 @@ function ensure_login()
 function check_user_access(User $user, $permission, array $options = array())
 {
     // For now.
-    if (!isset($options['error'])) $options['error'] = 'error';
+    if (!isset($options['error'])) $options['error'] = 'danger';
     if (!isset($options['message'])) $options['message'] = UNABLE_TO_ACCESS_THIS_AREA;
     if (!isset($options['redirect'])) $options['redirect'] = 'member/';
 

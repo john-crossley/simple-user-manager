@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.6.14)
 # Database: simple_user_manager
-# Generation Time: 2014-02-16 18:52:45 +0000
+# Generation Time: 2014-02-20 20:33:48 +0000
 # ************************************************************
 
 
@@ -77,13 +77,17 @@ LOCK TABLES `permission` WRITE;
 
 INSERT INTO `permission` (`id`, `description`, `pretty_name`)
 VALUES
-  (1,'accessAdminPanel','Access Admin Panel'),
-  (2,'viewMembers','View Members'),
-  (3,'editMembers','Edit Members'),
-  (4,'createMembers','Create Members'),
-  (5,'deleteMembers','Delete Members'),
-  (6,'bannedMember','Banned Account'),
-  (7,'accessSettingsPanel','Access Settings Panel');
+	(1,'accessAdminPanel','Access Admin Panel'),
+	(2,'viewMembers','View Members'),
+	(3,'editMembers','Edit Members'),
+	(4,'createMembers','Create Members'),
+	(5,'deleteMembers','Delete Members'),
+	(6,'bannedMember','Banned Account'),
+	(7,'accessSettingsPanel','Access Settings Panel'),
+	(8,'accessTemplatesPanel','Access Templates'),
+	(9,'createUserGroups','Create Users Groups'),
+	(10,'viewUserGroups','View User Groups'),
+	(11,'editUserGroupAccessAreas','Edit User Group Access Areas');
 
 /*!40000 ALTER TABLE `permission` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -122,9 +126,10 @@ LOCK TABLES `role` WRITE;
 
 INSERT INTO `role` (`role_id`, `role_name`)
 VALUES
-  (1,'Administrator'),
-  (3,'Banned'),
-  (2,'Member');
+	(4,'Access Admin Panel'),
+	(1,'Administrator'),
+	(3,'Banned'),
+	(2,'Member');
 
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -147,13 +152,18 @@ LOCK TABLES `role_permission` WRITE;
 
 INSERT INTO `role_permission` (`role_id`, `permission_id`)
 VALUES
-  (1,1),
-  (1,2),
-  (1,3),
-  (1,4),
-  (1,5),
-  (1,7),
-  (3,6);
+	(3,6),
+	(4,1),
+	(1,1),
+	(1,2),
+	(1,3),
+	(1,4),
+	(1,5),
+	(1,7),
+	(1,8),
+	(1,9),
+	(1,10),
+	(1,11);
 
 /*!40000 ALTER TABLE `role_permission` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -188,7 +198,7 @@ LOCK TABLES `setting` WRITE;
 
 INSERT INTO `setting` (`id`, `name`, `url`, `version`, `meta_author`, `meta_description`, `banned_email_extensions`, `default_group`, `allow_registration`, `email`, `pm_disabled`, `support_enabled`, `username_disabled`)
 VALUES
-  (1,'Simple User Manager','http://localhost/simple-user-manager/','1.2.1','John Crossley','This is a meta description, nothing too fancy just this.','fake.com example.com googlemail.com',2,1,'hello@phpcodemonkey.com',1,0,0);
+	(1,'Simple User Manager','http://localhost/simple-user-manager/','1.2.1','John Crossley','This is a meta description, nothing too fancy just this.','fake.com example.com googlemail.com',2,1,'hello@phpcodemonkey.com',1,0,0);
 
 /*!40000 ALTER TABLE `setting` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -214,13 +224,13 @@ LOCK TABLES `template` WRITE;
 
 INSERT INTO `template` (`id`, `name`, `subject`, `data`, `fields`, `default_data`)
 VALUES
-  (1,'Forgot Password Request','Forgot Password Request','Hello {{username}},\r\n\r\nSo you forgot your password? Not to worry! Please use the link below and we\'ll send you a new password.\r\n\r\n<a href=\"{{new_password_url}}\">{{new_password_url}}</a>\r\n\r\nJust click on the link to begin the process of obtaining a new password. If you did not make this request then do not worry! Nothing will be changed.\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team.','a:2:{i:0;s:8:\"username\";i:1;s:16:\"new_password_url\";}',''),
-  (2,'New Personal Message','New Personal Message','Hello {{username}},\r\n\r\nGood news! You have received a personal message from <strong>{{sender}}</strong> over at <strong>{{system_name}}</strong>. To see the message in context then head over to your account and check it out.\r\n\r\n<blockquote>\r\n{{title}}\r\n{{message}}\r\n</blockquote>\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team\r\n','a:4:{i:0;s:8:\"username\";i:1;s:6:\"sender\";i:2;s:5:\"title\";i:3;s:7:\"message\";}',''),
-  (3,'New Random Password','New random password','Hello {{username}},\r\n\r\nNew password <strong>{{password}}</strong>\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team','a:2:{i:0;s:8:\"username\";i:1;s:8:\"password\";}',''),
-  (4,'New User (From Admin Panel)','Your new account','Welcome {{username}},\r\n\r\nGood news! {{creator}} over at {{system_name}} has just made you a new account! No action is required on your part WOO! Here is some information you may need.\r\n\r\nUsername: {{username}}\r\nPassword: {{password}}\r\nEmail: {{user_email}}\r\nGroup: {{user_group}}\r\n\r\nSo head over to <a href=\"{{url}}\">{{url}}</a> and login.\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team','a:5:{i:0;s:7:\"creator\";i:1;s:8:\"username\";i:2;s:8:\"password\";i:3;s:10:\"user_email\";i:4;s:10:\"user_group\";}',''),
-  (5,'Registration Complete','Registration complete','Hello {{username}},\r\n\r\nJust to let you know that your registration is now complete and you may login to your account.\r\n\r\n<a href=\"{{login_url}}\">{{login_url}}</a>\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team','a:2:{i:0;s:8:\"username\";i:1;s:9:\"login_url\";}',''),
-  (6,'User Information Updated','Heads up! your information has been updated','Hello {{username}},\r\n\r\nJust to let you know that some of your data has been updated by one of {{system_name}}\'s administrators. Below is a list of what has been changed.\r\n\r\n<strong>Username</strong>: {{username}}\r\n<strong>Full name</strong>: {{fullname}}\r\n<strong>Email</strong>: {{user_email}}\r\n<strong>Password</strong>: {{password}}\r\n<strong>Group</strong>: {{user_group}}\r\n<strong>Location</strong>: {{location}}\r\n<hr>\r\n<strong>Bio</strong>: {{bio}}\r\n\r\n<strong>Account visibility</strong>: {{account_private}}\r\n\r\n{{status_change_message}}\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team','a:9:{i:0;s:8:\"username\";i:1;s:8:\"fullname\";i:2;s:10:\"user_email\";i:3;s:8:\"password\";i:4;s:10:\"user_group\";i:5;s:3:\"bio\";i:6;s:8:\"location\";i:7;s:15:\"account_private\";i:8;s:21:\"status_change_message\";}',''),
-  (7,'Welcome Email','New user account - Action required','Hello {{username}} and welcome to {{system_name}},\r\n\r\nJust to let you know that you need to verify this is your email to complete your registration. Simply click on the link below to complete.\r\n\r\n<a href=\"{{validate_url}}\">Verify your account</a>\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team','a:2:{i:0;s:8:\"username\";i:1;s:12:\"validate_url\";}','');
+	(1,'Forgot Password Request','Forgot Password Request','Hello {{username}},\r\n\r\nSo you forgot your password? Not to worry! Please use the link below and we\'ll send you a new password.\r\n\r\n<a href=\"{{new_password_url}}\">{{new_password_url}}</a>\r\n\r\nJust click on the link to begin the process of obtaining a new password. If you did not make this request then do not worry! Nothing will be changed.\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team.','a:2:{i:0;s:8:\"username\";i:1;s:16:\"new_password_url\";}',''),
+	(2,'New Personal Message','New Personal Message','Hello {{username}},\r\n\r\nGood news! You have received a personal message from <strong>{{sender}}</strong> over at <strong>{{system_name}}</strong>. To see the message in context then head over to your account and check it out.\r\n\r\n<blockquote>\r\n{{title}}\r\n{{message}}\r\n</blockquote>\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team\r\n','a:4:{i:0;s:8:\"username\";i:1;s:6:\"sender\";i:2;s:5:\"title\";i:3;s:7:\"message\";}',''),
+	(3,'New Random Password','New random password','Hello {{username}},\r\n\r\nNew password <strong>{{password}}</strong>\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team','a:2:{i:0;s:8:\"username\";i:1;s:8:\"password\";}',''),
+	(4,'New User (From Admin Panel)','Your new account','Welcome {{username}},\r\n\r\nGood news! {{creator}} over at {{system_name}} has just made you a new account! No action is required on your part WOO! Here is some information you may need.\r\n\r\nUsername: {{username}}\r\nPassword: {{password}}\r\nEmail: {{user_email}}\r\nGroup: {{user_group}}\r\n\r\nSo head over to <a href=\"{{url}}\">{{url}}</a> and login.\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team','a:5:{i:0;s:7:\"creator\";i:1;s:8:\"username\";i:2;s:8:\"password\";i:3;s:10:\"user_email\";i:4;s:10:\"user_group\";}',''),
+	(5,'Registration Complete','Registration complete','Hello {{username}},\r\n\r\nJust to let you know that your registration is now complete and you may login to your account.\r\n\r\n<a href=\"{{login_url}}\">{{login_url}}</a>\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team','a:2:{i:0;s:8:\"username\";i:1;s:9:\"login_url\";}',''),
+	(6,'User Information Updated','Heads up! your information has been updated','Hello {{username}},\r\n\r\nJust to let you know that some of your data has been updated by one of {{system_name}}\'s administrators. Below is a list of what has been changed.\r\n\r\n<strong>Username</strong>: {{username}}\r\n<strong>Full name</strong>: {{fullname}}\r\n<strong>Email</strong>: {{user_email}}\r\n<strong>Password</strong>: {{password}}\r\n<strong>Group</strong>: {{user_group}}\r\n<strong>Location</strong>: {{location}}\r\n<hr>\r\n<strong>Bio</strong>: {{bio}}\r\n\r\n<strong>Account visibility</strong>: {{account_private}}\r\n\r\n{{status_change_message}}\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team','a:9:{i:0;s:8:\"username\";i:1;s:8:\"fullname\";i:2;s:10:\"user_email\";i:3;s:8:\"password\";i:4;s:10:\"user_group\";i:5;s:3:\"bio\";i:6;s:8:\"location\";i:7;s:15:\"account_private\";i:8;s:21:\"status_change_message\";}',''),
+	(7,'Welcome Email','New user account - Action required','Hello {{username}} and welcome to {{system_name}},\r\n\r\nJust to let you know that you need to verify this is your email to complete your registration. Simply click on the link below to complete.\r\n\r\n<a href=\"{{validate_url}}\">Verify your account</a>\r\n\r\nKind Regards,\r\n\r\n{{system_name}} team','a:2:{i:0;s:8:\"username\";i:1;s:12:\"validate_url\";}','');
 
 /*!40000 ALTER TABLE `template` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -262,8 +272,8 @@ LOCK TABLES `user` WRITE;
 
 INSERT INTO `user` (`id`, `firstname`, `lastname`, `username`, `email`, `bio`, `location`, `password`, `salt`, `private`, `notify_me_personal_message`, `receive_personal_messages`, `banned_from_sending_personal_messages`, `redirect_to`, `created_at`, `updated_at`, `last_login`, `verified`, `hash`, `custom_image`)
 VALUES
-  (1,'John','Crossley','admin','hello@phpcodemonkey.com','Hello my name is John Crossley and I\'m a 24 year old student / web app developer from Manchester, England. I specialise in writing beauiful php, HTML, CSS and JavaScript oh and a little bit of Ruby. If your looking for someone to write awesome code for you, your company or even your dog then then I\'m your guy!','Manchester, England','0643c76c544072ea70d1f869d1b45cb45c3771a3','439313a160fb70949d073a266455d6d4a38c7c72',0,0,1,0,'admin/index.php','2013-05-26 21:45:48','2014-02-16 18:50:59','2014-02-16 18:50:59',1,'1cac65fc4cfba6bd576f9e028e47840d',''),
-  (2,'Carl','Evison','carlospinkz','newb2ninja@gmail.com','Hello, my name is Carl and welcome to my profile. - edit.','Rochdale, Manchester','ce430ae1364e1a94a4de34cfdf190338f2462851','d558a61bf29b8d47fdd70962d5aff57f968e7a8d',0,0,1,0,'member/','2013-08-12 19:51:46','2014-02-16 18:46:40','2014-02-16 18:41:00',1,NULL,'');
+	(1,'John','Crossley','admin','hello@phpcodemonkey.com','Hello my name is John Crossley and I\'m a 24 year old student / web app developer from Manchester, England. I specialise in writing beauiful php, HTML, CSS and JavaScript oh and a little bit of Ruby. If your looking for someone to write awesome code for you, your company or even your dog then then I\'m your guy!','Manchester, England','0643c76c544072ea70d1f869d1b45cb45c3771a3','439313a160fb70949d073a266455d6d4a38c7c72',0,0,1,0,'admin/index.php','2013-05-26 21:45:48','2014-02-20 20:31:54','2014-02-20 20:31:54',1,'1cac65fc4cfba6bd576f9e028e47840d',''),
+	(2,'Carl','Evison','carlospinkz','newb2ninja@gmail.com','Hello, my name is Carl and welcome to my profile. - edit.','Rochdale, Manchester','ce430ae1364e1a94a4de34cfdf190338f2462851','d558a61bf29b8d47fdd70962d5aff57f968e7a8d',0,0,1,0,'member/','2013-08-12 19:51:46','2014-02-20 20:06:15','2014-02-20 20:06:15',1,NULL,'');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -288,8 +298,8 @@ LOCK TABLES `user_role` WRITE;
 
 INSERT INTO `user_role` (`user_id`, `role_id`)
 VALUES
-  (1,1),
-  (2,2);
+	(1,1),
+	(2,2);
 
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;

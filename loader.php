@@ -1,7 +1,7 @@
 <?php
 // Start a new session
 session_start();
-if (!isset($_SESSION['init'])) {
+if (! isset($_SESSION['init'])) {
     session_regenerate_id(true);
     $_SESSION['init'] = true;
 }

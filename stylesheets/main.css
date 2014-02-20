@@ -122,3 +122,7 @@ textarea {
     right: 0;
     border-radius: 0;
 }
+
+li.active a:hover {
+    background: #428bca;
+}

@@ -9,7 +9,7 @@
     </li>
     <li <?= _is_active($active, 'sent-messages') ?>>
         <a href="<?= root_path('sent_messages.php') ?>">
-            <i class="glyphicon glyphicon-folder-open"></i>
+            <i class="glyphicon glyphicon-folder-close"></i>
             Sent Messages
         </a>
     </li>

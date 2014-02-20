@@ -103,20 +103,20 @@ if ((isset($_POST['task']) && $_POST['task'] == 'sendMessage') &&
 ?>
 <body>
 
-<!-- Menu -->
-<?= get_menu() ?>
+<?php get_menu(); ?>
 
-<div class="row">
+<div class="container">
 
-    <div class="container main">
+    <div class="page-header">
+        <h1>Compose Message</h1>
+        <p class="lead">Wanna send a message to another user? Go on then...</p>
+    </div>
 
-        <div class="col-lg-3">
-            <?= get_messages_sidebar('compose-message') ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?php get_messages_sidebar('compose-message'); ?>
         </div>
-        <!--//.col-lg-3-->
-
-        <div class="col-lg-9">
-            <h2>Compose a Message</h2>
+        <div class="col-md-8">
             <?php if ($user->banned_from_sending_personal_messages > 0): ?>
                 <p class="text-danger">Your account has been banned from sending
                     personal messages. If you feel this is a mistake then please
@@ -159,15 +159,13 @@ if ((isset($_POST['task']) && $_POST['task'] == 'sendMessage') &&
                 </form>
             <?php endif; ?>
         </div>
-        <!--//.col-lg-9-->
-
     </div>
-    <!--//.container-->
 
 </div>
-<!--//.row-->
 
-<?= get_footer() ?>
+<?php get_footer(); ?>
+
+<?php get_view_message_modal(); ?>
 
 </body>
 </html>

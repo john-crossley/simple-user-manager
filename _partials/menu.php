@@ -67,7 +67,7 @@
 <?php if ($message = Flash::show()): ?>
     <div class="container">
         <div class="alert alert-<?php echo $message['type']; ?> alert-dismissable">
-            <button type="button" class="close" data-dismissable="alert" aria-hidden="true">&times;</button>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <strong><?php echo ucfirst($message['type']); ?>!</strong> <?php echo $message['msg']; ?>
         </div>
     </div>

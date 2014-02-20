@@ -7,20 +7,20 @@ messages_enabled($user);
 ?>
 <body>
 
-<!-- Menu -->
-<?= get_menu() ?>
+<?php get_menu(); ?>
 
-<div class="row">
+<div class="container">
 
-    <div class="container main">
+    <div class="page-header">
+        <h1>Sent Messages</h1>
+        <p class="lead">Here you can view the messages you have sent to other members.</p>
+    </div>
 
-        <div class="col-lg-3">
-            <?= get_messages_sidebar('sent-messages') ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?php get_messages_sidebar('sent-messages'); ?>
         </div>
-        <!--//.col-lg-3-->
-
-        <div class="col-lg-9">
-
+        <div class="col-md-8">
             <?php if (has_sent_messages($user->id)): ?>
                 <table class="table table-hover table-condensed">
                     <thead>
@@ -49,19 +49,14 @@ messages_enabled($user);
                 <p>You have not yet sent any messages why not <a href="<?= root_path('compose_message.php') ?>">compose
                         one</a>?</p>
             <?php endif; ?>
-
         </div>
-        <!--//.col-lg-9-->
-
     </div>
-    <!--//.container-->
 
 </div>
-<!--//.row-->
 
-<?= get_footer() ?>
+<?php get_footer(); ?>
 
-<?= get_view_message_modal() ?>
+<?php get_view_message_modal(); ?>
 
 </body>
 </html>

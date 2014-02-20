@@ -20,4 +20,10 @@
     <meta name="description" content="<?php echo meta_description(); ?>">
     <meta name="author" content="<?php echo meta_author(); ?>">
 
+    <script>
+        window.setTimeout( function () {
+            $('.alert').slideUp();
+        }, 2000);
+    </script>
+
 </head>

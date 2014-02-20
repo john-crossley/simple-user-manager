@@ -20,20 +20,20 @@ if (!empty($_POST) && isset($_POST['delete_message']) && !empty($_POST['delete_m
 ?>
 <body>
 
-<!-- Menu -->
-<?= get_menu() ?>
+<?php get_menu(); ?>
 
-<div class="row">
+<div class="container">
 
-    <div class="container main">
+    <div class="page-header">
+        <h1>Messages Inbox</h1>
+        <p class="lead">Welcome to your personal messages. Here you can read, send and receive messages.</p>
+    </div>
 
-        <div class="col-lg-3">
-            <?= get_messages_sidebar('messages') ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?php get_messages_sidebar('messages'); ?>
         </div>
-        <!--//.col-lg-3-->
-
-        <div class="col-lg-9">
-
+        <div class="col-md-8">
             <?php if (has_inbox_messages($user->id)): ?>
                 <form method="POST" action="<?= root_path('messages.php') ?>">
                     <table class="table table-hover table-condensed">
@@ -78,19 +78,14 @@ if (!empty($_POST) && isset($_POST['delete_message']) && !empty($_POST['delete_m
                 <p>Your inbox is currently empty, would you like to <a href="<?= root_path('compose_message.php') ?>">compose
                         one</coma>?</p>
             <?php endif; ?>
-
         </div>
-        <!--//.col-lg-9-->
-
     </div>
-    <!--//.container-->
 
 </div>
-<!--//.row-->
 
-<?= get_footer() ?>
+<?php get_footer(); ?>
 
-<?= get_view_message_modal() ?>
+<?php get_view_message_modal(); ?>
 
 </body>
 </html>

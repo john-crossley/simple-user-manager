@@ -20,6 +20,7 @@ function eraseCookie(e) {
     createCookie(e, "", -1)
 }
 $(".no-js").hide();
+
 $(document).ready(function () {
     $("#db-connection").on("submit", function (e) {
         var t = $(this), n = $("#db-host").val(), r = $("#db-username").val(), i = $("#db-password").val(), s = $("#db-name").val(), o = t.find("button");
@@ -89,4 +90,4 @@ $(document).ready(function () {
         });
         e.preventDefault()
     })
-})
+});

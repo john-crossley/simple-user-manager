@@ -11,11 +11,10 @@ get_header('Home');
     <div class="container">
         <h1>Hello, Everyone!</h1>
 
-        <p>Welcome to my <strong>super awesome</strong> user management system. I kinda listened to what some of you
-            guys
-            wanted and produced this amazing piece of php machinery. (Frequently updated.)</p>
+        <p>Welcome to my <strong>super awesome</strong> simple user management system. I listened to what you
+            guys wanted and produced this amazing piece of php machinery and it's <em>Frequently updated!</em></p>
 
-        <p><a class="btn btn-primary btn-lg" href="<?php echo root_path('login.php'); ?>" role="button">Get started!</a>
+        <p><a class="btn btn-primary btn-lg" href="<?php echo root_path('login.php'); ?>" role="button">Get started &raquo;</a>
         </p>
     </div>
 </div>

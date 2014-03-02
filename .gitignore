@@ -1,5 +1,6 @@
 .DS_Store
 .sass-cache/
 .tags*
+tags
 .idea/
 vendor/

@@ -14,9 +14,8 @@ if (isset($_GET['hash']) && isset($_GET['id']) && isset($_GET['do'])
     // Check to see if the values match the user.
     $user = User::findById($id);
 
-    if ($user === false) {
+    if (false === $user) {
         redirect('login.php');
-        exit;
     }
 
     // Right now check to see if the user matches up.

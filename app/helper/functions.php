@@ -475,7 +475,7 @@ function random_password($len = 6)
 
 function stylesheets_path($file = '')
 {
-    $path = URL . 'stylesheets/';
+    $path = URL . 'public/stylesheets/';
     if (!empty($file)) {
         $path .= $file . '.css';
     }
@@ -484,7 +484,7 @@ function stylesheets_path($file = '')
 
 function javascripts_path($file = '')
 {
-    $path = URL . 'javascripts/';
+    $path = URL . 'public/javascripts/';
     if (!empty($file)) {
         $path .= $file . '.js';
     }
@@ -493,7 +493,7 @@ function javascripts_path($file = '')
 
 function images_path($image)
 {
-    $path = URL . 'images/';
+    $path = URL . 'public/images/';
     if (!empty($image)) {
         $path .= $image;
     }
@@ -663,7 +663,7 @@ function system_email()
 
 function pm_system_enabled()
 {
-    return (!!Settings::get('pm_disabled') === true) ? true : false;
+    return !!Settings::get('pm_disabled');
 }
 
 /**

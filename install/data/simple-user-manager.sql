@@ -44,21 +44,6 @@ CREATE TABLE `message` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-
-# Dump of table notifications_centre
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `notifications_centre`;
-
-CREATE TABLE `notifications_centre` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `json_object_data` text,
-  `created_at` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
 # Dump of table permission
 # ------------------------------------------------------------
 

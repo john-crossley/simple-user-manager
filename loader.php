@@ -1,5 +1,4 @@
 <?php
-// Start a new session
 session_start();
 if (! isset($_SESSION['init'])) {
     session_regenerate_id(true);
@@ -24,9 +23,11 @@ define('ACCESS', true);
  * Add the ability to autoload our classes
  * @see http://www.php.net/manual/en/function.spl-autoload-register.php
  */
-spl_autoload_register(function ($class) {
-    require_once ROOT . 'app/library/' . $class . '.php';
-});
+spl_autoload_register(
+    function ($class) {
+        require_once ROOT . 'app/library/' . $class . '.php';
+    }
+);
 
 
 /**

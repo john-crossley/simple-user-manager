@@ -1,105 +1,14 @@
 <?php
-require_once '../app/library/SingletonAbstract.php';
-require_once '../app/library/Flash.php';
-require_once 'functions.php';
-
-if (empty($_SESSION)) {
-    session_regenerate_id();
-    session_start();
-}
-
 /**
- * Added for those times when the server is down.
- * This ensures the user can still use the installer.
+ * Quick bash together script not intended to be used in production.
+ * Once you have finished installing your system please delete this folder.
  */
-define('SKIP_LICENSE_KEY', true);
-
-if (isset($_POST['task']) && $_POST['task'] === 'test_connection') {
-
-    // Save the connection information
-    $host = (isset($_POST['host']) ? strip_tags($_POST['host']) : '');
-    $user = (isset($_POST['user']) ? strip_tags($_POST['user']) : '');
-    $pass = (isset($_POST['pass']) ? strip_tags($_POST['pass']) : '');
-    $dbname = (isset($_POST['dbname']) ? strip_tags($_POST['dbname']) : '');
-
-    // Ok test the connection
-    $link = @mysqli_connect($host, $user, $pass, $dbname)
-        or die(json_encode(array('error' => true, 'message' => 'MYSQL Said: ' . mysqli_connect_error())));
-
-
-    $_SESSION['DB']['HOST'] = $host;
-    $_SESSION['DB']['USER'] = $user;
-    $_SESSION['DB']['PASS'] = $pass;
-    $_SESSION['DB']['DBNAME'] = $dbname;
-
-    echo json_encode(array(
-        'error' => false,
-        'message' => 'Successfully connected to the database! Ready to rock and roll?'
-    ));
-
-
-    exit;
+require_once 'includes/functions.php';
+session_start();
+if (! isset($_SESSION['init'])) {
+    session_regenerate_id(true);
+    $_SESSION['init'] = true;
 }
-
-if (isset($_POST['task']) && $_POST['task'] === 'license') {
-
-    if (empty($_POST['code'])) {
-        echo json_encode(array('error' => true, 'message' => 'You must enter your license key!'));
-        exit;
-    }
-
-    if (SKIP_LICENSE_KEY) {
-        echo json_encode(array('error' => false, 'message' => 'Success!'));
-        exit;
-    }
-
-    $url = "http://phpcodemonkey.com/api/v1/license";
-
-    $fields = array(
-        'code' => urlencode($_POST['code']),
-        'fullname' => urlencode($_SESSION['USER_INFORMATION']['FULLNAME']),
-        'email' => urlencode($_SESSION['USER_INFORMATION']['EMAIL']),
-        'url' => urlencode($_SESSION['USER_INFORMATION']['URL'])
-    );
-
-    $string = "";
-    foreach ($fields as $key => $value)
-        $string .= $key . '=' . $value . '&';
-
-    rtrim($string, '&');
-
-    $ch = curl_init();
-
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, count($fields));
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $string);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-    $result = curl_exec($ch);
-
-    curl_close($ch);
-
-    echo $result;
-    exit;
-
-}
-
-if (isset($_POST['task']) && $_POST['task'] === 'save_user') {
-    // Right save the information in a session... for now!
-    $url = $_SESSION['USER_INFORMATION']['URL'] = strip_tags($_POST['url']);
-    $fullname = $_SESSION['USER_INFORMATION']['FULLNAME'] = strip_tags($_POST['fullname']);
-    $email = $_SESSION['USER_INFORMATION']['EMAIL'] = strip_tags($_POST['email']);
-
-    // Cheeky validation
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(array('error' => true, 'message' => 'Please enter a valid email address.'));
-        exit;
-    }
-
-    echo json_encode(array('error' => false, 'message' => 'Information has been saved!'));
-    exit;
-}
-
 define('ROOT', str_replace('\\', '/', dirname(__FILE__)) . '/');
 $path1 = explode('/', str_replace('\\', '/', dirname($_SERVER['SCRIPT_FILENAME'])));
 $path2 = explode('/', substr(ROOT, 0, -1));
@@ -107,34 +16,25 @@ $path3 = explode('/', str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])));
 for ($i = count($path2); $i < count($path1); $i++) array_pop($path3);
 $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
 ($url{strlen($url) - 1} == '/') ? define('URL', 'http://' . $url . '/') : define('URL', 'http://' . $url);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Installation &raquo; Advanced User Management System</title>
+    <title>Installation &raquo; Simple User Manager</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="public/js/app.js"></script>
+
     <style>
-        body {
-            width: 80%;
-            margin: 4em auto;
-        }
-
-        h1 {
-            font-weight: normal;
-        }
-
-        .row {
-            margin-top: 1.5em;
-        }
-
-        #start-installation {
+        #change-settings {
             display: none;
         }
 
@@ -143,335 +43,262 @@ $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
 </head>
 <body>
 
-<div class="no-js">
-    <div class="alert alert-danger">
-        <strong>Warning: </strong> you must enable JavaScript to proceed with the installation!
+<div class="container">
+
+    <div class="page-header">
+        <h1>Simple User Manager</h1>
+        <p class="lead">a quick and easy, simple installer.</p>
     </div>
-    <!--//.alert alert-danger-->
-</div>
-<!--//.no-js-->
-
-
-<?php if ($message = Flash::show()): ?>
-    <div class="alert alert-<?= $message['type'] ?>">
-        <?= $message['msg'] ?>
-    </div><!--alert-->
-<?php endif; ?>
-
-<div class="row">
-    <h1>Welcome to Advanced User Manager Installation</h1>
-
-    <p>
-        Hello and welcome to the <strong>advanced user manager</strong>installation. The
-        installation script will attempt to install the system for you and help offer advice
-        should something go wrong. Before we continue you will need to provide some information
-        in order to continue.
-    </p>
-</div>
-<!--//.row-->
-
-<div class="row">
-
-<div class="col-md-4">
-    <ul class="nav nav-pills nav-stacked">
-        <li <?php is_active(1); ?>><a href="?step=1">Getting Started</a></li>
-        <li <?php is_active(2); ?>><a href="?step=2">Requirements</a></li>
-        <li <?php is_active(3); ?>><a href="?step=3">License Agreement</a></li>
-        <li <?php is_active(4); ?>><a href="?step=4">Install</a></li>
-        <li><br></li>
-        <li><a href="../help/" target="_blank">Help</a></li>
-    </ul>
-</div>
-<!--//.col-md-4-->
-
-<div class="col-md-8">
-
-<?php if ((isset($_GET['step']) && $_GET['step'] == 4) && check_license() && isset($_GET['start_installation'])): ?>
-
-    <?php if (!isset($_SESSION['DB']) OR !isset($_SESSION['USER_INFORMATION'])) {
-        Flash::make('danger', 'You must provide database and user information.');
-        header('Location: index.php');
-        exit;
-    }
-    ?>
-
-    <p>1) Starting installation...</p>
-
-    <?php
-    $connection = $_SESSION['DB'];
-    $conn = new mysqli($connection['HOST'], $connection['USER'], $connection['PASS'], $connection['DBNAME']);
-    if ($conn->connect_error) {
-        echo "<p>2) Connection failed... <a href='index.php?step=4'>Go back?</a></p>";
-        exit;
-    }
-    echo "<p>2) Successfully connected...</p>";
-
-    if ($conn->query("DROP DATABASE {$connection['DBNAME']}")) {
-        echo "<p>3) Dropping database {$connection['DBNAME']}...</p>";
-    }
-
-    if ($conn->query("CREATE DATABASE {$connection['DBNAME']}")) {
-        echo "<p>4) Creating database {$connection['DBNAME']}...</p>";
-    }
-
-    // Load the SQL file.
-    $query = file_get_contents(ROOT . 'simple-user-manager.sql');
-
-    // Reconnect
-    $conn = new mysqli($connection['HOST'], $connection['USER'], $connection['PASS'], $connection['DBNAME']);
-
-    if (mysqli_multi_query($conn, $query)) {
-        echo "<p>5) Installing SQL dump...</p>";
-    }
-
-    echo "<p>6) Done... add the following information to your <strong>app/config/config.php</strong></p>";
-
-    echo "<p class='text-danger'><strong>DELETE OR RENAME THE INSTALLATION FOLDER</strong></p>";
-
-    echo "<code>
-        DB::connect(array(
-        <br>&nbsp;&nbsp;'host'&nbsp;=&gt;&nbsp;'{$connection['HOST']}',
-        <br>&nbsp;&nbsp;'username'&nbsp;=&gt;&nbsp;'{$connection['USER']}',
-        <br>&nbsp;&nbsp;'password'&nbsp;=&gt;&nbsp;'{$connection['PASS']}',
-        <br>&nbsp;&nbsp;'database'&nbsp;=&gt;&nbsp;'{$connection['DBNAME']}'
-        <br>));
-        </code>";
-
-
-    ?>
-
-
-
-
-
-<?php elseif ((isset($_GET['step']) && $_GET['step'] == 4) && check_license()): ?>
 
     <div class="row">
-        <form role="form" id="about-you">
-            <div class="form-group">
-                <label for="site-url">URL to Advanced User Manager</label>
-                <input type="text" class="form-control" id="site-url" placeholder="Eg: http://phpcodemonkey.com/aum"
-                       value="<?php echo preg_replace('/install/', '', URL); ?>">
-                <small class="help-block">
-                    URL to the advanced user management system.
-                </small>
-            </div>
-            <!--//form-group-->
 
+        <div class="col-md-4">
+            <ul class="nav nav-pills nav-stacked">
+                <li <?php echo is_active(1); ?>><a href="?step=1">Getting Started</a></li>
+                <li <?php echo is_active(2); ?>><a href="?step=2">Requirements</a></li>
+                <li <?php echo is_active(3); ?>><a href="?step=3">License Agreement</a></li>
+                <li <?php echo is_active(4); ?>><a href="?step=4">Install</a></li>
+                <li><br></li>
+                <li><a href="http://johncrossley.io/support">Help</a></li>
+            </ul>
+        </div>
 
-            <div class="form-group">
-                <label for="fullname">Full name</label>
-                <input type="text" class="form-control" id="fullname" placeholder="Eg: John Doe">
-            </div>
-            <!--//form-group-->
+        <div class="col-md-8">
+            <?php if (!isset($_GET['step']) OR (isset($_GET['step']) && $_GET['step'] === '1')): ?>
+                <p>
+                    Before you continue with the installation, I'd just like to thank you
+                    for downloading my <strong>simple user manager</strong>. If you require
+                    any assistance then don't hesitate to contact me using the
+                    <a href="http://johncrossley.io/support">contact form</a> on my website.
+                </p>
+                <div class="btn-group pull-right">
+                    <a href="?step=2" class="btn btn-default">Continue &raquo;</a>
+                </div>
+            <?php elseif(isset($_GET['step']) && $_GET['step'] === '2'): ?>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Requirement</th>
+                            <th>Suitable</th>
+                            <th>Help</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PHP minimum version <strong>5.3.x</strong></td>
+                            <td class="<?php echo(check_version(true) ? 'success' : 'danger'); ?>"><?php echo check_version(); ?>.x</td>
+                            <td style="width: 10%;">
+                                <a class="btn btn btn-info btn-link"
+                                    href="http://php.net/downloads.php#5.5" target="_blank">More</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PHP short tags enabled &lt;?=?&gt;</td>
+                            <td class="<?php echo (@ini_get('short_open_tag') == 1) ? 'success' : 'danger'; ?>">
+                                <?php echo (@ini_get('short_open_tag') == 1) ? 'Yes' : 'No'; ?>
+                            </td>
+                            <td style="width: 10%;">
+                                <a class="btn btn btn-info btn-link"
+                                    href="http://stackoverflow.com/questions/2185320/how-to-enable-php-short-tags" target="_blank">More</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PDO extension enabled</td>
+                            <td class="<?php echo (extension_loaded('pdo')) ? 'success' : 'danger'; ?>">
+                                <?php echo (extension_loaded('pdo')) ? 'Yes' : 'No'; ?>
+                            </td>
+                            <td style="width: 10%;">
+                                <a class="btn btn btn-info btn-link"
+                                    href="http://php.net/manual/en/book.pdo.php" target="_blank">More</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PDO MySQL drive enabled</td>
+                            <td class="<?php echo (extension_loaded('pdo_mysql')) ? 'success' : 'danger'; ?>">
+                                <?php echo (extension_loaded('pdo_mysql')) ? 'Yes' : 'No'; ?>
+                            </td>
+                            <td style="width: 10%;">
+                                <a class="btn btn btn-info btn-link"
+                                    href="http://lmgtfy.com/?q=How+to+enable+pdo+mysql+driver" target="_blank">More</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    If your system does not meet the above requirements I will not stop you from continuing with the
+                    installation. Keep in mind that the system <strong>could fail</strong> shout it not meet any of the above.
+                </p>
+                <div class="btn-group pull-right">
+                    <a href="index.php" class="btn btn-default">&laquo; Back</a>
+                    <a href="?step=3" class="btn btn-default">Continue &raquo;</a>
+                </div>
+            <?php elseif (isset($_GET['step']) && $_GET['step'] === '3'): ?>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>License Type</th>
+                            <th>Link</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Regular License</td>
+                            <td><a href="http://codecanyon.net/licenses/regular"
+                                   target="_blank">http://codecanyon.net/licenses/regular</a></td>
+                        </tr>
+                        <tr>
+                            <td>Extended License</td>
+                            <td><a href="http://codecanyon.net/licenses/extended" target="_blank">http://codecanyon.net/licenses/extended</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    Please ensure you read the license which applies to you and you situation. If you refuse to acknowledge
+                    the terms of these licenses then I will refuse support. Once you're happy with either of the following
+                    licenses then you may proceed with the installation.
+                </p>
 
-            <div class="form-group">
-                <label for="email-address">Email Address</label>
-                <input type="email" class="form-control" id="email-address" placeholder="Eg: john.doe@example.com">
-            </div>
-            <!--//form-group-->
+                <div class="checkbox pull-left">
+                    <label>
+                        <input type="checkbox" id="license-agreement" name="license"
+                            <?php echo (isset($_COOKIE['license_accepted']) ? 'checked' : ''); ?>>
+                        I agree to accept the license (Regular or Extended).
+                    </label>
+                </div>
+                <div class="btn-group pull-right">
+                    <a href="?step=2" class="btn btn-default">&laquo; Back</a>
+                    <a href="?step=4" class="btn btn-default" id="license-agreement-button"
+                        <?php echo (isset($_COOKIE['license_accepted']) ? '' : 'disabled'); ?>>Continue &raquo;</a>
+                </div>
+            <?php elseif (isset($_GET['step']) && $_GET['step'] === '4' && isset($_COOKIE['license_accepted'])): ?>
 
-            <button id="save-info" class="btn btn-success pull-right btn-sm">Save</button>
-        </form>
-    </div><!--//.row-->
+                <form action="index.php" method="POST">
+                    <div class="form-group">
+                        <label for="site-url">URL to simple user manager (base)</label>
+                        <input type="text" class="form-control" id="site-url"
+                            placeholder="Eg: http://johncrossley.io" value="<?php echo preg_replace('/install/', '', URL); ?>">
+                    </div>
 
-    <div class="row">
-        <form role="form" id="license-info">
-            <div class="form-group">
-                <label for="license-key">License Key</label>
-                <input type="text" class="form-control" id="license-key"
-                       placeholder="Eg: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" disabled>
-                <small class="help-block">
-                    The license key envato emailed you when you purchased this product.
-                    <i><strong>If you don't provide your license information you will be refused support.</strong></i>
-                </small>
-            </div>
-            <!--//form-group-->
-            <button class="btn btn-success pull-right btn-sm disabled">Submit Key</button>
-        </form>
-    </div><!--//.row-->
+                    <div class="form-group">
+                        <label for="email-address">Email address</label>
+                        <input type="email" class="form-control" id="email-address" placeholder="Eg: john.doe@example.com">
+                    </div>
 
-    <div class="row">
-        <form role="form" id="db-connection">
-            <div class="form-group">
-                <label for="db-host">Database Hostname</label>
-                <input type="text" class="form-control" id="db-host" placeholder="Eg: localhost">
-                <small class="help-block">
-                    The hostname of the database, this is typically <strong>localhost</strong>.
-                    If you are unsure then contact your host.
-                </small>
-            </div>
-            <!--//form-group-->
+                    <div class="form-group">
+                        <label for="db-host">Database hostname</label>
+                        <input type="text" class="form-control" id="db-host" placeholder="Eg: localhost">
+                        <small class="help-block">
+                            The hostname of the database, this is typically <strong>localhost</strong>.
+                            If you are unsure then contact your host.
+                        </small>
+                    </div>
 
-            <div class="form-group">
-                <label for="db-username">Database Username</label>
-                <input type="text" class="form-control" id="db-username" placeholder="Eg: john_crossley">
-                <small class="help-block">
-                    The username of the database, again if you're unsure contact your host.
-                </small>
-            </div>
-            <!--//form-group-->
+                    <div class="form-group">
+                        <label for="db-username">Database username</label>
+                        <input type="text" class="form-control" id="db-username" placeholder="Eg: john_crossley">
+                        <small class="help-block">
+                            The username of the database, again if you're unsure contact your host.
+                        </small>
+                    </div>
+                    <!--//form-group-->
 
-            <div class="form-group">
-                <label for="db-password">Database Password</label>
-                <input type="password" class="form-control" id="db-password" placeholder="Eg: ...">
-                <small class="help-block">
-                    The password of the database, again if you're unsure contact your host.
-                </small>
-            </div>
-            <!--//form-group-->
+                    <div class="form-group">
+                        <label for="db-password">Database password</label>
+                        <input type="password" class="form-control" id="db-password" placeholder="Eg: ...">
+                        <small class="help-block">
+                            The password of the database, again if you're unsure contact your host.
+                        </small>
+                    </div>
+                    <!--//form-group-->
 
-            <div class="form-group">
-                <label for="db-name">Database Name</label>
-                <input type="text" class="form-control" id="db-name" placeholder="Eg: advanced_user_manager">
-                <small class="help-block">
-                    The name of the database you'd like to use for the application. Please ensure you have created this
-                    otherwise the connection will fail. <strong class="text-danger"><i>Please note that all data in this
-                            database will be deleted!</i></strong>
-                </small>
-            </div>
-            <!--//form-group-->
+                    <div class="form-group">
+                        <label for="db-name">Database name</label>
+                        <input type="text" class="form-control" id="db-name" placeholder="Eg: simple_user_manager">
+                        <small class="help-block">
+                            The name of the database you'd like to use for the application. Please ensure you have created this
+                            otherwise the connection will fail. <strong class="text-danger"><i>Please note that all data in this
+                                    database will be deleted!</i></strong>
+                        </small>
+                    </div>
 
-            <button class="btn btn-success pull-right btn-sm">Test Connection</button>
-        </form>
-    </div><!--//.row-->
+                    <div class="pull-left" id="change-settings">
+                        <a href="#" class="btn btn-link">Delete Settings</a>
+                    </div>
 
-    <div class="row" id="start-installation">
-        <a class="btn btn-warning btn-lg btn-block" href="index.php?step=4&amp;start_installation">Start
-            Installation</a>
-    </div><!--//.row-->
+                    <div class="btn-group pull-right" style="margin-bottom: 4em;">
+                        <a href="?step=3" class="btn btn-default">&laquo; Back</a>
+                        <a href="#" id="test-connection" class="btn btn-default"
+                            <?php echo (isset($_COOKIE['connection_success']) ? 'disabled' : ''); ?>>Test Connection</a>
+                        <a href="?step=install" class="btn btn-default" id="install-button"
+                            <?php echo (isset($_COOKIE['connection_success']) ? '' : 'disabled'); ?>>Install</a>
+                    </div>
 
-<?php
-elseif (isset($_GET['step']) && $_GET['step'] == 3): ?>
+                </form>
+            <?php elseif (isset($_GET['step']) && $_GET['step'] === 'install' && isset($_COOKIE['license_accepted'])): ?>
 
-    <p>By installing this application you are accepting the following
-        license agreements.</p>
+                <p>1) Starting installation...</p>
 
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>License</th>
-            <th>Link</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Regular License</td>
-            <td><a href="http://codecanyon.net/licenses/regular"
-                   target="_blank">http://codecanyon.net/licenses/regular</a></td>
-        </tr>
-        <tr>
-            <td>Extended License</td>
-            <td><a href="http://codecanyon.net/licenses/extended" target="_blank">http://codecanyon.net/licenses/extended</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <?php
+                $conn = new mysqli($_COOKIE['db_host'], $_COOKIE['db_username'],
+                    $_COOKIE['db_password'], $_COOKIE['db_name']);
+                if ($conn->connect_error) {
+                    echo "<p>2) Connection failed... <a href='index.php?step=4'>Go back?</a></p>";
+                    exit;
+                }
+                echo "<p>2) Successfully connected...</p>";
 
-    <p>Failing to adhere to any of the following <strong>phpcodemonkey</strong> has the right
-        to blacklist your purchase code and refuse support should you require it.</p>
+                if ($conn->query("DROP DATABASE {$_COOKIE['db_name']}")) {
+                    echo "<p>3) Dropping database {$_COOKIE['db_name']}...</p>";
+                }
 
-    <div class="checkbox pull-left">
-        <label>
-            <input type="checkbox" name="license">
-            I agree to accept the license (Regular or Extended).
-        </label>
-    </div><!--//.checkbox-->
-    <a class="btn btn-success pull-right disabled" id="license-agreement" href="index.php?step=4">Next &raquo;</a>
+                if ($conn->query("CREATE DATABASE {$_COOKIE['db_name']}")) {
+                    echo "<p>4) Creating database {$_COOKIE['db_name']}...</p>";
+                }
 
-<?php
-elseif (isset($_GET['step']) && $_GET['step'] == 2): ?>
+                // Load the SQL file.
+                $query = file_get_contents(ROOT . 'data/simple-user-manager.sql');
 
-    <p>Below is a table of requirements to help determine whether or not the
-        system will work on your current setup. To find out more information about
-        each item, select the help <strong>help</strong> button. For the application
-        to work as intended you <strong>MUST</strong> meet the requirements.</p>
+                // Reconnect
+                $conn = new mysqli($_COOKIE['db_host'], $_COOKIE['db_username'],
+                    $_COOKIE['db_password'], $_COOKIE['db_name']);
 
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Requirement</th>
-            <th>Suitable</th>
-            <th>More</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>PHP minimum version <strong>5.3.x</strong></td>
-            <td class="<?php echo(check_version(true) ? 'success' : 'danger'); ?>"><?php echo check_version(); ?>.x</td>
-            <td style="width: 10%;">
-                <a class="btn btn-danger btn-xs" href="http://php.net/downloads.php#5.5" target="_blank">Help ?</a>
-            </td>
-        </tr>
-        <tr>
-            <td>PHP short tags enabled &lt;?=?&gt;</td>
-            <td class="<?php echo (@ini_get('short_open_tag') == 1) ? 'success' : 'danger'; ?>">
-                <?php echo (@ini_get('short_open_tag') == 1) ? 'Yes' : 'No'; ?>
-            </td>
-            <td style="width: 10%;">
-                <a class="btn btn-danger btn-xs"
-                   href="http://stackoverflow.com/questions/2185320/how-to-enable-php-short-tags" target="_blank">Help
-                    ?</a>
-            </td>
-        </tr>
-        <tr>
-            <td>PDO extension enabled</td>
-            <td class="<?php echo (extension_loaded('pdo')) ? 'success' : 'danger'; ?>">
-                <?php echo (extension_loaded('pdo')) ? 'Yes' : 'No'; ?>
-            </td>
-            <td style="width: 10%;">
-                <a class="btn btn-danger btn-xs" href="http://php.net/manual/en/book.pdo.php" target="_blank">Help ?</a>
-            </td>
-        </tr>
-        <tr>
-            <td>PDO MySQL drive enabled</td>
-            <td class="<?php echo (extension_loaded('pdo_mysql')) ? 'success' : 'danger'; ?>">
-                <?php echo (extension_loaded('pdo_mysql')) ? 'Yes' : 'No'; ?>
-            </td>
-            <td style="width: 10%;">
-                <a class="btn btn-danger btn-xs" href="http://lmgtfy.com/?q=How+to+enable+pdo+mysql+driver"
-                   target="_blank">Help ?</a>
-            </td>
-        </tr>
-        <tr>
-            <td>cURL enabled</td>
-            <td class="<?php echo (function_exists('curl_version')) ? 'success' : 'danger'; ?>">
-                <?php echo (function_exists('curl_version')) ? 'Yes' : 'No'; ?>
-            </td>
-            <td style="width: 10%;">
-                <a class="btn btn-danger btn-xs"
-                   href="http://www.tomjepson.co.uk/enabling-curl-in-php-php-ini-wamp-xamp-ubuntu/" target="_blank">Help
-                    ?</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <p>If you're happy to continue with the installation hit the button below. Please note that all the above
-        requirements are needed for the application to work correctly.</p>
+                if (mysqli_multi_query($conn, $query)) {
+                    echo "<p>5) Installing SQL dump...</p>";
+                }
 
-    <a class="btn btn-success pull-right" href="index.php?step=3">Next &raquo;</a>
+                echo "<p>6) Done... add the following information to your <strong>app/config/config.php</strong></p>";
 
-<?php
-else: ?>
-    <p>
-        Hi, first of all thank you downloading <strong>advanced user manager</strong>. This
-        installation shouldn't take more than 2 minutes to install. When your ready to start hit
-        the next button to continue. If anything goes wrong during the installation then the system
-        will try and guide you on how to resolve any issues.
-    </p>
+                echo "<p class='text-danger'>Delete or rename the installation folder.</p>";
 
-    <a class="btn btn-success pull-right" href="index.php?step=2">Next &raquo;</a>
-<?php endif; ?>
+                echo "<code>
+                    DB::connect(array(
+                    <br>&nbsp;&nbsp;'host'&nbsp;=&gt;&nbsp;'{$_COOKIE['db_host']}',
+                    <br>&nbsp;&nbsp;'username'&nbsp;=&gt;&nbsp;'{$_COOKIE['db_username']}',
+                    <br>&nbsp;&nbsp;'password'&nbsp;=&gt;&nbsp;'{$_COOKIE['db_password']}',
+                    <br>&nbsp;&nbsp;'database'&nbsp;=&gt;&nbsp;'{$_COOKIE['db_name']}'
+                    <br>));
+                    </code>";
+                ?>
+                <script>
+                    eraseCookie('db_host');
+                    eraseCookie('db_username');
+                    eraseCookie('db_password');
+                    eraseCookie('db_name');
+                    eraseCookie('db_name');
+                    eraseCookie('license_accepted');
+                    eraseCookie('email_address');
+                    eraseCookie('site_url');
+                </script>
+
+            <?php else: ?>
+                <p>Have you <a href="index.php?step=3">accepted the license agreement?</a></p>
+            <?php endif; ?>
+        </div>
+
+    </div>
 
 </div>
-<!--//.col-md-8-->
 
-</div>
-<!--//.row-->
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="app.js"></script>
 </body>
 </html>

@@ -424,7 +424,7 @@ function get_gravatar($email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts 
 function get_profile_picture(User $user, $size = null)
 {
     if ($user->custom_image)
-        return URL . 'uploads/' . $user->custom_image;
+        return URL . 'public/uploads/' . $user->custom_image;
 
     return get_gravatar($user->email, $size);
 }

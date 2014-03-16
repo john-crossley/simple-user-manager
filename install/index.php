@@ -1,4 +1,8 @@
 <?php
+/**
+ * Quick bash together script not intended to be used in production.
+ * Once you have finished installing your system please delete this folder.
+ */
 require_once 'includes/functions.php';
 session_start();
 if (! isset($_SESSION['init'])) {
@@ -24,6 +28,10 @@ $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="public/js/app.js"></script>
 
     <style>
         #change-settings {
@@ -233,26 +241,27 @@ $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
 
                 <?php
                 $conn = new mysqli($_COOKIE['db_host'], $_COOKIE['db_username'],
-                    $_COOKIE['db_password'], $_COOKIE['db_host']);
+                    $_COOKIE['db_password'], $_COOKIE['db_name']);
                 if ($conn->connect_error) {
                     echo "<p>2) Connection failed... <a href='index.php?step=4'>Go back?</a></p>";
                     exit;
                 }
                 echo "<p>2) Successfully connected...</p>";
 
-                if ($conn->query("DROP DATABASE {$connection['DBNAME']}")) {
-                    echo "<p>3) Dropping database {$connection['DBNAME']}...</p>";
+                if ($conn->query("DROP DATABASE {$_COOKIE['db_name']}")) {
+                    echo "<p>3) Dropping database {$_COOKIE['db_name']}...</p>";
                 }
 
-                if ($conn->query("CREATE DATABASE {$connection['DBNAME']}")) {
-                    echo "<p>4) Creating database {$connection['DBNAME']}...</p>";
+                if ($conn->query("CREATE DATABASE {$_COOKIE['db_name']}")) {
+                    echo "<p>4) Creating database {$_COOKIE['db_name']}...</p>";
                 }
 
                 // Load the SQL file.
-                $query = file_get_contents(ROOT . 'simple-user-manager.sql');
+                $query = file_get_contents(ROOT . 'data/simple-user-manager.sql');
 
                 // Reconnect
-                $conn = new mysqli($connection['HOST'], $connection['USER'], $connection['PASS'], $connection['DBNAME']);
+                $conn = new mysqli($_COOKIE['db_host'], $_COOKIE['db_username'],
+                    $_COOKIE['db_password'], $_COOKIE['db_name']);
 
                 if (mysqli_multi_query($conn, $query)) {
                     echo "<p>5) Installing SQL dump...</p>";
@@ -260,19 +269,27 @@ $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
 
                 echo "<p>6) Done... add the following information to your <strong>app/config/config.php</strong></p>";
 
-                echo "<p class='text-danger'><strong>DELETE OR RENAME THE INSTALLATION FOLDER</strong></p>";
+                echo "<p class='text-danger'>Delete or rename the installation folder.</p>";
 
                 echo "<code>
                     DB::connect(array(
-                    <br>&nbsp;&nbsp;'host'&nbsp;=&gt;&nbsp;'{$connection['HOST']}',
-                    <br>&nbsp;&nbsp;'username'&nbsp;=&gt;&nbsp;'{$connection['USER']}',
-                    <br>&nbsp;&nbsp;'password'&nbsp;=&gt;&nbsp;'{$connection['PASS']}',
-                    <br>&nbsp;&nbsp;'database'&nbsp;=&gt;&nbsp;'{$connection['DBNAME']}'
+                    <br>&nbsp;&nbsp;'host'&nbsp;=&gt;&nbsp;'{$_COOKIE['db_host']}',
+                    <br>&nbsp;&nbsp;'username'&nbsp;=&gt;&nbsp;'{$_COOKIE['db_username']}',
+                    <br>&nbsp;&nbsp;'password'&nbsp;=&gt;&nbsp;'{$_COOKIE['db_password']}',
+                    <br>&nbsp;&nbsp;'database'&nbsp;=&gt;&nbsp;'{$_COOKIE['db_name']}'
                     <br>));
                     </code>";
-
-
                 ?>
+                <script>
+                    eraseCookie('db_host');
+                    eraseCookie('db_username');
+                    eraseCookie('db_password');
+                    eraseCookie('db_name');
+                    eraseCookie('db_name');
+                    eraseCookie('license_accepted');
+                    eraseCookie('email_address');
+                    eraseCookie('site_url');
+                </script>
 
             <?php else: ?>
                 <p>Have you <a href="index.php?step=3">accepted the license agreement?</a></p>
@@ -283,9 +300,5 @@ $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
 
 </div>
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="public/js/app.js"></script>
 </body>
 </html>

@@ -17,7 +17,7 @@ class ImageUploader
                 throw new Exception('Exceeded max file size: [' . ImageUploader::MAX_FILE_SIZE . ']');
             }
 
-            if (move_uploaded_file($file['tmp_name'], ROOT . 'uploads/' . $randomFilename) === true) {
+            if (move_uploaded_file($file['tmp_name'], ROOT . 'public/uploads/' . $randomFilename) === true) {
                 return $randomFilename;
             }
 

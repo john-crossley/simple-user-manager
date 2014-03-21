@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Checks to see if a current item menu is active or not.
  * @param  integer $current The current item step
@@ -10,7 +11,7 @@ function is_active($current)
     if (isset($_GET['step']))
         $step = (int)$_GET['step'];
     if ($current === $step)
-        echo 'class="active"';
+        return 'class="disabled"';
 }
 
 function check_version($returnBool = false)

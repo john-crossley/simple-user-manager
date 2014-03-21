@@ -51,6 +51,10 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
         $default_group = (int)$_POST['default_group'];
     } else $default_group = null; // Default to nothing
 
+    if (isset($_POST['email_on_register'])) {
+        $email_on_register = 1;
+    } else $email_on_register = 0;
+
     // DEMO MODE BLOCK
     if (DEMO_MODE === true) {
         Flash::make('info', 'Your in demo mode and unable to change system settings.');
@@ -69,7 +73,8 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
         'email' => $system_email,
         'allow_registration' => (int)$_POST['registration_status'],
         'pm_disabled' => $pm_disabled,
-        'username_disabled' => (int)$_POST['username_disabled']
+        'username_disabled' => (int)$_POST['username_disabled'],
+        'email_on_register' => $email_on_register
     ));
 
     if ($result) {
@@ -103,7 +108,6 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
                    placeholder="The name of the system" value="<?= $settings->name ?>">
             <small class="help-block"><?= form_has_message('system_name') ?></small>
         </div>
-        <!--//.form-group-->
 
         <div class="form-group has-<?= form_has_error('system_email') ?>">
             <label for="system_email" class="control-label">System email</label>
@@ -111,7 +115,6 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
                    placeholder="The system email address" value="<?= $settings->email ?>">
             <small class="help-block"><?= form_has_message('system_email') ?></small>
         </div>
-        <!--//.form-group-->
 
         <div class="form-group has-<?= form_has_error('meta_description') ?>">
             <label for="bio" class="control-label">Meta description</label>
@@ -119,7 +122,6 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
                       rows="0"><?= $settings->meta_description ?></textarea>
             <small class="help-block"><?= form_has_message('meta_description') ?></small>
         </div>
-        <!--//.form-group-->
 
         <div class="form-group has-<?= form_has_error('meta_author') ?>">
             <label for="meta_author" class="control-label">Meta author</label>
@@ -127,7 +129,6 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
                    placeholder="The systems author" value="<?= $settings->meta_author ?>">
             <small class="help-block"><?= form_has_message('meta_author') ?></small>
         </div>
-        <!--//.form-group-->
 
         <div class="form-group has-<?= form_has_error('system_url') ?>">
             <label for="system_url" class="control-label">System URL</label>
@@ -135,7 +136,6 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
                    placeholder="Eg: <?= root_path() ?>" value="<?= $settings->url ?>">
             <small class="help-block"><?= form_has_message('system_url') ?></small>
         </div>
-        <!--//.form-group-->
 
         <div class="form-group has-<?= form_has_error('banned_extensions') ?>">
             <label for="banned_extensions" class="control-label">Banned extensions</label>
@@ -144,7 +144,6 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
             <small
                 class="help-block"><?= form_has_message('banned_extensions', 'Separate email extensions by a space!') ?></small>
         </div>
-        <!--//.form-group-->
 
         <div class="form-group has-<?= form_has_error('registration_status') ?>">
             <label for="registration_status" class="control-label">Registration status</label>
@@ -153,7 +152,6 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
                 <option value="0" <?= status(0, $settings->allow_registration) ?>>Close Registration</option>
             </select>
         </div>
-        <!--//.form-group-->
 
         <div class="form-group has-<?= form_has_error('pm_disabled') ?>">
             <label for="pm_disabled" class="pm_disabled-label">Personal Message System</label>
@@ -163,7 +161,6 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
             </select>
             <small class="help-block">This system allows members to send personal messages to each other</small>
         </div>
-        <!--//.form-group-->
 
         <div class="form-group has-<?= form_has_error('default_group') ?>">
             <label for="default_group" class="control-label">Default group</label>
@@ -178,7 +175,6 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
                     have?</a>
             </small>
         </div>
-        <!--//.form-group-->
 
         <div class="form-group has-<?= form_has_error('username_disabled') ?>">
             <label for="username_disabled" class="username_disabled-label">Username disabled?</label>
@@ -191,7 +187,12 @@ if (!empty($_POST) && isset($_POST['task']) && $_POST['task'] == 'saveSettingsFr
                 address.
             </small>
         </div>
-        <!--//.form-group-->
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="email_on_register" value="email_on_register" <?php echo ($settings->email_on_register == 1) ? "checked":""; ?>> Notify <strong>admin</strong> when new members join
+            </label>
+        </div>
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-xs pull-right" name="save">Save changes</button>

@@ -44,6 +44,7 @@ if (!empty($_POST)) {
         $validateURL = URL . 'confirm.php?hash=' . $user->hash . '&amp;id=' . $id . '&amp;do=register';
 
         $template = DB::Table('template')->where('id', '=', 7)->grab(1)->get();
+        $settings = get_settings(); // Get the settings
 
         if ($template) {
             $text = mini_parse($template->data, array(
@@ -65,6 +66,30 @@ if (!empty($_POST)) {
                     'url' => URL
                 ))
                 ->send();
+
+            // Code can be moved out - this is a quick fix.
+            if (isset($settings->email, $settings->meta_author) && $settings->email_on_register == 1) {
+                $template = DB::Table('template')->where('id', '=', 8)->grab(1)->get();
+
+                $text = mini_parse($template->data, array(
+                    'username' => $user->username,
+                    'admin_name' => meta_author(),
+                    'system_name' => system_name(),
+                    'year' => date('Y')
+                ));
+
+                $e = new Email;
+                $e->to($settings->email)
+                    ->from(system_email(), meta_author())
+                    ->subject($template->subject)
+                    ->template(TEMPLATE . 'generic_email_template.html', array(
+                        'user' => $user->username,
+                        'template' => nl2br($text),
+                        'system_name' => system_name(),
+                        'year' => date('Y')
+                    ))
+                    ->send();
+            }
 
             Flash::make('success', _rd('username', $user->username, NEW_USER_REGISTERED));
             redirect('login.php');

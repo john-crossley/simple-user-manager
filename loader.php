@@ -14,7 +14,7 @@ $url = $_SERVER['HTTP_HOST'] . implode('/', $path3);
 ($url{strlen($url) - 1} == '/') ? define('URL', 'http://' . $url) : define('URL', 'http://' . $url . '/');
 
 // The path to the templates folder.
-define('TEMPLATE', ROOT . 'templates/');
+define('TEMPLATE', ROOT . 'public/templates/');
 
 // Whether or not the browser has direct access to a file.
 define('ACCESS', true);
